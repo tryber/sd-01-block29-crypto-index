@@ -6,7 +6,7 @@ router.use(express.json())
 router.post('/', (req, res) => {
   const errors = verifyData(req.body);
   if (errors) {
-    res.status(401).json({ message: 'Campos inválidos', errors });
+    return res.status(401).json({ message: 'Campos inválidos' });
   }
   return res.json({ token: `${gerarToken()}` });
 });

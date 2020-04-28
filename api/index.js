@@ -1,11 +1,18 @@
 const express = require('express');
 const app = express();
 const login = require('./login');
+const crypto = require('./crypto');
+
+app.use('/login', login);
+
+app.use(authenticationMiddleware);
+
+app.use('/crypto', crypto);
 
 function authenticationMiddleware(req, res, next) {
   if (!validToken(req)) {
     return res.status(500)
-    .json({ message: 'ERROR TOKEN' });
+      .json({ message: 'ERROR TOKEN' });
   }
   next();
 }
@@ -17,6 +24,10 @@ function validToken(req) {
   return true;
 }
 
-app.use(authenticationMiddleware);
+app.use((req, res) => {
+  res.status(404).json({
+    "message": "Endpoint não encontrado",
+  });
+})
 
 app.listen(3005, () => console.log('Foi'));
