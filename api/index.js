@@ -2,31 +2,31 @@ const express = require('express');
 const app = express();
 const port = 3001;
 
-function makeid(length) {
-  const result = '';
-  const characters =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i += 1) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
+const { validateLogin } = require('./login.js');
+const { generateCurrencies, updateCurrencies } = require('./crypto.js');
 
 app.use(express.json());
 
 app.post('/login', (req, res) => {
-  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-  const passwordRegex = /^[0-9]{6}$/;
+  validateLogin(req)
+    ? res.send(validateLogin(req))
+    : res.send({ message: 'Campos inválidos' }).status(400);
+});
 
-  if (req.body.email && req.body.password)
-    if (
-      req.body.email.match(emailRegex) &&
-      req.body.password.match(passwordRegex)
-    )
-      return res.send({ token: makeid(16) });
+app.get('/crypto/btc', async (req, res) => {
+  res.send(await generateCurrencies());
+});
 
-  return res.send({ message: 'Campos inválidos' }).status(400);
+app.post('/crypto/btc', async (req, res) => {
+  const result = await updateCurrencies(req);
+  if (result !== 'Valor alterado com sucerro!') {
+    return res.send({ message: result }).status(400);
+  }
+  return res.send({ message: result});
+});
+
+app.use((res) => {
+  res.send({ message: 'Endpoint não encontrado' }).status(404);
 });
 
 app.listen(port, () => console.log(`ouvindo ${port}`));
