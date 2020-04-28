@@ -1,12 +1,11 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const bodyParser = require("body-parser");
 const port = 3001;
 
 function makeid(length) {
-  var result = "";
+  var result = '';
   var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var charactersLength = characters.length;
   for (var i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -16,7 +15,7 @@ function makeid(length) {
 
 app.use(express.json());
 
-app.post("/login", (req, res, next) => {
+app.post('/login', (req, res, next) => {
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   const passwordRegex = /^[0-9]{6}$/;
 
@@ -29,7 +28,7 @@ app.post("/login", (req, res, next) => {
     }
   }
 
-  return res.send({ message: "Campos inválidos" }).status(400);
+  return res.send({ message: 'Campos inválidos' }).status(400);
 });
 
 app.listen(port, () => console.log(`ouvindo ${port}`));
