@@ -10,7 +10,7 @@ Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu
 
 Você vai desenvolver um app full-stack! Isso significa que você vai construir tanto a API quanto o front-end (Server Side Rendered 😃)!
 
-A aplicação a ser contruída é um "index" para vermos o preço do BitCoin em diferentes moedas.
+A aplicação a ser contruída é um "index" para vermos o preço do _BitCoin_ em diferentes moedas.
 
 ---
 
