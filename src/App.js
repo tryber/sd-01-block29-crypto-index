@@ -4,7 +4,7 @@ import './App.css'
 export default function App() {
   return (
     <div>
-      <h1>Hello Word!!! 2</h1>
+      <h1>Hello Word!!!</h1>
     </div>
   );
 }
