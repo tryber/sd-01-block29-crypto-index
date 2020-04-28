@@ -8,7 +8,6 @@ import ReactDOMServer from 'react-dom/server';
 import App from '../src/App.js';
 
 const app = express();
-
 const reactApp = ReactDOMServer.renderToString(<App />);
 
 app.use('^/$', (req, res, next) => {
