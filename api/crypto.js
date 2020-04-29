@@ -37,7 +37,10 @@ async function generateCurrencies() {
   return api;
 }
 
-function validateData(req) {
+function validateData(req, validate) {
+  if (!validateAuthorization(req, validate)) {
+    return 'token inválido!';
+  }
   if (!req.body.currency || !validateCurrency(req.body.currency)) {
     return 'Moeda inválida';
   }
@@ -49,9 +52,12 @@ function validateData(req) {
 
 const validateCurrency = (value) => ['BRL', 'EUR', 'CAD'].includes(value);
 const validateValue = (value) => Number.isInteger(value) && value > 0;
+const validateAuthorization = (req, validate) =>
+  validate[validate.length - 1] &&
+  req.headers.authorization === validate[validate.length - 1].token;
 
-async function updateCurrencies(req) {
-  if (validateData(req) !== 'Valor alterado com sucesso') {
+async function updateCurrencies(req, validate) {
+  if (validateData(req, validate) === 'Valor alterado com sucesso') {
     const values = await getCurrencies();
     values[req.body.currency] = req.body.value;
 
@@ -63,7 +69,7 @@ async function updateCurrencies(req) {
       }
     );
   }
-  return validateData(req);
+  return validateData(req, validate);
 }
 module.exports = {
   generateCurrencies,

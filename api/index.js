@@ -4,12 +4,13 @@ const port = 3001;
 
 const { validateLogin } = require('./login.js');
 const { generateCurrencies, updateCurrencies } = require('./crypto.js');
-
+const validate = [];
 app.use(express.json());
 
 app.post('/login', (req, res) => {
-  validateLogin(req)
-    ? res.send(validateLogin(req))
+  validate.push(validateLogin(req));
+  validate[validate.length - 1]
+    ? res.send(validate[validate.length - 1])
     : res.send({ message: 'Campos inválidos' }).status(400);
 });
 
@@ -18,11 +19,11 @@ app.get('/crypto/btc', async (req, res) => {
 });
 
 app.post('/crypto/btc', async (req, res) => {
-  const result = await updateCurrencies(req);
+  const result = await updateCurrencies(req, validate);
   if (result !== 'Valor alterado com sucerro!') {
     return res.send({ message: result }).status(400);
   }
-  return res.send({ message: result});
+  return res.send({ message: result });
 });
 
 app.use((res) => {
