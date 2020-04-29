@@ -1,17 +1,15 @@
-import useAxios from 'axios-hooks';
+const express = require('express');
+const routes = require('./routes');
+const errors = require('@expresso/errors')
 
-function getAPI() {
-  const [{ data, loading, error }, refetch] = useAxios('https://api.coindesk.com/v1/bpi/currentprice.json');
+const app = express();
 
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error!</p>
+app.use(express.json());
 
-  return (
-    <div>
-      <button onClick={refetch}>Atualizar</button>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
-  );
-}
+app.use(routes);
 
-export default getAPI;
+app.use(errors.factory(process.env.NODE_ENV));
+
+app.listen(3001, () => {
+    console.log('Ouvindo na porta 3001');
+});
