@@ -10,9 +10,9 @@ app.use(express.json());
 
 app.post('/login', (req, res) => {
   validate.push(validateLogin(req));
-  validate[validate.length - 1]
-    ? res.send(validate[validate.length - 1])
-    : res.send({ message: 'Campos inválidos' }).status(400);
+  if(validate[validate.length - 1])
+    return res.send(validate[validate.length - 1]);
+  return res.send({ message: 'Campos inválidos' }).status(400);
 });
 
 app.get('/crypto/btc', async (req, res) => {

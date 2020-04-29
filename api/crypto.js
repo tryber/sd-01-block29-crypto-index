@@ -2,19 +2,20 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
+
 const readFile = util.promisify(fs.readFile);
 
 const getCurrencies = async () => {
   const content = await readFile(
-    path.resolve(__dirname, '..', 'server', 'currencies.json')
+    path.resolve(__dirname, '..', 'server', 'currencies.json'),
   );
   return JSON.parse(content.toString('utf-8'));
 };
 
 function fetchCoinDesk() {
   return fetch('https://api.coindesk.com/v1/bpi/currentprice/BTC.json')
-    .then((res) => res.json())
-    .then((result) => result);
+    .then(res => res.json())
+    .then(result => result);
 }
 
 const currencies = [
@@ -65,7 +66,7 @@ async function updateCurrencies(req, validate) {
       JSON.stringify(values),
       (err) => {
         if (err) throw err;
-      }
+      },
     );
   }
   return validateData(req, validate);
