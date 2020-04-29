@@ -1,7 +1,9 @@
-const login = require('../server/login');
+const login = require('./login');
+const home = require('./home');
 const express = require('express');
-/* Chama a função express para instanciar a aplicação do framework
-   e armazenar na variável app para ser utilizada no código */
 const app = express();
 
-app.use('/login', login);
+app.use(home);
+app.use(login);
+
+app.listen(3001, () => console.log('ouvindo porta 3001!'));
