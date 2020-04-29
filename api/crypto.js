@@ -27,34 +27,33 @@ async function generateCurrencies() {
   const values = await getCurrencies();
   const api = await fetchCoinDesk();
   currencies.forEach((currency) => {
-    api['bpi'][currency[0]] = {
+    api.bpi[currency[0]] = {
       code: currency[0],
-      rate: (api['bpi']['USD']['rate_float'] * values[currency[0]]).toString(),
+      rate: (api.bpi.USD.rate_float * values[currency[0]]).toString(),
       description: currency[1],
-      rate_float: api['bpi']['USD']['rate_float'] * values[currency[0]],
+      rate_float: api.bpi.USD.rate_float * values[currency[0]],
     };
   });
   return api;
 }
 
-function validateData(req, validate) {
-  if (!validateAuthorization(req, validate)) {
-    return 'token inválido!';
-  }
-  if (!req.body.currency || !validateCurrency(req.body.currency)) {
-    return 'Moeda inválida';
-  }
-  if (!req.body.value || !validateValue(req.body.value)) {
-    return 'Valor inválido';
-  }
-  return 'Valor alterado com sucesso';
-}
-
-const validateCurrency = (value) => ['BRL', 'EUR', 'CAD'].includes(value);
-const validateValue = (value) => Number.isInteger(value) && value > 0;
+const validateCurrency = value => ['BRL', 'EUR', 'CAD'].includes(value);
+const validateValue = value => Number.isInteger(value) && value > 0;
 const validateAuthorization = (req, validate) =>
   validate[validate.length - 1] &&
   req.headers.authorization === validate[validate.length - 1].token;
+
+function validateData(req, validate) {
+  if (!validateAuthorization(req, validate)) return 'token inválido!';
+
+  if (!req.body.currency || !validateCurrency(req.body.currency))
+    return 'Moeda inválida';
+
+  if (!req.body.value || !validateValue(req.body.value))
+    return 'Valor inválido';
+
+  return 'Valor alterado com sucesso';
+}
 
 async function updateCurrencies(req, validate) {
   if (validateData(req, validate) === 'Valor alterado com sucesso') {
