@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.post('/login', (req, res) => {
   validate.push(validateLogin(req));
-  if(validate[validate.length - 1])
+  if (validate[validate.length - 1])
     return res.send(validate[validate.length - 1]);
   return res.send({ message: 'Campos inválidos' }).status(400);
 });
