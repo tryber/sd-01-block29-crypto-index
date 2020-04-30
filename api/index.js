@@ -13,7 +13,6 @@ app.use(authenticationMiddleware);
 app.use('/crypto', crypto);
 
 function authenticationMiddleware(req, res, next) {
-  console.log('verificando',req.headers.authorization)
   if (!validToken(req)) {
     return res.status(500)
       .json({ message: 'ERROR TOKEN' });

@@ -4,6 +4,8 @@ const router = express.Router();
 router.use(express.json())
 
 router.post('/', (req, res) => {
+  console.log('asdasdas');
+  console.log(req.body, 'body');
   const errors = verifyData(req.body);
   if (errors) {
     return res.status(401).json({ message: 'Campos inválidos' });

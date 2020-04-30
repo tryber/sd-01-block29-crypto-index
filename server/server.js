@@ -8,8 +8,9 @@ import ReactDOMServer from 'react-dom/server';
 import App from '../src/App.js';
 
 const app = express();
+const router = express.Router();
 
-const reactApp = ReactDOMServer.renderToString(<App />);
+const reactApp = (location) => ReactDOMServer.renderToString(<App location={location} />);
 
 app.use('^/$', (req, res, next) => {
   fs.readFile(
@@ -19,7 +20,7 @@ app.use('^/$', (req, res, next) => {
         return res.status(500).send('Algo deu errado :(');
       }
       return res.send(
-        data.replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
+        data.replace('<div id="root"></div>', `<div id="root">${reactApp("/")}</div>`)
       );
     }
   );
@@ -27,6 +28,18 @@ app.use('^/$', (req, res, next) => {
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
-
+router.use('/login', (req, res, next) => {
+  fs.readFile(
+    path.resolve('./build/index.html'), 'utf-8', (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send('Algo deu errado :(');
+      }
+      return res.send(
+        data.replace('<div id="root"></div>', `<div id="root">${reactApp("/login")}</div>`)
+      );
+    }
+  );
+});
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

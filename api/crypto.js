@@ -35,7 +35,6 @@ router.get('/btc', async (req, res) => {
     obj.bpi[dado[0]] = createObj(dado[0], dado[1], USD.rate_float);
     return obj;
   }, values);
-  console.log(result,'result')
   res.json(result);
 })
 

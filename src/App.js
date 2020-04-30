@@ -10,21 +10,22 @@ import Home from './pages/Home';
 import './App.css'
 
 
-function App(location) {
+function App(props) {
+  const { location } = props;
   return (
-      <StaticRouter location={location}>
-        <Switch>
-          <Route exact path="/login">
-            <Login />
-          </Route>
-          {/* <Route exact path="/update">
+    <StaticRouter location={location}>
+      <Switch>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        {/* <Route exact path="/update">
           <Update />
         </Route> */}
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </StaticRouter>
+        <Route exact path="/">
+          <Login />
+        </Route>
+      </Switch>
+    </StaticRouter>
   );
 }
 
