@@ -1,11 +1,13 @@
 const express = require('express');
 const { validateLogin } = require('./login.js');
 const { generateCurrencies, updateCurrencies } = require('./crypto.js');
+const cors = require('cors');
 
 const app = express();
 const port = 3001;
 const validate = [];
 
+app.use(cors());
 app.use(express.json());
 
 app.post('/login', (req, res) => {
