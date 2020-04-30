@@ -11,14 +11,14 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "axios-hooks": "^1.9.0",
+    "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "ignore-styles": "^5.0.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-scripts": "3.4.0",
-    "sequelize": "^5.21.7"
+    "react-scripts": "3.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
