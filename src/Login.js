@@ -6,7 +6,6 @@ const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]
 const passwordRegex = /^[0-9]{6}$/;
 
 async function submitForm(e, email, password) {
-  e.preventDefault();
   if (validateLogin(email, password)) {
     await fetch('http://localhost:3001/login', {
       method: 'POST',
@@ -18,10 +17,11 @@ async function submitForm(e, email, password) {
     })
       .then((res) => res.json())
       .then((result) => localStorage.setItem('token', result.token));
+      return true;
   }
+  e.preventDefault();
   alert('dados inválidos!');
-  // e.preventDefault();
-  return false;
+  // retur;
 }
 
 function validateLogin(email, password) {
