@@ -27,4 +27,6 @@ app.use('^/$', (req, res, next) => {
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
+
+
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

@@ -11,15 +11,16 @@ const readFile = util.promisify(fs.readFile);
 router.use(express.json());
 
 router.post('/btc', async (req, res) => {
-  if (verifyData(req.body)) {
-    res.status(401).json({ message: 'Campos inválidos' });
-  }
   const { currency, value } = req.body;
+
+  if (verifyCurrencies(currency)) return res.status(400).json({ message: 'Moeda inválida' });
+  if (verifyValue(value)) return res.status(400).json({ message: 'Valor inválido' });
+
   const newObj = { ...currencies, [currency]: `${value}` }
 
   fs.writeFile(path.resolve(__dirname, 'data', 'currencies.json'), JSON.stringify(newObj), (err) => {
     if (err) throw err;
-    res.json({
+    return res.json({
       "message": "Valor alterado com sucesso!"
     });
   });
@@ -34,7 +35,8 @@ router.get('/btc', async (req, res) => {
     obj.bpi[dado[0]] = createObj(dado[0], dado[1], USD.rate_float);
     return obj;
   }, values);
-  res.send(result);
+  console.log(result,'result')
+  res.json(result);
 })
 
 const createObj = (code, value, dolar_rate_float) => {
@@ -57,8 +59,6 @@ const getCurrencies = async () => {
   const content = await readFile(path.resolve(__dirname, 'data', 'currencies.json'));
   return JSON.parse(content.toString('utf-8'));
 }
-
-const verifyData = (currency, value) => (verifyCurrencies(currency) && verifyValue(value));
 
 const verifyCurrencies = (currency) => ['BRL', 'EUR', 'CAD'].includes(currency);
 

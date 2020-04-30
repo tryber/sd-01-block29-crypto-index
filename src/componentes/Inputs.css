@@ -1,0 +1,7 @@
+.Inputs .isValid {
+  color: green;
+}
+
+.Inputs .notValid {
+  color: red;
+}
