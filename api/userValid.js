@@ -14,7 +14,7 @@ function generateToken() {
   return crypto.randomBytes(8).toString('hex');
 };
 
-function uservalidMiddleware(req, res, next) {
+function userValidMiddleware(req, res, next) {
   if (!emailValid(req.body.email) || !passwordValid(req.body.password)) {
     return res.status(400).json({ message: 'Campos inválidos' });
   }
@@ -29,6 +29,6 @@ function uservalidMiddleware(req, res, next) {
 
 module.exports = {
   generateToken,
-  uservalidMiddleware,
+  userValidMiddleware,
 };
 

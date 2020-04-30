@@ -3,12 +3,12 @@ const app = express();
 
 const {
   generateToken,
-  uservalidMiddleware,
+  userValidMiddleware,
 } = require('./userValid');
 
 app.use(express.json());
 
-app.post('/login', uservalidMiddleware, (req, res) => {
+app.post('/login', userValidMiddleware, (req, res) => {
   res.json({token: generateToken()});
 });
 
