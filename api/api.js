@@ -48,10 +48,6 @@ async function getCurrencies() {
 //   }]
 // };
 
-app.post('/crypto/btc', (req, res) => {
-  res.json({ message: 'Valor alterado com sucesso!' });
-});
-
 app.listen(3002, () => {
   console.log();
 });

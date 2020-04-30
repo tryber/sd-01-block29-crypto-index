@@ -22,11 +22,6 @@ function userValidMiddleware(req, res, next) {
   next();
 };
 
-// function errMiddleware() {
-//   console.error(err);
-//   res.status(500).json({ error: 'Nenhum campo pode ficar em branco' });
-// }
-
 module.exports = {
   generateToken,
   userValidMiddleware,
