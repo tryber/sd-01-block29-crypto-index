@@ -1,31 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import UseAxios from 'axios-hooks';
+import axios from 'axios';
 import Currency from '../componentes/Currency';
 import Loading from '../componentes/Loading';
-import ErrorApi from '../componentes/ErrorApi';
 
 const Home = () => {
-  const [result] = UseAxios({
-    url: 'http://localhost:3005/crypto/btc',
-    method: 'GET',
-    headers: {
-      authorization: '1234567890123456',
-    }
-  }
-  );
+  // const [result] = axios.get({
+  //   url: 'http://localhost:3005/crypto/btc',
+  //   method: 'GET',
+  //   headers: {
+  //     authorization: '1234567890123456',
+  //   }
+  // }
+  // );
 
   const [data, setData] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!result.loading) setData(result.data)
-  })
+    console.log('UPDATE')
+    if (!loading) {
+      setLoading(true);
+      axios.get('http://localhost:3005/crypto/btc', {
+        headers: {
+          authorization: '1234567890123456',
+        }
+      })
+      .then((response) => {
+        console.log('fim, fetch',response);
+        setData(response.data);
+        setLoading(false);
+      })
+    }
+  },[])
+
   if (data !== '') {
     console.log(data.bpi, 'data')
   }
+  console.log(data)
+  console.log(loading,'load')
   return (
     <div className="Home">
-      {result.loading && <Loading />}
-      {result.error && <ErrorApi />}
+      {loading && <Loading />}
       {(data !== '') && <Currency data={data} />}
     </div>
   );

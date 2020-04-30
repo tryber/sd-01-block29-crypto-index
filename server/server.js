@@ -1,45 +1,15 @@
 import express from 'express';
-import fs from 'fs';
+
 import path from 'path';
 
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-
-import App from '../src/App.js';
+import render from './render';
 
 const app = express();
-const router = express.Router();
 
-const reactApp = (location) => ReactDOMServer.renderToString(<App location={location} />);
-
-app.use('^/$', (req, res, next) => {
-  fs.readFile(
-    path.resolve('./build/index.html'), 'utf-8', (err, data) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send('Algo deu errado :(');
-      }
-      return res.send(
-        data.replace('<div id="root"></div>', `<div id="root">${reactApp("/")}</div>`)
-      );
-    }
-  );
-});
+app.use('^/$',render);
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
-router.use('/login', (req, res, next) => {
-  fs.readFile(
-    path.resolve('./build/index.html'), 'utf-8', (err, data) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send('Algo deu errado :(');
-      }
-      return res.send(
-        data.replace('<div id="root"></div>', `<div id="root">${reactApp("/login")}</div>`)
-      );
-    }
-  );
-});
+app.use('/login',render);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

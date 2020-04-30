@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const fetch = require('node-fetch');
+
 const getData = require('../client');
 const currencies = require('./data/currencies.json');
 const path = require('path');
@@ -12,7 +12,6 @@ router.use(express.json());
 
 router.post('/btc', async (req, res) => {
   const { currency, value } = req.body;
-
   if (verifyCurrencies(currency)) return res.status(400).json({ message: 'Moeda inválida' });
   if (verifyValue(value)) return res.status(400).json({ message: 'Valor inválido' });
 
@@ -27,10 +26,9 @@ router.post('/btc', async (req, res) => {
 })
 
 router.get('/btc', async (req, res) => {
-  const values = await getData(fetch);
+  const values = await getData();
   const { bpi: { USD } } = values;
   const dados = await getCurrencies();
-
   const result = Object.entries(dados).reduce((obj, dado) => {
     obj.bpi[dado[0]] = createObj(dado[0], dado[1], USD.rate_float);
     return obj;
@@ -59,8 +57,8 @@ const getCurrencies = async () => {
   return JSON.parse(content.toString('utf-8'));
 }
 
-const verifyCurrencies = (currency) => ['BRL', 'EUR', 'CAD'].includes(currency);
+const verifyCurrencies = (currency) => !['BRL', 'EUR', 'CAD'].includes(currency);
 
-const verifyValue = (value) => (Number.isInteger(value) && value !== 0);
+const verifyValue = (value) => !(Number.isInteger(value) && value !== 0);
 
 module.exports = router;

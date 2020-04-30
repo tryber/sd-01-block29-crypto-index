@@ -3,10 +3,8 @@ import ShowValue from './ShowValue';
 import { Link } from "react-router-dom";
 
 const formatDataCurrency = (data) => {
-  console.log(data, 'currency')
   return Object.entries(data)
     .reduce((arr, currency) => {
-      console.log(currency)
       arr.push(
         {
           type: currency[0],

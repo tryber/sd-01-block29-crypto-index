@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  StaticRouter,
   Switch,
   Route,
 } from "react-router-dom";
@@ -9,23 +8,19 @@ import Home from './pages/Home';
 // import Update from './pages/Update';
 import './App.css'
 
-
-function App(props) {
-  const { location } = props;
+function App() {
   return (
-    <StaticRouter location={location}>
       <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
         <Route exact path="/login">
           <Login />
         </Route>
         {/* <Route exact path="/update">
           <Update />
         </Route> */}
-        <Route exact path="/">
-          <Login />
-        </Route>
       </Switch>
-    </StaticRouter>
   );
 }
 
