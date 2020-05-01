@@ -41,8 +41,8 @@ const description = {
 
 function getValues(coins, valueAPI) {
   const newObject = Object.entries(coins)
-    .map(coin => {
-      return {
+    .map((coin) => (
+      {
         [coin[0]]:
         {
           code: coin[0],
@@ -50,10 +50,10 @@ function getValues(coins, valueAPI) {
           description: description[coin[0]],
           rate_float: (valueAPI.bpi.USD.rate_float * coin[1]),
         },
-      };
-    })
+      }
+    ))
     .reduce((acum, coin) => {
-      acum.bpi[Object.keys(coin)[0]] = Object.values(coin)[0];
+      valueAPI.bpi[Object.keys(coin)[0]] = Object.values(coin)[0];
       return acum;
     }, valueAPI);
 
