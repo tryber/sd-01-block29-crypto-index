@@ -1,7 +1,19 @@
-const currencyValid = ['BRL', 'EUR', 'CAD'];
+const fs = require('fs');
+const util = require('util');
+const path = require('path');
 
-function currencyValidMiddleware(req, res, next) {
+const readFile = util.promisify(fs.readFile);
+
+async function getCurrencies() {
+  const currenciesJson = await readFile(path.resolve(__dirname, 'currencies.json'), 'utf-8');
+
+  return JSON.parse(currenciesJson);
+}
+
+async function currencyValidMiddleware(req, res, next) {
   const { currency, value } = req.body;
+
+  const currencyValid = Object.keys(await getCurrencies());
 
   const coin = currencyValid.find((valid) => valid === currency);
 
@@ -28,4 +40,4 @@ function authenticationMiddleware(req, res, next) {
   next();
 };
 
-module.exports = { currencyValidMiddleware, authenticationMiddleware };
+module.exports = { currencyValidMiddleware, authenticationMiddleware, getCurrencies };
