@@ -10,44 +10,68 @@ app.use(express.json());
 const readFile = util.promisify(fs.readFile);
 
 async function getCurrencies() {
-  return await readFile(path.resolve(__dirname, 'currencies.json'), 'utf-8');
+  const currenciesJson = await readFile(path.resolve(__dirname, 'currencies.json'), 'utf-8');
+  // retorna o arquivo de currencies json;
+
+  return currenciesJson;
 }
 
-// app.get('/crypto/btc', (req, res) => {
-//   axios.get('http://api.coindesk.com/v1/bpi/currentprice/BTC.json')
-//     .then((response) => {
-//       const bitcoin = (response.data)
+app.get('/crypto/btc', (req, res) => {
+  axios.get('http://api.coindesk.com/v1/bpi/currentprice/BTC.json')
+    .then( async (response) => {
+      const bitcoin = response.data;
+      // retorna os valores da api;
 
-//       res.json(getCurrencies());
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// });
+      const fileCurrencies = await getCurrencies();
+      // como a função getCurrencies() retorna uma promise o await é necessário para esperar o valor do 
+      // return desta função, caso o contrário a constante não teria nenhum valor e seria passada para frente;
+      
+      res.json(getValues(JSON.parse(fileCurrencies), bitcoin));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
-// function obj(rate, rate_float) {
-//   [{
-//     BRL: {
-//       "code": "BRL",
-//       "rate": rate * 'function',
-//       "description": "Brazilian Real",
-//       "rate_float": rate_float * 'function'
-//     },
-//     EUR: {
-//       "code": "EUR",
-//       "rate": "#Valor calculado a partir do arquivo currencies.json e API CoinDesk",
-//       "description": "Euro",
-//       "rate_float": "#Valor calculado a partir do arquivo currencies.json e API CoinDesk"
-//     },
-//     CAD: {
-//       "code": "CAD",
-//       "rate": "#Valor calculado a partir do arquivo currencies.json e API CoinDesk",
-//       "description": "Canadian Dollar",
-//       "rate_float": "#Valor calculado a partir do arquivo currencies.json e API CoinDesk"
-//     },
-//   }]
-// };
+function getValues(coins, valueAPI) {
+  const description = {
+    EUR: 'Euro',
+    BRL: 'Brazilian Real',
+    CAD: 'Canadian Dollar',
+  };
+
+  const newObject = Object.entries(coins)
+  // cria-se um array com cada indice sendo um array formado por chave e valor de um objeto;
+    .map((coin) => {
+      // console.log(coin)
+      return { [coin[0]]: 
+        {
+          "code": coin[0],
+          "rate": (valueAPI.bpi.USD.rate_float * coin[1]).toLocaleString('pt-BR'),
+          "description": description[coin[0]],
+          "rate_float": (valueAPI.bpi.USD.rate_float * coin[1]),
+        },
+      }
+    })
+    // newObject retorna um array de objetos sem o reduce;
+
+    .reduce((acum, coin) => {
+      console.log(coin)
+
+      console.log(Object.keys(coin), 'coin');
+      // console.log(Object.values(coin)[0], 'values');
+      
+      // console.log(acum.bpi[Object.keys(coin)[0]], 'coin')
+      acum.bpi[Object.keys(coin)] = Object.values(coin)[0]
+
+      return acum
+    }, valueAPI);
+
+    // console.log(newObject);
+
+  return newObject;
+}
 
 app.listen(3002, () => {
-  console.log();
+  console.log('funcionando');
 });
