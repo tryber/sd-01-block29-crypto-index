@@ -15,7 +15,7 @@ async function currencyValidMiddleware(req, res, next) {
 
   const currencyValid = Object.keys(await getCurrencies());
 
-  const coin = currencyValid.find((valid) => valid === currency);
+  const coin = currencyValid.find(valid => valid === currency);
 
   if (!coin) return res.status(400).json({ message: 'Moeda Inválida' });
 
@@ -23,7 +23,7 @@ async function currencyValidMiddleware(req, res, next) {
     return res.status(400).json({ message: 'Valor inválido' });
 
   next();
-};
+}
 
 function isTokenValid(token = '') {
   const regex = /^([a-zA-Z0-9 _-]+)$/;
@@ -33,11 +33,10 @@ function isTokenValid(token = '') {
 function authenticationMiddleware(req, res, next) {
   const { authorization } = req.headers;
 
-  if (!authorization || !isTokenValid(authorization)) {
-    res.status(401).json({ message: 'Token inválido' });
-  }
+  if (!authorization || !isTokenValid(authorization))
+    return res.status(401).json({ message: 'Token inválido' });
 
   next();
-};
+}
 
 module.exports = { currencyValidMiddleware, authenticationMiddleware, getCurrencies };

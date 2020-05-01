@@ -1,4 +1,5 @@
 const express = require('express');
+
 const axios = require('axios');
 const fs = require('fs');
 const util = require('util');
@@ -40,8 +41,7 @@ const description = {
 
 function getValues(coins, valueAPI) {
   const newObject = Object.entries(coins)
-    // cria-se um array com cada indice sendo um array formado por chave e valor de um objeto;
-    .map((coin) => {
+    .map(coin => {
       return {
         [coin[0]]:
         {
@@ -50,8 +50,8 @@ function getValues(coins, valueAPI) {
           description: description[coin[0]],
           rate_float: (valueAPI.bpi.USD.rate_float * coin[1]),
         },
-      }
-    }) // newObject retorna um array de objetos sem o reduce;
+      };
+    })
     .reduce((acum, coin) => {
       acum.bpi[Object.keys(coin)[0]] = Object.values(coin)[0];
       return acum;
@@ -64,12 +64,8 @@ router.get('/', (req, res) => {
   axios.get('http://api.coindesk.com/v1/bpi/currentprice/BTC.json')
     .then(async (response) => {
       const bitcoin = response.data;
-      // retorna os valores da api;
 
       const fileCurrencies = await getCurrencies();
-      // como a função getCurrencies() retorna uma promise o await é necessário para esperar o valor do 
-      // return desta função, caso o contrário a constante não teria nenhum 
-      // valor e seria passada para frente;
 
       res.json(getValues(fileCurrencies, bitcoin));
     })
