@@ -40,8 +40,9 @@ const description = {
 };
 
 function getValues(coins, valueAPI) {
+  const { bpi } = valueAPI;
   const newObject = Object.entries(coins)
-    .map((coin) => (
+    .map(coin => (
       {
         [coin[0]]:
         {
@@ -53,7 +54,7 @@ function getValues(coins, valueAPI) {
       }
     ))
     .reduce((acum, coin) => {
-      valueAPI.bpi[Object.keys(coin)[0]] = Object.values(coin)[0];
+      bpi[Object.keys(coin)[0]] = Object.values(coin)[0];
       return acum;
     }, valueAPI);
 
