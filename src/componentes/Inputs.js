@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Inputs.css';
-import { attributesType } from '../types';
+import attributesType from '../types';
 
 const setClass = (valid) => {
   if (valid) return 'isValid';
@@ -101,4 +101,4 @@ Select.propTypes = {
 Option.propTypes = {
   optionValue: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-}
+};

@@ -12,11 +12,11 @@ const verifyEmail = (email) => {
 function verifyPassword(password) {
   const pwdRegex = /([0-9]*)/g;
   return (pwdRegex.test(password) && password.length >= 6);
-};
+}
 
 function gerarToken() {
   return `${Math.random().toString(36).slice(-10)}${Math.random().toString(36).slice(-6)}`;
-};
+}
 
 const verifyData = ({ email, password }) => (
   !(verifyEmail(email) && verifyPassword(password))
