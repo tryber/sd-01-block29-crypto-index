@@ -44,11 +44,11 @@ const Login = () => {
   const [isRedirect, setIsRedirect] = useState(false);
   const objInputs = [
     {
-      ...SimpleCamps('inputEmail','Email', 'email', email, verifyEmail(email)),
+      ...SimpleCamps('inputEmail', 'Email', 'email', email, verifyEmail(email)),
       onChange: value => setEmail(value),
     },
     {
-      ...SimpleCamps('iptPwd','Senha', 'password', password, verifyPassword(password)),
+      ...SimpleCamps('iptPwd', 'Senha', 'password', password, verifyPassword(password)),
       onChange: value => setPassword(value),
     },
     {
