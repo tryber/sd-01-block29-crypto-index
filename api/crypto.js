@@ -1,11 +1,17 @@
 const express = require('express');
-const router = express.Router();
+
 const fs = require('fs');
 
+const router = express.Router();
+
 const getData = require('../client');
+
 const currencies = require('./data/currencies.json');
+
 const path = require('path');
+
 const util = require('util');
+
 const readFile = util.promisify(fs.readFile);
 
 router.use(express.json());
@@ -32,7 +38,7 @@ const createObj = (code, value, dolarRateFloat) => {
     rate: `${rateFloat.toLocaleString('pt-BR')}`,
     description: description[code],
     rate_float: rateFloat,
-  }
+  };
 };
 
 router.post('/btc', async (req, res) => {
@@ -53,7 +59,7 @@ router.get('/btc', async (req, res) => {
   const { bpi: { USD } } = values;
   const dados = await getCurrencies();
   const result = Object.entries(dados).reduce((obj, dado) => {
-    let arr = obj;
+    const arr = obj;
     arr.bpi[dado[0]] = createObj(dado[0], dado[1], USD.rate_float);
     return arr;
   }, values);
