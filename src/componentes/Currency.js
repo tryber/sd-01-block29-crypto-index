@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ShowValue from './ShowValue';
 
-const formatDataCurrency = (data) => (
+const formatDataCurrency = data => (
   Object.entries(data)
     .reduce((arr, currency) => {
       arr.push(
@@ -11,7 +11,7 @@ const formatDataCurrency = (data) => (
           type: currency[0],
           value: currency[1].rate,
         },
-      )
+      );
       return arr;
     }, [])
 );
@@ -40,7 +40,7 @@ Currency.propTypes = {
     bpi: PropTypes.shape({
       USD: PropTypes.shape({
         rate_float: PropTypes.number.isRequired,
-      })
-    })
+      }),
+    }),
   }).isRequired,
 };

@@ -1,26 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.hydrate(
+const root = document.getElementById('root')
+
+const AppDOM = () => (
   <BrowserRouter>
     <App />
-  </BrowserRouter>, document.getElementById('root')
-);
+  </BrowserRouter>
+)
 
 if (document.getElementById('root').hasChildNodes() === true) {
   ReactDOM.hydrate(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>, document.getElementById('root'));
-} else {
+    <AppDOM />,
+    root,
+  );
+}
+
+if (!document.getElementById('root').hasChildNodes() === true) {
   ReactDOM.render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>, document.getElementById('root'));
+    <AppDOM />,
+    root,
+  );
 }
 
 // If you want your app to work offline and load faster, you can change

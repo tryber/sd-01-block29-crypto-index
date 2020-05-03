@@ -5,12 +5,13 @@ import './Inputs.css';
 const setClass = (valid) => {
   if (valid) return 'isValid';
   return 'notValid';
-}
+};
 
 const Option = ({ optionValue, value }) => (
   <option
     selected={value === optionValue}
-    value={optionValue}>
+    value={optionValue}
+  >
     {optionValue}
   </option>
 );

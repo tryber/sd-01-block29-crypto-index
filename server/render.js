@@ -18,7 +18,7 @@ export default (req, res) => {
   const body = renderToString(
     <StaticRouter location={req.path} context={context}>
       <App />
-    </StaticRouter>
+    </StaticRouter>,
   );
   if (context.url) {
     res.redirect(context.url);
