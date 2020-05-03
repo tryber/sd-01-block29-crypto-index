@@ -8,7 +8,6 @@ const sendUser = (email, password, setIsRedirect) => {
     email,
     password,
   }).then(resp => {
-    console.log(resp.status, resp.data.token)
     if (resp.status === 200) localStorage.setItem("token", resp.data.token);
     setIsRedirect(true)
   })

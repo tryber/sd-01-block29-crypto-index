@@ -6,7 +6,30 @@ const setClass = (valid) => {
   return 'notValid';
 }
 
-const createButton = (attributes) => {
+const Option = ({ optionValue, value }) => (
+  <option
+    selected={value === optionValue}
+    value={optionValue}>
+    {optionValue}
+  </option>
+)
+
+const Select = ({ attributes }) => {
+  const { id, label, options } = attributes;
+  const { value, onChange } = attributes;
+  return (
+    <div className="Inputs select-input">
+      <label htmlFor={id}>{label}</label>
+      <select id={id} onChange={(e) => onChange(e.target.value)}>
+        {options.map(option => (
+          <Option key={option} optionValue={option} value={value} />
+        ))}
+      </select>
+    </div>
+  )
+}
+
+const Button = ({ attributes }) => {
   const { id, type, value, disable, onClick } = attributes;
   return (
     <div className="Inputs btn-input">
@@ -21,7 +44,7 @@ const createButton = (attributes) => {
   )
 }
 
-const createInput = (attributes) => {
+const Input = ({ attributes }) => {
   const { id, type, value, onChange, valid, label } = attributes;
   return (
     <div className="Inputs input">
@@ -40,8 +63,9 @@ const createInput = (attributes) => {
 }
 
 const createByType = (attributes) => {
-  if (attributes.type === "button") return createButton(attributes);
-  return createInput(attributes);
+  if (attributes.type === "button") return <Button attributes={attributes} />;
+  if (attributes.type === "select") return <Select attributes={attributes} />;
+  return <Input attributes={attributes} />;
 }
 
 const Inputs = (props) => {
@@ -51,7 +75,6 @@ const Inputs = (props) => {
     createByType(attributes)
   );
 }
-
 
 export default Inputs;
 

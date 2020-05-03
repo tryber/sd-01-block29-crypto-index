@@ -11,7 +11,9 @@ const readFile = util.promisify(fs.readFile);
 router.use(express.json());
 
 router.post('/btc', async (req, res) => {
+
   const { currency, value } = req.body;
+
   if (verifyCurrencies(currency)) return res.status(400).json({ message: 'Moeda inválida' });
   if (verifyValue(value)) return res.status(400).json({ message: 'Valor inválido' });
 
@@ -26,14 +28,19 @@ router.post('/btc', async (req, res) => {
 })
 
 router.get('/btc', async (req, res) => {
+
   const values = await getData();
+
   const { bpi: { USD } } = values;
+
   const dados = await getCurrencies();
+
   const result = Object.entries(dados).reduce((obj, dado) => {
     obj.bpi[dado[0]] = createObj(dado[0], dado[1], USD.rate_float);
     return obj;
   }, values);
-  res.json(result);
+
+  return res.json(result);
 })
 
 const createObj = (code, value, dolar_rate_float) => {
@@ -59,6 +66,8 @@ const getCurrencies = async () => {
 
 const verifyCurrencies = (currency) => !['BRL', 'EUR', 'CAD'].includes(currency);
 
-const verifyValue = (value) => !(Number.isInteger(value) && value !== 0);
+const verifyValue = (value) => {
+  return !(Number.isInteger(Number(value)) && value !== 0)
+};
 
 module.exports = router;
