@@ -15,7 +15,7 @@ const htmlData = fs.readFileSync(path.resolve(__dirname, '..', 'build', 'index.h
 export default (req, res) => {
   const context = {};
   const body = renderToString(
-    RouterApp(req, context)
+    RouterApp(req, context),
   );
   if (context.url) {
     res.redirect(context.url);
