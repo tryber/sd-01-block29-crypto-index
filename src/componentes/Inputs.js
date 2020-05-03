@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Inputs.css';
+import { attributesType } from '../types';
 
 const setClass = (valid) => {
   if (valid) return 'isValid';
@@ -21,7 +22,7 @@ const Select = ({ attributes }) => {
   const { value, onChange } = attributes;
   return (
     <div className="Inputs select-input">
-      <label htmlFor={id}>{label}</label>
+      {label && <label htmlFor={id}>{label}</label>}
       <select id={id} onChange={e => onChange(e.target.value)}>
         {options.map(option => (
           <Option key={option} optionValue={option} value={value} />
@@ -50,9 +51,11 @@ const Input = ({ attributes }) => {
   const { id = 'inputText', type, value, onChange, valid, label } = attributes;
   return (
     <div className="Inputs input">
-      <label htmlFor={id}>
-        {label}
-      </label>
+      {label &&
+        <label htmlFor={id}>
+          {label}
+        </label>
+      }
       <input
         id={id}
         type={type}
@@ -80,7 +83,22 @@ const Inputs = (props) => {
 export default Inputs;
 
 Inputs.propTypes = {
-  attributes: PropTypes.shape({
-
-  }),
+  attributes: attributesType.isRequired,
 };
+
+Input.propTypes = {
+  attributes: attributesType.isRequired,
+};
+
+Button.propTypes = {
+  attributes: attributesType.isRequired,
+};
+
+Select.propTypes = {
+  attributes: attributesType.isRequired,
+};
+
+Option.propTypes = {
+  optionValue: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+}
