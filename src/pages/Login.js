@@ -27,44 +27,37 @@ const verifyData = (email, password) => {
   return (verifyEmail(email) && verifyPassword(password))
 }
 
+const SimpleCamps = (label, type, value, valid) => (
+  {
+    label,
+    type,
+    value,
+    valid,
+  }
+)
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRedirect, setIsRedirect] = useState(false);
-
   const objInputs = [
     {
-      id: "inputEmail",
-      label: "Email",
-      type: "email",
-      value: email,
+      ...SimpleCamps("Email", "email", email, verifyEmail(email)),
       onChange: (value) => setEmail(value),
-      valid: verifyEmail(email),
     },
     {
-      id: "inputSenha",
-      label: "Senha",
-      type: "password",
-      value: password,
+      ...SimpleCamps("Senha", "password", password, verifyPassword(password)),
       onChange: (value) => setPassword(value),
-      valid: verifyPassword(password),
     },
     {
-      id: "btnLogin",
       type: "button",
       value: "Entrar",
       onClick: () => sendUser(email, password, setIsRedirect),
       disable: !verifyData(email, password),
     },
   ];
-
   if (isRedirect && localStorage.getItem("token")) return <Redirect to="/" />
-
-  return (
-    <Form>
-      {objInputs}
-    </Form>
-  );
+  return <Form>{objInputs}</Form>
 };
 
 export default Login;
