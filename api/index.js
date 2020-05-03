@@ -1,9 +1,9 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
 const login = require('./login');
 const crypto = require('./crypto');
 
+const app = express();
 app.use(cors());
 
 function validToken(req) {
