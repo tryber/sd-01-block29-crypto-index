@@ -3,6 +3,7 @@ import axios from 'axios';
 import Form from '../componentes/Form';
 import InfoFeed from '../componentes/InfoFeed';
 import Loading from '../componentes/Loading';
+import { getItemToken } from './localStorageApi';
 
 const sendCurrency = (currency, value, objFetch) => {
   const { setIsLoading, isLoading, data, setData } = objFetch;
@@ -12,13 +13,13 @@ const sendCurrency = (currency, value, objFetch) => {
       method: 'post',
       url: 'http://localhost:3005/crypto/btc',
       headers: {
-        authorization: localStorage.getItem("token"),
+        authorization: getItemToken(),
       },
       data: {
         currency,
         value,
-      }
-    }).then(resp => {
+      },
+    }).then((resp) => {
       setData(resp.data.message);
       setIsLoading(false);
     }).catch((err) => {
@@ -45,25 +46,25 @@ const createObj = (obj) => {
   const { isLoading, setIsLoading, data, setData } = obj
   const objFetch = { isLoading, setIsLoading, data, setData };
   return [{
-    label: "Moeda",
-    type: "select",
+    label: 'Moeda',
+    type: 'select',
     options: ['BRL', 'EUR', 'CAD'],
     value: currency,
-    onChange: (valueCurrency) => setCurrency(valueCurrency),
+    onChange: valueCurrency => setCurrency(valueCurrency),
   },
   {
-    label: "Valor",
-    type: "number",
+    label: 'Valor',
+    type: 'number',
     value,
-    onChange: (val) => setValue(val),
+    onChange: val => setValue(val),
     valid: verifyValue(value),
   },
   {
-    type: "button",
-    value: "Atualizar",
+    type: 'button',
+    value: 'Atualizar',
     onClick: () => sendCurrency(currency, value, objFetch),
     disable: !verifyData(currency, value),
-  },];
+  }];
 }
 
 const Update = () => {
@@ -73,17 +74,16 @@ const Update = () => {
   const [data, setData] = useState('');
   const [isRefresh, setIsRefresh] = useState(false);
   let obj = { currency, value, setCurrency, setValue };
-  obj  = { ...obj, ...{isLoading, setIsLoading, data, setData} };
+  obj = { ...obj, ...{ isLoading, setIsLoading, data, setData } };
   useEffect(() => {
     if (isRefresh) return 0;
     setData('');
-    setValue(0)
+    setValue(0);
     setIsLoading(false);
     setCurrency('BRL');
     setIsRefresh(false);
-
-  }, [isRefresh])
-  if (isLoading) return <Loading />
+  }, [isRefresh]);
+  if (isLoading) return <Loading />;
   return (
     <div>
       {data !== '' &&
