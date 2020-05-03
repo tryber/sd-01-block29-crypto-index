@@ -1,2 +1,4 @@
-export const getItemToken = () => localStorage.getItem('token');
-export const setToken = (value) => localStorage.setItem('token', value);
+export const getItemToken = () => window.localStorage.getItem('token');
+export const setToken = (value) => (
+  window.localStorage.setItem('token', value)
+);

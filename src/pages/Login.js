@@ -57,7 +57,7 @@ const Login = () => {
       disable: !verifyData(email, password),
     },
   ];
-  if (isRedirect && getItemToken()) return <Redirect to='/' />;
+  if (isRedirect && getItemToken()) return <Redirect to="/" />;
   return <Form>{objInputs}</Form>;
 };
 
