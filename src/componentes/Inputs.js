@@ -77,6 +77,3 @@ const Inputs = (props) => {
 }
 
 export default Inputs;
-
-
-

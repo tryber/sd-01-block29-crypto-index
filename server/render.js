@@ -1,31 +1,26 @@
-import fs from 'fs'
-import path from 'path'
-import React from 'react'
-import { renderToString } from 'react-dom/server'
-import { StaticRouter } from 'react-router-dom'
-import App from '../src/App.js'
+import fs from 'fs';
+import path from 'path';
+import { renderToString } from 'react-dom/server';
+import RouterApp from './RouterApp.jsx';
+
 
 const injectHTML = (data, body) => {
-  data = data.replace(
+  const newData = data.replace(
     '<div id="root"></div>',
-    `<div id="root">${body}</div>`
+    `<div id="root">${body}</div>`,
   );
-  return data;
+  return newData;
 };
-const htmlData = fs.readFileSync(path.resolve(__dirname,'..', 'build', 'index.html'), 'utf8')
+const htmlData = fs.readFileSync(path.resolve(__dirname, '..', 'build', 'index.html'), 'utf8');
 export default (req, res) => {
-
-  const context = {}
+  const context = {};
   const body = renderToString(
-    <StaticRouter location={req.path} context={context}>
-      <App />
-    </StaticRouter>
-  )
-  //verifica se tem redirecionamento de url
+    RouterApp(req, context)
+  );
   if (context.url) {
-    res.redirect(context.url)
-    return res.end()
+    res.redirect(context.url);
+    return res.end();
   }
-  const html = injectHTML(htmlData, body)
-  res.send(html)
-}
+  const html = injectHTML(htmlData, body);
+  res.send(html);
+};
