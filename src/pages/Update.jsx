@@ -77,7 +77,7 @@ const Update = () => {
   useEffect(() => {
     if (isRefresh) return 0;
     setData('');
-    setValue(0);
+    setValue(0)
     setIsLoading(false);
     setCurrency('BRL');
     setIsRefresh(false);
