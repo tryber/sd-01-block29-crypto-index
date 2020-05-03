@@ -72,8 +72,8 @@ const Update = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState('');
   const [isRefresh, setIsRefresh] = useState(false);
-  let obj = { currency, value, setCurrency, setValue }
-    = { ...obj, isLoading, setIsLoading, data, setData }
+  let obj = { currency, value, setCurrency, setValue };
+  obj  = { ...obj, ...{isLoading, setIsLoading, data, setData} };
   useEffect(() => {
     if (isRefresh) return 0;
     setData('');

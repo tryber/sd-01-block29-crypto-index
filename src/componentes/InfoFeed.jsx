@@ -19,4 +19,3 @@ InfoFeed.propTypes = {
   info: PropTypes.string.isRequired,
   isRefresh: PropTypes.func.isRequired,
 };
-
