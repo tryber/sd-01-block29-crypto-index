@@ -6,7 +6,7 @@ import {
   arrayOf,
 } from 'prop-types';
 
-export default attributesType = shape({
+export default shape({
   id: string,
   type: string.isRequired,
   onClick: func,

@@ -12,3 +12,8 @@ const ShowValue = (props) => {
 };
 
 export default ShowValue;
+
+ShowValue.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+}
