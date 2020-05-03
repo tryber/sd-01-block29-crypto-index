@@ -1,8 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import { renderToString } from 'react-dom/server';
-import RouterApp from './RouterApp.jsx';
-
+import React from 'react';
+import { StaticRouter } from 'react-router-dom';
+import App from '../src/App.js';
 
 const injectHTML = (data, body) => {
   const newData = data.replace(
@@ -15,7 +16,9 @@ const htmlData = fs.readFileSync(path.resolve(__dirname, '..', 'build', 'index.h
 export default (req, res) => {
   const context = {};
   const body = renderToString(
-    RouterApp(req, context),
+    <StaticRouter location={req.path} context={context}>
+      <App />
+    </StaticRouter>
   );
   if (context.url) {
     res.redirect(context.url);
