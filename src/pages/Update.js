@@ -4,7 +4,8 @@ import Form from '../componentes/Form';
 import InfoFeed from '../componentes/InfoFeed';
 import Loading from '../componentes/Loading';
 
-const sendCurrency = (currency, value, { setIsLoading, isLoading, data, setData }) => {
+const sendCurrency = (currency, value, objFetch) => {
+  const { setIsLoading, isLoading, data, setData } = objFetch;
   if (!isLoading && data === '') {
     setIsLoading(true);
     axios({
@@ -18,23 +19,51 @@ const sendCurrency = (currency, value, { setIsLoading, isLoading, data, setData 
         value,
       }
     }).then(resp => {
-      setData(resp.data.message)
+      setData(resp.data.message);
       setIsLoading(false);
     }).catch((err) => {
-      setData(err.response.data.message)
+      setData(err.response.data.message);
       setIsLoading(false);
     })
   }
 }
 
-const verifyCurrencies = (currency) => ['BRL', 'EUR', 'CAD'].includes(currency);
+const verifyCurrencies = (currency) => (
+  ['BRL', 'EUR', 'CAD'].includes(currency)
+);
 
-const verifyValue = (value) => {
-  return (Number.isInteger(Number(value)) && value !== 0)
-};
+const verifyValue = (value) => (
+  (Number.isInteger(Number(value)) && value !== 0)
+);
 
-const verifyData = (currency, value) => {
-  return (verifyCurrencies(currency) && verifyValue(value))
+const verifyData = (currency, value) => (
+  (verifyCurrencies(currency) && verifyValue(value))
+)
+
+const createObj = (obj) => {
+  const { currency, value, setCurrency, setValue } = obj;
+  const { isLoading, setIsLoading, data, setData } = obj
+  const objFetch = { isLoading, setIsLoading, data, setData };
+  return [{
+    label: "Moeda",
+    type: "select",
+    options: ['BRL', 'EUR', 'CAD'],
+    value: currency,
+    onChange: (valueCurrency) => setCurrency(valueCurrency),
+  },
+  {
+    label: "Valor",
+    type: "number",
+    value,
+    onChange: (val) => setValue(val),
+    valid: verifyValue(value),
+  },
+  {
+    type: "button",
+    value: "Atualizar",
+    onClick: () => sendCurrency(currency, value, objFetch),
+    disable: !verifyData(currency, value),
+  },];
 }
 
 const Update = () => {
@@ -43,61 +72,24 @@ const Update = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState('');
   const [isRefresh, setIsRefresh] = useState(false);
-
-  const objInputs = [
-    {
-      id: "inputSelect",
-      label: "Moeda",
-      type: "select",
-      options: ['BRL', 'EUR', 'CAD'],
-      value: currency,
-      onChange: (valueCurrency) => setCurrency(valueCurrency),
-    },
-    {
-      id: "inputValue",
-      label: "Valor:",
-      type: "number",
-      value: value,
-      onChange: (value) => setValue(value),
-      valid: verifyValue(value),
-    },
-    {
-      id: "btnLogin",
-      type: "button",
-      value: "Atualizar",
-      onClick: () => sendCurrency(
-        currency,
-        value,
-        { isLoading, setIsLoading, data, setData }
-      ),
-      disable: !verifyData(currency, value),
-    },
-  ];
-
+  let obj = { currency, value, setCurrency, setValue }
+    = { ...obj, isLoading, setIsLoading, data, setData }
   useEffect(() => {
-    if (isRefresh)
-      console.log('aaaaaa')
+    if (isRefresh) return 0;
     setData('');
     setValue(0);
     setIsLoading(false);
     setCurrency('BRL');
     setIsRefresh(false);
+
   }, [isRefresh])
-
   if (isLoading) return <Loading />
-
   return (
     <div>
-      {
-        data !== '' &&
-        <InfoFeed
-          info={data}
-          isRefresh={() => setIsRefresh(true)}
-        />
+      {data !== '' &&
+        <InfoFeed info={data} isRefresh={() => setIsRefresh(true)} />
       }
-      <Form>
-        {objInputs}
-      </Form>
+      <Form>{createObj(obj)}</Form>
     </div>
   );
 };

@@ -15,7 +15,7 @@ const Option = ({ optionValue, value }) => (
 )
 
 const Select = ({ attributes }) => {
-  const { id, label, options } = attributes;
+  const { id = `inputSelect`, label, options } = attributes;
   const { value, onChange } = attributes;
   return (
     <div className="Inputs select-input">
@@ -30,7 +30,7 @@ const Select = ({ attributes }) => {
 }
 
 const Button = ({ attributes }) => {
-  const { id, type, value, disable, onClick } = attributes;
+  const { id = 'inputButton', type, value, disable, onClick } = attributes;
   return (
     <div className="Inputs btn-input">
       <input
@@ -45,7 +45,7 @@ const Button = ({ attributes }) => {
 }
 
 const Input = ({ attributes }) => {
-  const { id, type, value, onChange, valid, label } = attributes;
+  const { id = "inputText", type, value, onChange, valid, label } = attributes;
   return (
     <div className="Inputs input">
       <label htmlFor={id}>
