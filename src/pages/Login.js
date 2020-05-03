@@ -28,8 +28,9 @@ const verifyData = (email, password) => (
   (verifyEmail(email) && verifyPassword(password))
 );
 
-const SimpleCamps = (label, type, value, valid) => (
+const SimpleCamps = (id, label, type, value, valid) => (
   {
+    id,
     label,
     type,
     value,
@@ -43,11 +44,11 @@ const Login = () => {
   const [isRedirect, setIsRedirect] = useState(false);
   const objInputs = [
     {
-      ...SimpleCamps('Email', 'email', email, verifyEmail(email)),
+      ...SimpleCamps('inputEmail','Email', 'email', email, verifyEmail(email)),
       onChange: value => setEmail(value),
     },
     {
-      ...SimpleCamps('Senha', 'password', password, verifyPassword(password)),
+      ...SimpleCamps('iptPwd','Senha', 'password', password, verifyPassword(password)),
       onChange: value => setPassword(value),
     },
     {
