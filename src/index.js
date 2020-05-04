@@ -15,7 +15,7 @@ ReactDOM.hydrate(
       <Route exact path="/currencyQuote" component={CurrencyQuote} />
     </Switch>
   </BrowserRouter>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

@@ -1,11 +1,10 @@
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import Login from '../src/Login.js';
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-
-import Login from '../src/Login.js';
 
 const app = express();
 

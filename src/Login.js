@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import './Login.css';
 import { Redirect } from 'react-router-dom';
+import './Login.css';
 
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const passwordRegex = /^[0-9]{6}$/;
+
+function validateLogin(email, password) {
+  if (email.match(emailRegex) && password.match(passwordRegex)) return true;
+  return false;
+}
 
 async function submitForm(e, email, password, setShouldRedirect) {
   e.preventDefault();
@@ -16,8 +21,8 @@ async function submitForm(e, email, password, setShouldRedirect) {
       },
       body: JSON.stringify({ email, password }),
     })
-      .then((res) => res.json())
-      .then((result) =>
+      .then(res => res.json())
+      .then(result =>
         result.token
           ? localStorage.setItem('token', result.token)
           : alert(result.message)
@@ -27,11 +32,16 @@ async function submitForm(e, email, password, setShouldRedirect) {
   alert('dados inválidos!');
 }
 
-function validateLogin(email, password) {
-  if (email.match(emailRegex) && password.match(passwordRegex)) return true;
-  return false;
+function generateInput(type, value, func) {
+  return (
+    <input
+      type={type}
+      name={value}
+      placeholder={value}
+      onChange={e => func(e.target.value)}
+    />
+  );
 }
-
 function Login() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [email, setEmail] = useState('');
@@ -40,19 +50,9 @@ function Login() {
   if (shouldRedirect) return <Redirect to="/" />;
   return (
     <div>
-      <form onSubmit={(e) => submitForm(e, email, password, setShouldRedirect)}>
-        <input
-          type="text"
-          name="email"
-          placeholder="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+      <form onSubmit={e => submitForm(e, email, password, setShouldRedirect)}>
+        {generateInput('text', 'email', setEmail)}
+        {generateInput('password', 'password', setPassword)}
         <button>Entrar</button>
       </form>
     </div>
