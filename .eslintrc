@@ -24,10 +24,13 @@
                     ".jsx"
                 ]
             }
-        ]
+        ],
+        "no-alert": "off",
+        "no-confusing-arrow": "off"
     },
     "globals": {
         "localStorage": false,
-        "alert": false
+        "alert": false,
+        "fetch": false
     }
 }
