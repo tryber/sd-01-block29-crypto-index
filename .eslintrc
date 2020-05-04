@@ -27,6 +27,7 @@
         ]
     },
     "globals": {
-        "localStorage": false
+        "localStorage": false,
+        "alert": false
     }
 }
