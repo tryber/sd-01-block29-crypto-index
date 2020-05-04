@@ -2,10 +2,31 @@
     "extends": "airbnb",
     "rules": {
         "no-console": "off",
-        "func-names": ["error", "as-needed"],
+        "func-names": [
+            "error",
+            "as-needed"
+        ],
         "consistent-return": "off",
         "no-useless-escape": "off",
-        "arrow-body-style": ["error", "as-needed"],
-        "curly": ["error", "multi"]
+        "arrow-body-style": [
+            "error",
+            "as-needed"
+        ],
+        "curly": [
+            "error",
+            "multi"
+        ],
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            }
+        ]
+    },
+    "globals": {
+        "localStorage": false
     }
 }
