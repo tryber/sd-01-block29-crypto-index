@@ -25,7 +25,7 @@ async function submitForm(e, email, password, setShouldRedirect) {
       .then(result =>
         result.token
           ? localStorage.setItem('token', result.token)
-          : alert(result.message)
+          : alert(result.message),
       );
     return setShouldRedirect(true);
   }
