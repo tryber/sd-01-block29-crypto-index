@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ShowValue from './ShowValue';
 
-const formatDataCurrency = data => (
+const formatDataCurrency = (data, bitcoin) => (
   Object.entries(data)
     .reduce((arr, currency) => {
+      console.log(currency)
       arr.push(
         {
           type: currency[0],
-          value: currency[1].rate,
+          value: (currency[1].rate_float * bitcoin).toLocaleString('pt-BR'),
         },
       );
       return arr;
@@ -17,8 +18,8 @@ const formatDataCurrency = data => (
 );
 
 const Currency = (props) => {
-  const { data: { bpi } } = props;
-  const arrayCurrency = formatDataCurrency(bpi);
+  const { data: { bpi }, bitcoin } = props;
+  const arrayCurrency = formatDataCurrency(bpi, bitcoin);
   return (
     <div className="Currency">
       <Link to="/update">

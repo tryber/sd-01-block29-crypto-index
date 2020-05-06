@@ -11,7 +11,7 @@ const sendCurrency = (currency, value, objFetch) => {
     setIsLoading(true);
     axios({
       method: 'post',
-      url: 'http://localhost:3005/crypto/btc',
+      url: 'http://localhost:3001/crypto/btc',
       headers: {
         authorization: getItemToken(),
       },

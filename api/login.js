@@ -24,7 +24,7 @@ const verifyData = ({ email, password }) => (
 
 router.post('/', (req, res) => {
   const errors = verifyData(req.body);
-  if (errors) return res.status(401).json({ message: 'Campos inválidos' });
+  if (errors) return res.status(400).json({ message: 'Campos inválidos' });
   return res.json({ token: `${gerarToken()}` });
 });
 
