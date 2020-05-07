@@ -6,7 +6,6 @@ import ShowValue from './ShowValue';
 const formatDataCurrency = (data, bitcoin) => (
   Object.entries(data)
     .reduce((arr, currency) => {
-      console.log(currency)
       arr.push(
         {
           type: currency[0],

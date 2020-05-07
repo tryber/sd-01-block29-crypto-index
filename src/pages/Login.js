@@ -19,10 +19,10 @@ const verifyEmail = (email) => {
   return emailRegex.test(email);
 };
 
-const verifyPassword = (password) => {
-  const pwdRegex = /([0-9]*)/g;
-  return (pwdRegex.test(password) && password.length >= 6);
-};
+function verifyPassword(password) {
+  const pwdRegex = /^[0-9]{6}$/;
+  return (password.match(pwdRegex) && password.length >= 6);
+}
 
 const verifyData = (email, password) => (
   (verifyEmail(email) && verifyPassword(password))

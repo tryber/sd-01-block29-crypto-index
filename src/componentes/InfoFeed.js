@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
-const InfoFeed = ({ info, isRefresh }) => (
-  <div>
-    <h2>{info}</h2>
-    <input type="button" value="Novo valor?" onClick={isRefresh} />
-    <Link to="/">
-      Voltar
-      </Link>
-  </div>
-);
-
+const InfoFeed = ({ info, setData }) => {
+  setTimeout(() => setData(), 1500);
+  return (
+    <div>
+      <h2>{info}</h2>
+    </div>
+  )
+};
 
 export default InfoFeed;
 

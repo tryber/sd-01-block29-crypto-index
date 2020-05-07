@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Form from '../componentes/Form';
 import InfoFeed from '../componentes/InfoFeed';
@@ -7,7 +7,7 @@ import { getItemToken } from './localStorageApi';
 
 const sendCurrency = (currency, value, objFetch) => {
   const { setIsLoading, isLoading, data, setData } = objFetch;
-  if (!isLoading && data === '') {
+  if (!isLoading && !data) {
     setIsLoading(true);
     axios({
       method: 'post',
@@ -32,7 +32,7 @@ const sendCurrency = (currency, value, objFetch) => {
 const verifyCurrencies = currency => ['BRL', 'EUR', 'CAD'].includes(currency);
 
 const verifyValue = value => (
-  (Number.isInteger(Number(value)) && value !== 0)
+  (Number.isInteger(Number(value)) && value > 0)
 );
 
 const verifyData = (currency, value) => (
@@ -69,23 +69,16 @@ const Update = () => {
   const [currency, setCurrency] = useState('BRL');
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState('');
-  const [isRefresh, setIsRefresh] = useState(false);
+  const [data, setData] = useState();
   let obj = { currency, value, setCurrency, setValue };
   obj = { ...obj, ...{ isLoading, setIsLoading, data, setData } };
-  useEffect(() => {
-    if (isRefresh) return 0;
-    setData('');
-    setValue(0);
-    setIsLoading(false);
-    setCurrency('BRL');
-    setIsRefresh(false);
-  }, [isRefresh]);
+
   if (isLoading) return <Loading />;
+  console.log(data)
   return (
     <div>
-      {data !== '' &&
-        <InfoFeed info={data} isRefresh={() => setIsRefresh(true)} />
+      {data &&
+        <InfoFeed info={data} setData={() => setData()} />
       }
       <Form>{createObj(obj)}</Form>
     </div>

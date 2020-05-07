@@ -4,7 +4,7 @@ import Currency from '../componentes/Currency';
 import Loading from '../componentes/Loading';
 import { getItemToken } from './localStorageApi';
 
-const createInput = (value, onChange) => (
+const CreateInput = ({ value, onChange }) => (
   <div>
     <label htmlFor="bitcoin">Quantidade Bitcoin:</label>
     <input type="number" value={value} onChange={(e) => onChange(e.target.value)} />
@@ -12,11 +12,13 @@ const createInput = (value, onChange) => (
 )
 
 const Home = () => {
-  const [data, setData] = useState('');
+  const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [bitcoin, setBitcoin] = useState(1);
   useEffect(() => {
+    console.log('Update ou mount')
     if (!loading) {
+      console.log('Iniciando')
       setLoading(true);
       axios.get(
         'http://localhost:3001/crypto/btc',
@@ -28,12 +30,11 @@ const Home = () => {
         }).catch(err => console.log(err));
     }
   }, []);
-  console.log(bitcoin)
+  if (loading || !data) return <Loading />;
   return (
     <div className="Home">
-      {loading || createInput(bitcoin, setBitcoin)}
-      {loading && <Loading />}
-      {(data !== '') && <Currency data={data} bitcoin={bitcoin} />}
+      <CreateInput value={bitcoin} onChange={(value) => setBitcoin(value)} />
+      <Currency data={data} bitcoin={bitcoin} />
     </div>
   );
 };

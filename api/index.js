@@ -6,13 +6,22 @@ const crypto = require('./crypto');
 const app = express();
 app.use(cors());
 
+const getContent = async (name, value) => {
+  const content = await readFile(path.resolve(__dirname, 'data', name));
+  const data = JSON.parse(content.toString('utf-8'));
+  const isExist = data.tokens.find(token => token === value)
+  return isExist;
+};
+
 function validToken(req) {
-  if (!(req.headers.authorization && req.headers.authorization.length === 16)) return false;
-  return true;
+  return (req.headers.authorization &&
+    req.headers.authorization.length === 16 &&
+    getContent('tokens.json', req.headers.authorization)
+  )
 }
 
 function authenticationMiddleware(req, res, next) {
-  if (!validToken(req)) return res.status(500).json({ message: 'ERROR TOKEN' });
+  if (!validToken(req)) return res.status(401).json({ message: 'Token inválido' });
   next();
 }
 
