@@ -7,12 +7,12 @@ const InfoFeed = ({ info, setData }) => {
     <div>
       <h2>{info}</h2>
     </div>
-  )
+  );
 };
 
 export default InfoFeed;
 
 InfoFeed.propTypes = {
   info: PropTypes.string.isRequired,
-  isRefresh: PropTypes.func.isRequired,
+  setData: PropTypes.func.isRequired,
 };

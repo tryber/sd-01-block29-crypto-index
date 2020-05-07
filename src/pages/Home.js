@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Currency from '../componentes/Currency';
 import Loading from '../componentes/Loading';
 import { getItemToken } from './localStorageApi';
@@ -7,18 +8,16 @@ import { getItemToken } from './localStorageApi';
 const CreateInput = ({ value, onChange }) => (
   <div>
     <label htmlFor="bitcoin">Quantidade Bitcoin:</label>
-    <input type="number" value={value} onChange={(e) => onChange(e.target.value)} />
+    <input type="number" value={value} onChange={e => onChange(e.target.value)} />
   </div>
-)
+);
 
 const Home = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [bitcoin, setBitcoin] = useState(1);
   useEffect(() => {
-    console.log('Update ou mount')
     if (!loading) {
-      console.log('Iniciando')
       setLoading(true);
       axios.get(
         'http://localhost:3001/crypto/btc',
@@ -40,3 +39,8 @@ const Home = () => {
 };
 
 export default Home;
+
+CreateInput.propTypes = {
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+};

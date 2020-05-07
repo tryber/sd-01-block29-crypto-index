@@ -2,12 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const login = require('./login');
 const crypto = require('./crypto');
+const path = require('path');
+const fs = require('fs').promises;
 
 const app = express();
 app.use(cors());
 
 const getContent = async (name, value) => {
-  const content = await readFile(path.resolve(__dirname, 'data', name));
+  const content = await fs.readFile(path.resolve(__dirname, 'data', name));
   const data = JSON.parse(content.toString('utf-8'));
   const isExist = data.tokens.find(token => token === value)
   return isExist;

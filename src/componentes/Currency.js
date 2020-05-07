@@ -43,4 +43,5 @@ Currency.propTypes = {
       }),
     }),
   }).isRequired,
+  bitcoin: PropTypes.number.isRequired,
 };
