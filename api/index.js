@@ -19,7 +19,7 @@ function validToken(req) {
   return (req.headers.authorization &&
     req.headers.authorization.length === 16 &&
     getContent('tokens.json', req.headers.authorization)
-  )
+  );
 }
 
 function authenticationMiddleware(req, res, next) {
