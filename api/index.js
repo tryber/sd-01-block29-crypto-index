@@ -1,7 +1,8 @@
 const express = require('express');
+const app = express();
 
 const login = require('./login');
-const app = express();
+
 const home = require('./home');
 
 app.use(express.json());
