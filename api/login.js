@@ -22,9 +22,8 @@ const callBackrequest = (req, res) => {
   if (
     isEmailValid(email, regexEmail) &&
     isPasswordValid(password, regexPassword)
-  ) {
+  )
     return res.status(200).send({ token });
-  }
   return res.status(400).send({ mensagem: 'Campos inválidos' });
 };
 
