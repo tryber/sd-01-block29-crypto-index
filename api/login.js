@@ -36,7 +36,6 @@ router.post('/', async (req, res) => {
   if (errors) return res.status(400).json({ message: 'Campos inválidos' });
   const dados = await getTokens();
   const token = gerarToken();
-  console.log(dados)
   dados.tokens.push(token);
   fs.writeFile(path.resolve(__dirname, 'data', 'tokens.json'), JSON.stringify(dados))
     .then(() => res.json({ token: `${token}` }));
