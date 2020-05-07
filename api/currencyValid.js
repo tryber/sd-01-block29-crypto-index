@@ -2,6 +2,8 @@ const fs = require('fs');
 const util = require('util');
 const path = require('path');
 
+const { tokenGenerate } = require('./routerLogin');
+
 const readFile = util.promisify(fs.readFile);
 
 async function getCurrencies() {
@@ -26,8 +28,7 @@ async function currencyValidMiddleware(req, res, next) {
 }
 
 function isTokenValid(token = '') {
-  const regex = /^([a-zA-Z0-9 _-]+)$/;
-  return token.length === 16 && regex.test(token);
+  return tokenGenerate.find(toke => toke === token);
 }
 
 function authenticationMiddleware(req, res, next) {
