@@ -1,9 +1,10 @@
 const express = require('express');
-const app = express();
 
 const login = require('./login');
 
 const home = require('./home');
+
+const app = express();
 
 app.use(express.json());
 app.use(home);
