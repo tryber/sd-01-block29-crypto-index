@@ -11,7 +11,7 @@ app.use(cors());
 const getContent = async (name, value) => {
   const content = await fs.readFile(path.resolve(__dirname, 'data', name));
   const data = JSON.parse(content.toString('utf-8'));
-  const isExist = data.tokens.find(token => token === value)
+  const isExist = data.tokens.find(token => token === value);
   return isExist;
 };
 

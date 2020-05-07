@@ -32,7 +32,7 @@ const Home = () => {
   if (loading || !data) return <Loading />;
   return (
     <div className="Home">
-      <CreateInput value={bitcoin} onChange={(value) => setBitcoin(value)} />
+      <CreateInput value={bitcoin} onChange={value => setBitcoin(value)} />
       <Currency data={data} bitcoin={bitcoin} />
     </div>
   );

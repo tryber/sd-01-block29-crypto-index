@@ -74,7 +74,6 @@ const Update = () => {
   obj = { ...obj, ...{ isLoading, setIsLoading, data, setData } };
 
   if (isLoading) return <Loading />;
-  console.log(data)
   return (
     <div>
       {data &&
