@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
-// const bcrypt = require('bcrypt');
-
-// const saltRounds = 16
-
-// const salt = bcrypt.genSaltSync(saltRounds)
+const crypto = require('crypto');
 
 const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -20,40 +16,18 @@ const isPasswordValid = (password, regex) => {
   return regex.test(password);
 };
 
-// const makeid = (length) => {
-//   let result = '';
-//   const characters =
-//     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-//   const charactersLength = characters.length;
-//   for (let i = 0; i < length; i += 1)
-//     result += characters.charAt(Math.floor(Math.random() * charactersLength));
-//   return result;
-// }
-
-// const hash = bcrypt.hashSync(testPass, salt);
-
-router.post('/login', (req, res) => {
-  // const { email, password } = req.boby;
-  console.log('o email é => ', req.boby.email);
+const callBackrequest = (req, res) => {
+  const token = crypto.randomBytes(8);
+  const { email, password } = req.body;
   if (
-    isEmailValid(req.boby.email, regexEmail) &&
-    isPasswordValid(req.boby.password, regexPassword)
+    isEmailValid(email, regexEmail) &&
+    isPasswordValid(password, regexPassword)
   ) {
-    return res.status(200).send( req.boby.email, req.boby.password );
+    return res.status(200).send({ token });
   }
-
   return res.status(400).send({ mensagem: 'Campos inválidos' });
-});
+};
+
+router.post('/login', callBackrequest);
 
 module.exports = router;
-
-// router.post('/login', async (req, res) => {
-//   try {
-//     const { email, password } = req.boby;
-//     if (isEmailValid(email, regexEmail) && isPasswordValid(password, regexPassword)) {
-//       return res.status(200).send({email, password});
-//     }
-//   } catch (err) {
-//     return res.status(400).send({ error: 'teste' });
-//   }
-// });
