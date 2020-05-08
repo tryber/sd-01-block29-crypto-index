@@ -16,11 +16,11 @@ async function updateValue(selectedCurrency, newValue) {
     },
     body: JSON.stringify({
       currency: selectedCurrency,
-      value: parseInt(newValue),
+      value: parseInt(newValue, 10),
     }),
   })
-    .then((res) => res.json())
-    .then((result) => alert(result.message));
+    .then(res => res.json())
+    .then(result => alert(result.message));
 }
 
 function CurrencyQuote() {
@@ -30,14 +30,14 @@ function CurrencyQuote() {
   return (
     <div>
       <p>Moeda</p>
-      <select onChange={(e) => setSelectedCurrency(e.target.value)}>
+      <select onChange={e => setSelectedCurrency(e.target.value)}>
         <option value="BRL">BRL</option>
         <option value="EUR">EUR</option>
         <option value="CAD">CAD</option>
       </select>
       <p>Valor atual: {currencies[selectedCurrency]}</p>
       <p>Novo valor</p>
-      <input onChange={(e) => setNewValue(e.target.value)} />
+      <input onChange={e => setNewValue(e.target.value)} />
       <button onClick={() => updateValue(selectedCurrency, newValue)}>
         ATUALIZAR
       </button>

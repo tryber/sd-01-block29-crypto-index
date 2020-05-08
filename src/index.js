@@ -2,15 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-// import Home from './Home';
+import Home from './Home';
 
-import Login from './Login';
-import CurrencyQuote from './CurrencyQuote';
+// import Login from './Login';
+// import CurrencyQuote from './CurrencyQuote';
 
 ReactDOM.hydrate(
+  <Home />,
   // <Login />,
-  // <Home />,
-  <CurrencyQuote />,
+  // <CurrencyQuote />,
   document.getElementById('root'),
 );
 

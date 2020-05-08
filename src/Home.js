@@ -13,18 +13,18 @@ function generateValues({ bpi }, btcValue) {
 }
 
 function Home() {
+  
+  const [btcValue, setBtcValue] = useState(1);
+  const [data, setData] = useState('');
+  
   useEffect(() => {
     async function fetchData() {
       await fetch('http://localhost:3001/crypto/btc')
-        .then((res) => res.json())
-        .then((result) => setData(result));
+        .then(res => res.json())
+        .then(result => setData(result));
     }
     fetchData();
   }, []);
-
-  const [btcValue, setBtcValue] = useState(1);
-  const [data, setData] = useState('');
-
   if (data === '') return <div>Carregando...</div>;
   return (
     <div>
