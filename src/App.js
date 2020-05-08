@@ -1,13 +1,11 @@
 import React from 'react';
 import './App.css'
+import LoginForms from './components/Login';
 
 function App() {
   return (
     <div>
-      <form>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Senha" />
-      </form>
+      <LoginForms />
     </div>
   );
 }

@@ -17,4 +17,3 @@ app.use('*', (req, res) => {
 app.listen(3001, () => {
   console.log('Ouvindo na porta 3001');
 });
-
