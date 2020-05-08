@@ -1,0 +1,32 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { getItemToken } from '../pages/localStorageApi';
+import Loading from './Loading';
+
+const ShowCoinValue = ({ coin }) => {
+  const [values, setValues] = useState();
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (!loading) {
+      setLoading(true);
+      axios.get(
+        'http://localhost:3001/crypto/currency',
+        {
+          headers: { authorization: getItemToken() },
+        }).then((response) => {
+          setValues(response.data.dados);
+          setLoading(false);
+        }).catch(err => console.log(err));
+    }
+  },[]);
+  console.log(loading, 'loading')
+  console.log(values)
+  if (loading || !values) return <Loading />;
+  return (
+    <div>
+      <h2>{`Valor:${values[coin]}`}</h2>
+    </div>
+  )
+};
+
+export default ShowCoinValue;

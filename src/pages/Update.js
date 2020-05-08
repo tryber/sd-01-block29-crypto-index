@@ -4,6 +4,7 @@ import Form from '../componentes/Form';
 import InfoFeed from '../componentes/InfoFeed';
 import Loading from '../componentes/Loading';
 import { getItemToken } from './localStorageApi';
+import ShowCoinValue from '../componentes/ShowCoinValue';
 
 const sendCurrency = (currency, value, objFetch) => {
   const { setIsLoading, isLoading, data, setData } = objFetch;
@@ -80,6 +81,7 @@ const Update = () => {
         <InfoFeed info={data} setData={() => setData()} />
       }
       <Form>{createObj(obj)}</Form>
+      <ShowCoinValue coin={currency} />
     </div>
   );
 };

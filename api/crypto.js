@@ -22,8 +22,9 @@ const getContent = async (name) => {
 };
 
 const verifyCurrencies = currency => !['BRL', 'EUR', 'CAD'].includes(currency);
-const verifyValue = value => Number.isInteger(value) && value > 0;
-
+const verifyValue = value => (
+  Number.isInteger(Number(value)) && value > 0
+);
 const createObj = (code, value, dolarRateFloat) => {
   const rateFloat = dolarRateFloat * value;
   const description = {
@@ -40,6 +41,11 @@ const createObj = (code, value, dolarRateFloat) => {
   };
 };
 
+router.get('/currency', async (req, res) => {
+  const dados = await getContent('currencies.json');
+  return res.json({ dados });
+});
+
 router.post('/btc', async (req, res) => {
   const { currency, value } = req.body;
   if (verifyCurrencies(currency)) return res.status(400).json({ message: 'Moeda inválida' });
@@ -48,7 +54,7 @@ router.post('/btc', async (req, res) => {
   fs.writeFile(path.resolve(__dirname, 'data', 'currencies.json'), JSON.stringify(newObj), (err) => {
     if (err) throw err;
     return res.json({
-      message: `Valor alterado com sucesso! ${currency} + ${value}`,
+      message: `Valor alterado com sucesso! ${currency}: ${value}`,
     });
   });
 });
