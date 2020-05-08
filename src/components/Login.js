@@ -8,9 +8,9 @@ function Login(setUser, type, placeholder, value) {
       value={value}
       placeholder={placeholder}
       required
-      onChange={(event) => setUser(event.target.value)}
+      onChange={event => setUser(event.target.value)}
     />
-  )
+  );
 }
 
 function emailValid(email = '') {
@@ -27,14 +27,13 @@ function requestConfig(userEmail, userPassword) {
   return {
     method: 'POST',
     headers: {
-      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       email: userEmail,
       password: userPassword,
     })
-  }
+  };
 }
 
 async function newToken(userEmail, userPassword, setInvalidForm) {
@@ -59,14 +58,14 @@ function LoginForms() {
       {Login(setUserEmail, 'email', 'Email', userEmail)}
       {Login(setUserPassword, 'password', 'Senha', userPassword)}
       <button
-        type='button'
+        type="button"
         onClick={() => newToken(userEmail, userPassword, setInvalidForm)}
       >
         Entrar
       </button>
       {invalidForm}
     </form>
-  )
+  );
 }
 
 export default LoginForms;
