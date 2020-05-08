@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const InfoFeed = ({ info, setData }) => {
-  setTimeout(() => setData(), 3);
+  setTimeout(() => setData(), 2000);
   return (
     <div>
       <h2>{info}</h2>

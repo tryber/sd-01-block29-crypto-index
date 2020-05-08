@@ -62,7 +62,7 @@ const createObj = (obj) => {
     type: 'button',
     value: 'Atualizar',
     onClick: () => sendCurrency(currency, Number(value), objFetch),
-    disable: !verifyData(currency, value),
+    disable: !verifyData(currency, Number(value)),
   }];
 };
 
