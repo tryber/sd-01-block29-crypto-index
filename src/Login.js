@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
 
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const passwordRegex = /^[0-9]{6}$/;
@@ -46,7 +45,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  if (shouldRedirect) return <Redirect to="/" />;
+  if (shouldRedirect) return <p>Redirecionando...</p>;
   return (
     <div>
       <form onSubmit={e => submitForm(e, email, password, setShouldRedirect)}>
