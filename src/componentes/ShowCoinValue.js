@@ -18,9 +18,7 @@ const ShowCoinValue = ({ coin }) => {
           setLoading(false);
         }).catch(err => console.log(err));
     }
-  },[]);
-  console.log(loading, 'loading')
-  console.log(values)
+  }, []);
   if (loading || !values) return <Loading />;
   return (
     <div>
