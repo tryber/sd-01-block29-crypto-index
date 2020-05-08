@@ -30,6 +30,6 @@ const ShowCoinValue = ({ coin }) => {
 
 export default ShowCoinValue;
 
-ShowCoinValue.PropTypes = {
+ShowCoinValue.propTypes = {
   coin: PropTypes.string.isRequired,
-}
+};
