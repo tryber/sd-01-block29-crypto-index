@@ -80,8 +80,8 @@ const Update = () => {
       {data &&
         <InfoFeed info={data} setData={() => setData()} />
       }
-      <Form>{createObj(obj)}</Form>
       <ShowCoinValue coin={currency} />
+      <Form>{createObj(obj)}</Form>
     </div>
   );
 };

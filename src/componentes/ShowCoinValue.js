@@ -23,7 +23,7 @@ const ShowCoinValue = ({ coin }) => {
   if (loading || !values) return <Loading />;
   return (
     <div>
-      <h2>{`Valor:${values[coin]}`}</h2>
+      <h2>{`Valor Atual:${values[coin]}`}</h2>
     </div>
   );
 };
