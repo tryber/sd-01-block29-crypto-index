@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { getItemToken } from '../pages/localStorageApi';
 import Loading from './Loading';
 
@@ -24,7 +25,11 @@ const ShowCoinValue = ({ coin }) => {
     <div>
       <h2>{`Valor:${values[coin]}`}</h2>
     </div>
-  )
+  );
 };
 
 export default ShowCoinValue;
+
+ShowCoinValue.PropTypes = {
+  coin: PropTypes.string.isRequired,
+}
