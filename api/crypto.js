@@ -23,7 +23,7 @@ const getContent = async (name) => {
 
 const verifyCurrencies = currency => !['BRL', 'EUR', 'CAD'].includes(currency);
 const verifyValue = value => (
-  Number.isInteger(Number(value)) && value > 0
+  Number.isInteger(value) && value > 0
 );
 const createObj = (code, value, dolarRateFloat) => {
   const rateFloat = dolarRateFloat * value;

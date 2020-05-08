@@ -33,7 +33,7 @@ const sendCurrency = (currency, value, objFetch) => {
 const verifyCurrencies = currency => ['BRL', 'EUR', 'CAD'].includes(currency);
 
 const verifyValue = value => (
-  (Number.isInteger(Number(value)) && value > 0)
+  (Number.isInteger(value) && value > 0)
 );
 
 const verifyData = (currency, value) => (
@@ -61,7 +61,7 @@ const createObj = (obj) => {
   {
     type: 'button',
     value: 'Atualizar',
-    onClick: () => sendCurrency(currency, value, objFetch),
+    onClick: () => sendCurrency(currency, Number(value), objFetch),
     disable: !verifyData(currency, value),
   }];
 };
