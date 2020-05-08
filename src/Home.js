@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const desiredValues = ['BRL', 'CAD', 'EUR', 'USD'];
 function generateValues({ bpi }, btcValue) {
-  return desiredValues.map((value) => (
+  return desiredValues.map(value => (
     <div key={bpi[value].code}>
       <p>{bpi[value].code}</p>
       <p>{(bpi[value].rate_float * btcValue).toFixed(2)}</p>
@@ -11,7 +11,6 @@ function generateValues({ bpi }, btcValue) {
 }
 
 function Home() {
-
   const [btcValue, setBtcValue] = useState(1);
   const [data, setData] = useState('');
 
