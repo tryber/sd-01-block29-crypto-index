@@ -7,22 +7,34 @@ const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 
 const regexPassword = /^[0-9]{6}$/;
 
-const isEmailValid = (email, regex) => {
-  if (!email) return false;
-  return regex.test(email);
+// const isEmailValid = (email, regex) => {
+//   if (!email) return false;
+//   return regex.test(email);
+// };
+
+// const isPasswordValid = (password, regex) => {
+//   if (!password) return false;
+//   return regex.test(password);
+// };
+
+const validEmailOrPass = (validator, regex) => {
+  if (!validator) return false;
+  return regex.test(validator);
 };
 
-const isPasswordValid = (password, regex) => {
-  if (!password) return false;
-  return regex.test(password);
-};
+const generateToken = (length) =>
+  `${Math.random()
+    .toString(36)
+    .slice((length / 2) * -1)}${Math.random()
+    .toString(36)
+    .slice((length / 2) * -1)}`;
 
 const callBackrequest = (req, res) => {
-  const token = crypto.randomBytes(8);
+  const token = generateToken(16);
   const { email, password } = req.body;
   if (
-    isEmailValid(email, regexEmail) &&
-    isPasswordValid(password, regexPassword)
+    validEmailOrPass(email, regexEmail) &&
+    validEmailOrPass(password, regexPassword)
   )
     return res.status(200).send({ token });
   return res.status(400).send({ mensagem: 'Campos inválidos' });
