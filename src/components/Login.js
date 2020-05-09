@@ -32,7 +32,7 @@ function requestConfig(userEmail, userPassword) {
     body: JSON.stringify({
       email: userEmail,
       password: userPassword,
-    })
+    }),
   };
 }
 
