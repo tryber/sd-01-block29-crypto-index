@@ -4,7 +4,7 @@ const login = require('./login');
 
 const home = require('./home');
 
-const btc = require('./cryto/btc.js');
+const btc = require('./cryto/btc');
 
 const app = express();
 

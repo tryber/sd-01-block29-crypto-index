@@ -1,22 +1,31 @@
 const express = require('express');
-const axios = require('axios')
+
+const axios = require('axios');
 
 const router = express.Router();
-const url = () =>
-  `https://api.coindesk.com/v1/bpi/currentprice.json`;
 
-const getSomeData = () => {
-  return axios
-    .get(`${url()}`)
-    .then((currencies) => currencies.bpi)
-    .catch((err) => console.error(err));
-};
+const URL = (currency = 'currentprice.json') =>
+  `https://api.coindesk.com/v1/bpi/${currency}`;
 
+// const getSomeData =  () =>
+//   axios
+//     .get(`${URL()}`)
+//     .then(({ bpi }) => bpi)
+//     .catch((err) => console.error(err));
 
-router.get('/cryto/btc', (req, res) => {
-  const {USD, GBP, EUR} = await getSomeData()
-  const currencies = {}
-  res.send('estamos no btc!');
+router.get('/cryto/btc',  (req, res, next) => {
+  try {
+    axios
+      .get(`${URL()}`)
+      .then(({bpi}) =>{
+        console.log('o que tem aqui?', bpi);
+      return  res.status(200).send({bpi}
+        
+      )})
+      .catch((err) => res.send(err));
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;
