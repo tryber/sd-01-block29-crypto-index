@@ -1,21 +1,10 @@
 const express = require('express');
 
 const router = express.Router();
-const crypto = require('crypto');
 
 const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const regexPassword = /^[0-9]{6}$/;
-
-// const isEmailValid = (email, regex) => {
-//   if (!email) return false;
-//   return regex.test(email);
-// };
-
-// const isPasswordValid = (password, regex) => {
-//   if (!password) return false;
-//   return regex.test(password);
-// };
 
 const validEmailOrPass = (validator, regex) => {
   if (!validator) return false;
