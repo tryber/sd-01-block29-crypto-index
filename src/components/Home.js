@@ -10,6 +10,7 @@ function setCoins(data, quantityCoins, setQuantityCoins, setUpdateValue) {
         Atualizar Valores
       </button>
       <div>
+        BTC:
         <input
           type="number"
           placeholder="Quantidade"
