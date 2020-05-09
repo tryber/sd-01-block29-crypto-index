@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Login(setUser, type, placeholder, value) {
+function LoginForms(setUser, type, placeholder, value) {
   return (
     <input
       type={type}
@@ -48,15 +48,15 @@ async function newToken(userEmail, userPassword, setInvalidForm) {
   return setInvalidForm('');
 }
 
-function LoginForms() {
+function Login() {
   const [userEmail, setUserEmail] = useState();
   const [userPassword, setUserPassword] = useState();
   const [invalidForm, setInvalidForm] = useState('');
 
   return (
     <form>
-      {Login(setUserEmail, 'email', 'Email', userEmail)}
-      {Login(setUserPassword, 'password', 'Senha', userPassword)}
+      {LoginForms(setUserEmail, 'email', 'Email', userEmail)}
+      {LoginForms(setUserPassword, 'password', 'Senha', userPassword)}
       <button
         type="button"
         onClick={() => newToken(userEmail, userPassword, setInvalidForm)}
@@ -68,4 +68,4 @@ function LoginForms() {
   );
 }
 
-export default LoginForms;
+export default Login;

@@ -1,13 +1,15 @@
 import React from 'react';
 import './App.css'
-import LoginForms from './components/Login';
+import Login from './components/Login';
 import Home from './components/Home';
+import UpdateCoins from './components/UpdateCoin';
 
 function App() {
   return (
     <div>
+      <Login />
       <Home />
-      <LoginForms />
+      <UpdateCoins />
     </div>
   );
 }
