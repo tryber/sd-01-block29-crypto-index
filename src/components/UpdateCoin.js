@@ -1,9 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import fs from 'fs';
-// import path from 'path';
-// import util from 'util';
-
-// const readFile = util.promisify(fs.readFile);
 
 const currenciesJson = {
   BRL: '5.400',
@@ -15,19 +10,20 @@ function requestConfig(currency, valueCurrency) {
   return {
     method: 'POST',
     headers: {
-      // Authorization: localStorage.token,
+      Authorization: localStorage.token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       currency,
-      value: valueCurrency,
+      value: parseFloat(valueCurrency),
     }),
   };
 }
 
 async function getAPI(currency, valueCurrency, setErrorMessage) {
   try {
-    const response = await fetch('http://localhost:3001/crypto/btc', requestConfig(currency, valueCurrency));
+    console.log(currency, parseInt(valueCurrency, 10), parseFloat(valueCurrency))
+    const response = await fetch('http://localhost:3001/crypto/btc', requestConfig(currency, Number(valueCurrency)));
     const data = await response.json();
 
     if (data.message === 'Valor Alterado com sucesso') {
@@ -40,12 +36,6 @@ async function getAPI(currency, valueCurrency, setErrorMessage) {
     console.log(err);
   }
 }
-
-// async function readFileCurrencies() {
-//   const currenciesJson = await readFile(path.resolve(__dirname, '..', '..', 'api',
-//      'currencies.json'), 'utf-8');
-//   return Object.entries(JSON.parse(currenciesJson));
-// }
 
 function currencies(valueCurrency, setValueCurrency, currency, setCurrency, setErrorMessage) {
   const coins = Object.entries(currenciesJson);
@@ -73,7 +63,7 @@ function currencies(valueCurrency, setValueCurrency, currency, setCurrency, setE
 
 function UpdateCoins() {
   const [valueCurrency, setValueCurrency] = useState();
-  const [currency, setCurrency] = useState();
+  const [currency, setCurrency] = useState('BRL');
   const [data, setData] = useState();
   const [errorMessage, setErrorMessage] = useState();
 
