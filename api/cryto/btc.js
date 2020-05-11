@@ -30,6 +30,8 @@ const getSomeData = () =>
     .then(({ data }) => data)
     .catch((err) => console.error(err));
 
+const parseF = (value, length) => Number(parseFloat(value).toFixed(length));
+
 const creatorObject = (code, rate, description) => {
   const floatRate = parseF(rate, 4);
   const floatRateString = formatNumber(rate);
@@ -42,10 +44,8 @@ const creatorObject = (code, rate, description) => {
   };
 };
 
-const parseF = (value, length) => Number(parseFloat(value).toFixed(length));
-
 const callBackrequest = async (req, res) => {
-  let data = await getSomeData();
+  const data = await getSomeData();
 
   const { rate_float: rate } = data.bpi.USD;
   const { BRL: real, CAD: dolCad } = read;
@@ -59,9 +59,8 @@ const callBackrequest = async (req, res) => {
   Object.assign(data.bpi, BRL);
   Object.assign(data.bpi, CAD);
 
-  if (data) {
-    return res.status(200).send({ data });
-  }
+  if (data) return res.status(200).send({ data });
+
   return res.status(400).send({ mensagem: 'Requisição falhou' });
 };
 

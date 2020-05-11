@@ -1,12 +1,11 @@
 // transforma a entrada em número float
 var convertToFloatNumber = function(value) {
-  value = value.toString();
-  if (value.indexOf('.') !== -1 && value.indexOf(',') !== -1) {
-    if (value.indexOf('.') < value.indexOf(',')) {
+  var value = value.toString();
+  if (value.indexOf('.') !== -1 && value.indexOf(',') !== -1)
+    if (value.indexOf('.') < value.indexOf(','))
       return parseFloat(value.replace(/,/gi, ''));
-    } 
-  } 
-    return parseFloat(value);
+
+  return parseFloat(value);
 };
 // prototype para formatar a saída
 Number.prototype.formatMoney = function(c, d, t) {
