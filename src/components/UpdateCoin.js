@@ -31,8 +31,8 @@ async function getAPI(currency, valueCurrency, setErrorMessage) {
     const data = await response.json();
 
     if (data.message === 'Valor Alterado com sucesso') {
-      setErrorMessage(data.message)
-      return currenciesJson[currency] = valueCurrency;
+      setErrorMessage(data.message);
+      return (currenciesJson[currency] = valueCurrency);
     }
 
     return setErrorMessage(data.message);
@@ -61,7 +61,12 @@ function currencies(valueCurrency, setValueCurrency, currency, setCurrency, setE
       </p>
       Novo Valor:
       <input type="number" onChange={e => setValueCurrency(e.target.value)} />
-      <button type="button" onClick={() => getAPI(currency, valueCurrency, setErrorMessage)}>Atualizar</button>
+      <button
+        type="button"
+        onClick={() => getAPI(currency, valueCurrency, setErrorMessage)}
+      >
+        Atualizar
+      </button>
     </section>
   );
 }
