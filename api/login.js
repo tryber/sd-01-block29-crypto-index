@@ -11,7 +11,7 @@ const validEmailOrPass = (validator, regex) => {
   return regex.test(validator);
 };
 
-const generateToken = (length) =>
+const generateToken = length =>
   `${Math.random()
     .toString(36)
     .slice((length / 2) * -1)}${Math.random()

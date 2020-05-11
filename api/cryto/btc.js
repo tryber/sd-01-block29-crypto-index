@@ -28,7 +28,7 @@ const getSomeData = () =>
   axios
     .get(`${URL()}`)
     .then(({ data }) => data)
-    .catch((err) => console.error(err));
+    .catch(err => console.error(err));
 
 const parseF = (value, length) => Number(parseFloat(value).toFixed(length));
 
