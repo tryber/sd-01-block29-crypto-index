@@ -4,36 +4,47 @@ const axios = require('axios');
 
 const router = express.Router();
 
+const fs = require('fs');
+
+const fileName = 'currencies.json';
+let read =''
+ fs.readFile(fileName, 'utf8', (err, data) => {
+  if (err) {
+    console.error(`Não foi possível ler o arquivo ${fileName}\n Erro: ${err}`);
+    process.exit(1);
+  }
+  const json = JSON.parse(data);
+  console.log('aqui tem alguma coisa', json);
+  read = json;
+});
+
+// minha função Read não ta funfando
+
 const URL = (currency = 'currentprice.json') =>
   `https://api.coindesk.com/v1/bpi/${currency}`;
 
-// const getSomeData =  () =>
-//   axios
-//     .get(`${URL()}`)
-//     .then(({ bpi }) => bpi)
-//     .catch((err) => console.error(err));
+const getSomeData = () =>
+  axios
+    .get(`${URL()}`)
+    .then(({ data }) => data.bpi)
+    .catch((err) => console.error(err));
 
-router.get('/cryto/btc',  (req, res, next) => {
-  try {
-    axios
-      .get(`${URL()}`)
-      .then(({bpi}) =>{
-        console.log('o que tem aqui?', bpi);
-      return  res.status(200).send({bpi}
-        
-      )})
-      .catch((err) => res.send(err));
-  } catch (err) {
-    next(err);
-  }
+// 1 BTC em dolares = 6,506.6717 dólares (campo rate_float de USD no resultado da API)
+
+// 1 BTC em reais = 5,40 (rate_float de BRL) * 6,506.6717 (rate_float de USD) = 35,136.02718 reais.
+
+router.get('/cryto/btc', async (req, res) => {
+  const dataFetch = await getSomeData();
+  const {BRL} =  read;
+  console.log('BRL →→→', BRL);
+  const { rate_float } = dataFetch.USD;
+  const BTCReais = BRL * rate_float;
+  return res.status(200).send({ BTCReais });
 });
 
 module.exports = router;
 
-// perguntar ao Roz porque a api não retornar o bpi com os paises pedidos no projeto.
-// perguntar o Roz porque o preço do BTC tão tão barato em reais no exemplo do projeto
-
-const values = {
+const value = {
   time: {
     updated: 'May 9, 2020 20:16:00 UTC',
     updatedISO: '2020-05-09T20:16:00+00:00',
