@@ -12,4 +12,6 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 app.use('/login', render);
 
+app.use('/update', render);
+
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

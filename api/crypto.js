@@ -1,13 +1,16 @@
 const express = require('express');
-const fs = require('fs').promises;
+const fs = require('fs');
 const router = express.Router();
 const getData = require('../client');
 const path = require('path');
+const util = require('util');
+
+const readFile = util.promisify(fs.readFile);
 
 router.use(express.json());
 
 const getContent = async (name) => {
-  const content = await fs.readFile(path.resolve(__dirname, 'data', name));
+  const content = await readFile(path.resolve(__dirname, 'data', name));
   return JSON.parse(content.toString('utf-8'));
 };
 
