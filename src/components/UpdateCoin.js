@@ -15,7 +15,7 @@ function requestConfig(currency, valueCurrency) {
     },
     body: JSON.stringify({
       currency,
-      value: parseFloat(valueCurrency),
+      value: parseInt(valueCurrency, 10),
     }),
   };
 }
