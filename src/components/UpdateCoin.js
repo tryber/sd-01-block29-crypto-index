@@ -22,7 +22,6 @@ function requestConfig(currency, valueCurrency) {
 
 async function getAPI(currency, valueCurrency, setErrorMessage) {
   try {
-    console.log(currency, parseInt(valueCurrency, 10), parseFloat(valueCurrency))
     const response = await fetch('http://localhost:3001/crypto/btc', requestConfig(currency, Number(valueCurrency)));
     const data = await response.json();
 
