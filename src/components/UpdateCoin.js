@@ -25,15 +25,17 @@ function requestConfig(currency, valueCurrency) {
   };
 }
 
-async function getAPI(currency, valueCurrency) {
+async function getAPI(currency, valueCurrency, setErrorMessage) {
   try {
     const response = await fetch('http://localhost:3001/crypto/btc', requestConfig(currency, valueCurrency));
     const data = await response.json();
 
-    if (data.message !== 'Token inválido')
-      currenciesJson[currency] = valueCurrency;
+    if (data.message === 'Valor Alterado com sucesso') {
+      setErrorMessage(data.message)
+      return currenciesJson[currency] = valueCurrency;
+    }
 
-    return data.message;
+    return setErrorMessage(data.message);
   } catch (err) {
     console.log(err);
   }
@@ -45,10 +47,9 @@ async function getAPI(currency, valueCurrency) {
 //   return Object.entries(JSON.parse(currenciesJson));
 // }
 
-function currencies(valueCurrency, setValueCurrency, currency, setCurrency) {
+function currencies(valueCurrency, setValueCurrency, currency, setCurrency, setErrorMessage) {
   const coins = Object.entries(currenciesJson);
   const objCoins = Object.fromEntries(coins);
-  console.log(currenciesJson);
 
   return (
     <section>
@@ -60,7 +61,7 @@ function currencies(valueCurrency, setValueCurrency, currency, setCurrency) {
       </p>
       Novo Valor:
       <input type="number" onChange={e => setValueCurrency(e.target.value)} />
-      <button type="button" onClick={() => getAPI(currency, valueCurrency)}>Atualizar</button>
+      <button type="button" onClick={() => getAPI(currency, valueCurrency, setErrorMessage)}>Atualizar</button>
     </section>
   );
 }
@@ -69,15 +70,17 @@ function UpdateCoins() {
   const [valueCurrency, setValueCurrency] = useState();
   const [currency, setCurrency] = useState();
   const [data, setData] = useState();
+  const [errorMessage, setErrorMessage] = useState();
 
   useEffect(() => {
-    setData(currencies(valueCurrency, setValueCurrency, currency, setCurrency));
+    setData(currencies(valueCurrency, setValueCurrency, currency, setCurrency, setErrorMessage));
   }, [valueCurrency, currency]);
 
   if (!data) return 'Loading...';
   return (
     <section>
       {data}
+      <p>{errorMessage}</p>
     </section>
   );
 }
