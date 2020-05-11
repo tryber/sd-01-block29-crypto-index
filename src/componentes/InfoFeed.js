@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const InfoFeed = ({ info, setData }) => {
   setTimeout(() => {
-    setData()
+    setData();
   }, 2000);
   return (
     <div>
