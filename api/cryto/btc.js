@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const fileName = 'currencies.json';
 
-const formatNumber = require('../../service/converter')
+const formatNumber = require('../../service/converter');
 
 let read = '';
 
@@ -63,7 +63,7 @@ const callBackrequest = async (req, res) => {
     return res.status(200).send({ data });
   }
   return res.status(400).send({ mensagem: 'Requisição falhou' });
-}
+};
 
 router.get('/cryto/btc', callBackrequest);
 

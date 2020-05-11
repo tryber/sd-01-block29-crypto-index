@@ -1,25 +1,14 @@
-function formatNumber(value) {
-  value = convertToFloatNumber(value);
-  return value.formatMoney(4, '.', ',');
-}
-
-//transforma a entrada em número float
+// transforma a entrada em número float
 var convertToFloatNumber = function(value) {
   value = value.toString();
   if (value.indexOf('.') !== -1 && value.indexOf(',') !== -1) {
     if (value.indexOf('.') < value.indexOf(',')) {
-      //inglês
       return parseFloat(value.replace(/,/gi, ''));
-    } else {
-      //português
-      return parseFloat(value.replace(/./gi, '').replace(/,/gi, '.'));
-    }
-  } else {
+    } 
+  } 
     return parseFloat(value);
-  }
 };
-
-//prototype para formatar a saída
+// prototype para formatar a saída
 Number.prototype.formatMoney = function(c, d, t) {
   var n = this,
     c = isNaN((c = Math.abs(c))) ? 2 : c,
@@ -39,6 +28,11 @@ Number.prototype.formatMoney = function(c, d, t) {
           .slice(2)
       : '')
   );
+};
+
+const formatNumber = (value) => {
+  value = convertToFloatNumber(value);
+  return value.formatMoney(4, '.', ',');
 };
 
 module.exports = formatNumber;
