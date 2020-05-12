@@ -8,8 +8,6 @@ const fs = require('fs');
 
 const fileName = 'currencies.json';
 
-const formatNumber = require('../../service/converter');
-
 let read = '';
 
 fs.readFile(fileName, 'utf8', (err, data) => {
@@ -34,7 +32,7 @@ const parseF = (value, length) => Number(parseFloat(value).toFixed(length));
 
 const creatorObject = (code, rate, description) => {
   const floatRate = parseF(rate, 4);
-  const floatRateString = formatNumber(rate);
+  const floatRateString = rate.toLocaleString('en-US',{ maximumSignificantDigits: 9 })
   return {
     code,
     symbol: '&#36;',
