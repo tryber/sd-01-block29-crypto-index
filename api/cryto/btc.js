@@ -56,7 +56,7 @@ const callBackRequestPost = async (req, res) => {
   const { currency, value } = body;
   const { status, message } = validatorRequestBtc(body);
   if (status === 200) {
-    let read = await readFile();
+    const read = await readFile();
     read[currency] = value;
     writeFile(read);
     return res.status(200).send({ message });

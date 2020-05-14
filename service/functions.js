@@ -36,18 +36,18 @@ const validatorRequestBtc = ({ currency, value }) => {
   const currencyVerificator = [currency].includes('BRL', 'EUR', 'CAD');
   const valueVerificator = value >= 0 && Number.isInteger(value);
 
-  if (!currencyVerificator) {
+  if (!currencyVerificator)
     return {
       status: 400,
       message: 'Moeda inválida',
     };
-  }
-  if (!valueVerificator) {
+
+  if (!valueVerificator)
     return {
       status: 400,
       message: 'Valor inválido',
     };
-  }
+
   return {
     status: 200,
     message: 'Valor alterado com sucesso!',
