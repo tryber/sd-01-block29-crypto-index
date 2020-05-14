@@ -47,21 +47,21 @@ const callBackrequestGet = async (req, res) => {
 
   if (data) return res.status(200).send({ data });
 
-  return res.status(400).send({ mensagem: 'Requisição falhou' });
+  return res.status(400).send({ mensagem: 'Campos inválidos' });
 };
 
 const callBackRequestPost = async (req, res) => {
   const body = req.body;
   const { currency, value } = body;
-
-  if (validatorRequestBtc(body)) {
+  const { status, message } = validatorRequestBtc(body);
+  if (status === 200) {
     let read = await readFile();
     read[currency] = value;
     writeFile(read);
-
-    return res.status(200).send({ message: 'Valor alterado com sucesso!' });
+    return res.status(200).send({ message });
   }
-  return res.status(500).send({ mensagem: 'Erro na Request' });
+
+  return res.status(400).send({ message });
 };
 
 router.post('/cryto/btc', callBackRequestPost);
