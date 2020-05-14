@@ -64,7 +64,7 @@ const writeFile = async newContent =>
 
 const authorizationMiddleware = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log('authorization →→→',authorization);
+  console.log('authorization →→→', authorization);
   console.log('arraysToken →→♠', arraysToken);
   if (arraysToken.includes(authorization.toString())) return next();
   return res.status(401).json({ message: 'unauthorized' });

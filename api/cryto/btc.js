@@ -8,7 +8,7 @@ const {
   validatorRequestBtc,
   readFile,
   writeFile,
-  authorizationMiddleware
+  authorizationMiddleware,
 } = require('../../service/functions');
 
 const router = express.Router();
