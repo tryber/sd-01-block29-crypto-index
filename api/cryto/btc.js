@@ -6,24 +6,11 @@ const {
   parseF,
   creatorObject,
   validatorRequestBtc,
+  readFile,
+  writeFile,
 } = require('../../service/functions');
 
 const router = express.Router();
-
-const fs = require('fs');
-
-const fileName = 'currencies.json';
-
-let read = '';
-
-fs.readFile(fileName, 'utf8', (err, data) => {
-  if (err) {
-    console.error(`Não foi possível ler o arquivo ${fileName}\n Erro: ${err}`);
-    process.exit(1);
-  }
-  const json = JSON.parse(data);
-  read = json;
-});
 
 const URL = (currency = 'currentprice.json') =>
   `https://api.coindesk.com/v1/bpi/${currency}`;
@@ -32,7 +19,7 @@ const getSomeData = () =>
   axios
     .get(URL())
     .then(({ data }) => data)
-    .catch((err) => console.error(err));
+    .catch(err => console.error(err));
 
 const bitcoin = {
   code: 'BTC',
@@ -43,7 +30,7 @@ const bitcoin = {
 
 const callBackrequestGet = async (req, res) => {
   const data = await getSomeData();
-
+  const read = await readFile();
   const { rate_float: rate } = data.bpi.USD;
   const { BRL: real, CAD: dolCad } = read;
 
@@ -64,16 +51,14 @@ const callBackrequestGet = async (req, res) => {
 };
 
 const callBackRequestPost = async (req, res) => {
-  const fileNameWrite = '../../currencies.json';
-  const { currency, value } = req.body;
-  console.log('0 que tem aqui?', req.body);
-  if (validatorRequestBtc(currency, value)) {
-    fs.writeFile(fileNameWrite, req.body, (err) => {
-      if (err) {
-        throw err;
-      }
-      console.log('Arquivo salvo');
-    });
+  const body = req.body;
+  const { currency, value } = body;
+
+  if (validatorRequestBtc(body)) {
+    let read = await readFile();
+    read[currency] = value;
+    writeFile(read);
+
     return res.status(200).send({ message: 'Valor alterado com sucesso!' });
   }
   return res.status(500).send({ mensagem: 'Erro na Request' });

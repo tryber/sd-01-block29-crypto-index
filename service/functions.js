@@ -1,9 +1,12 @@
+const path = require('path');
+const fs = require('fs').promises;
+
 const validEmailOrPass = (validator, regex) => {
   if (!validator) return false;
   return regex.test(validator);
 };
 
-const generateToken = (length) =>
+const generateToken = length =>
   `${Math.random()
     .toString(36)
     .slice((length / 2) * -1)}${Math.random()
@@ -26,13 +29,19 @@ const creatorObject = (code, rate, description) => {
   };
 };
 
-const validatorRequestBtc = async (currency, value) => {
+const validatorRequestBtc = ({ currency, value }) => {
   const listVerificator = [currency];
-  const regex = /^[0-9]+$/;
-  if (await listVerificator.includes('BRL', 'EUR', 'CAD') &&  await value.match(regex))
-    return true;
+  if (listVerificator.includes('BRL', 'EUR', 'CAD') && value >= 0) return true;
   return false;
 };
+
+const filePath = path.resolve(__dirname, '..', 'currencies.json');
+
+const readFile = async () =>
+  fs.readFile(filePath).then(fileContent => JSON.parse(fileContent));
+
+const writeFile = async newContent =>
+  fs.writeFile(filePath, JSON.stringify(newContent));
 
 module.exports = {
   validEmailOrPass,
@@ -40,4 +49,6 @@ module.exports = {
   parseF,
   creatorObject,
   validatorRequestBtc,
+  readFile,
+  writeFile,
 };
