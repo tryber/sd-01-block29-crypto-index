@@ -1,24 +1,14 @@
 const express = require('express');
 
+const { validEmailOrPass, generateToken } = require('../service/functions');
+
 const router = express.Router();
 
 const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const regexPassword = /^[0-9]{6}$/;
 
-const validEmailOrPass = (validator, regex) => {
-  if (!validator) return false;
-  return regex.test(validator);
-};
-
-const generateToken = length =>
-  `${Math.random()
-    .toString(36)
-    .slice((length / 2) * -1)}${Math.random()
-    .toString(36)
-    .slice((length / 2) * -1)}`;
-
-const callBackrequest = (req, res) => {
+const callBackRequestLogin = (req, res) => {
   const token = generateToken(16);
   const { email, password } = req.body;
   if (
@@ -29,6 +19,6 @@ const callBackrequest = (req, res) => {
   return res.status(400).send({ mensagem: 'Campos inválidos' });
 };
 
-router.post('/login', callBackrequest);
+router.post('/login', callBackRequestLogin);
 
 module.exports = router;

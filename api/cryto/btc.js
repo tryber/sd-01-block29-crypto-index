@@ -2,6 +2,12 @@ const express = require('express');
 
 const axios = require('axios');
 
+const {
+  parseF,
+  creatorObject,
+  validatorRequestBtc,
+} = require('../../service/functions');
+
 const router = express.Router();
 
 const fs = require('fs');
@@ -24,25 +30,18 @@ const URL = (currency = 'currentprice.json') =>
 
 const getSomeData = () =>
   axios
-    .get(`${URL()}`)
+    .get(URL())
     .then(({ data }) => data)
-    .catch(err => console.error(err));
+    .catch((err) => console.error(err));
 
-const parseF = (value, length) => Number(parseFloat(value).toFixed(length));
-
-const creatorObject = (code, rate, description) => {
-  const floatRate = parseF(rate, 4);
-  const floatRateString = rate.toLocaleString('en-US',{ maximumSignificantDigits: 9 })
-  return {
-    code,
-    symbol: '&#36;',
-    rate: floatRateString,
-    description,
-    rate_float: floatRate,
-  };
+const bitcoin = {
+  code: 'BTC',
+  rate: '1.0000',
+  description: 'Bitcoin',
+  rate_float: 1,
 };
 
-const callBackrequest = async (req, res) => {
+const callBackrequestGet = async (req, res) => {
   const data = await getSomeData();
 
   const { rate_float: rate } = data.bpi.USD;
@@ -53,15 +52,35 @@ const callBackrequest = async (req, res) => {
 
   const BRL = { BRL: creatorObject('BRL', BTCReais, 'Brazilian Real') };
   const CAD = { CAD: creatorObject('CAD', BTCDolCad, 'Canadian Dollar') };
+  const BTC = { BTC: bitcoin };
 
   Object.assign(data.bpi, BRL);
   Object.assign(data.bpi, CAD);
+  Object.assign(data.bpi, BTC);
 
   if (data) return res.status(200).send({ data });
 
   return res.status(400).send({ mensagem: 'Requisição falhou' });
 };
 
-router.get('/cryto/btc', callBackrequest);
+const callBackRequestPost = async (req, res) => {
+  const fileNameWrite = '../../currencies.json';
+  const { currency, value } = req.body;
+  console.log('0 que tem aqui?', req.body);
+  if (validatorRequestBtc(currency, value)) {
+    fs.writeFile(fileNameWrite, req.body, (err) => {
+      if (err) {
+        throw err;
+      }
+      console.log('Arquivo salvo');
+    });
+    return res.status(200).send({ message: 'Valor alterado com sucesso!' });
+  }
+  return res.status(500).send({ mensagem: 'Erro na Request' });
+};
+
+router.post('/cryto/btc', callBackRequestPost);
+
+router.get('/cryto/btc', callBackrequestGet);
 
 module.exports = router;
