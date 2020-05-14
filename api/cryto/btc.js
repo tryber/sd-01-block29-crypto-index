@@ -8,6 +8,7 @@ const {
   validatorRequestBtc,
   readFile,
   writeFile,
+  authorizationMiddleware
 } = require('../../service/functions');
 
 const router = express.Router();
@@ -60,9 +61,10 @@ const callBackRequestPost = async (req, res) => {
     writeFile(read);
     return res.status(200).send({ message });
   }
-
   return res.status(400).send({ message });
 };
+
+router.use(authorizationMiddleware);
 
 router.post('/cryto/btc', callBackRequestPost);
 

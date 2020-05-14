@@ -1,5 +1,8 @@
 const path = require('path');
+
 const fs = require('fs').promises;
+
+const { arraysToken } = require('../api/login');
 
 const validEmailOrPass = (validator, regex) => {
   if (!validator) return false;
@@ -30,7 +33,6 @@ const creatorObject = (code, rate, description) => {
 };
 
 const validatorRequestBtc = ({ currency, value }) => {
-  
   const currencyVerificator = [currency].includes('BRL', 'EUR', 'CAD');
   const valueVerificator = value >= 0 && Number.isInteger(value);
 
@@ -60,6 +62,14 @@ const readFile = async () =>
 const writeFile = async newContent =>
   fs.writeFile(filePath, JSON.stringify(newContent));
 
+const authorizationMiddleware = (req, res, next) => {
+  const { authorization } = req.headers;
+  console.log('authorization →→→',authorization);
+  console.log('arraysToken →→♠', arraysToken);
+  if (arraysToken.includes(authorization.toString())) return next();
+  return res.status(401).json({ message: 'unauthorized' });
+};
+
 module.exports = {
   validEmailOrPass,
   generateToken,
@@ -68,4 +78,5 @@ module.exports = {
   validatorRequestBtc,
   readFile,
   writeFile,
+  authorizationMiddleware,
 };

@@ -8,8 +8,12 @@ const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 
 const regexPassword = /^[0-9]{6}$/;
 
+const arraysToken = [];
+
 const callBackRequestLogin = (req, res) => {
   const token = generateToken(16);
+  arraysToken.push(token);
+  console.log('to dentro da função callbacklogin', arraysToken);
   const { email, password } = req.body;
   if (
     validEmailOrPass(email, regexEmail) &&
@@ -21,4 +25,4 @@ const callBackRequestLogin = (req, res) => {
 
 router.post('/login', callBackRequestLogin);
 
-module.exports = router;
+module.exports = { router, arraysToken };
