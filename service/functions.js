@@ -2,19 +2,12 @@ const path = require('path');
 
 const fs = require('fs').promises;
 
-const { arraysToken } = require('../api/login');
+const { isTokenValid } = require('../api/token');
 
 const validEmailOrPass = (validator, regex) => {
   if (!validator) return false;
   return regex.test(validator);
 };
-
-const generateToken = length =>
-  `${Math.random()
-    .toString(36)
-    .slice((length / 2) * -1)}${Math.random()
-    .toString(36)
-    .slice((length / 2) * -1)}`;
 
 const parseF = (value, length) => Number(parseFloat(value).toFixed(length));
 
@@ -55,7 +48,6 @@ const validatorRequestBtc = ({ currency, value }) => {
 };
 
 const fileModifier = async (fileModifierType, newContent) => {
-
   const filePath = path.resolve(__dirname, '..', 'currencies.json');
 
   const readFile = () =>
@@ -75,18 +67,18 @@ const fileModifier = async (fileModifierType, newContent) => {
 
 const authorizationMiddleware = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log('authorization →→→', authorization);
-  console.log('arraysToken →→♠', arraysToken);
-  if (arraysToken.includes(authorization.toString())) return next();
-  return res.status(401).json({ message: 'unauthorized' });
+
+  if (isTokenValid(authorization)) return next();
+  return res.status(401).json({ message: 'Token inválido' });
 };
 
 module.exports = {
   validEmailOrPass,
-  generateToken,
   parseF,
   creatorObject,
   validatorRequestBtc,
   fileModifier,
   authorizationMiddleware,
 };
+
+// next.js

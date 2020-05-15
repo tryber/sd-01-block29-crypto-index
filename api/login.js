@@ -1,6 +1,7 @@
 const express = require('express');
 
-const { validEmailOrPass, generateToken } = require('../service/functions');
+const { validEmailOrPass } = require('../service/functions');
+const { generateToken } = require('./token');
 
 const router = express.Router();
 
@@ -8,13 +9,12 @@ const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 
 const regexPassword = /^[0-9]{6}$/;
 
-const arraysToken = [];
-
 const callBackRequestLogin = (req, res) => {
+
   const token = generateToken(16);
-  arraysToken.push(token);
-  console.log('to dentro da função callbacklogin', arraysToken);
+
   const { email, password } = req.body;
+
   if (
     validEmailOrPass(email, regexEmail) &&
     validEmailOrPass(password, regexPassword)
@@ -25,4 +25,4 @@ const callBackRequestLogin = (req, res) => {
 
 router.post('/login', callBackRequestLogin);
 
-module.exports = { router, arraysToken };
+module.exports = router;
