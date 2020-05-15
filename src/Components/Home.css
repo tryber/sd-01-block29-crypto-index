@@ -1,0 +1,15 @@
+.home {
+  display: flex;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  position: absolute;
+  width: 740px;
+  height: 99px;
+  left: 350px;
+  top: 220px;
+  background: #C4C4C4;
+}
