@@ -54,13 +54,24 @@ const validatorRequestBtc = ({ currency, value }) => {
   };
 };
 
-const filePath = path.resolve(__dirname, '..', 'currencies.json');
+const fileModifier = async (fileModifierType, newContent) => {
 
-const readFile = async () =>
-  fs.readFile(filePath).then(fileContent => JSON.parse(fileContent));
+  const filePath = path.resolve(__dirname, '..', 'currencies.json');
 
-const writeFile = async newContent =>
-  fs.writeFile(filePath, JSON.stringify(newContent));
+  const readFile = () =>
+    fs.readFile(filePath).then(fileContent => JSON.parse(fileContent));
+
+  const writeFile = newContent =>
+    fs.writeFile(filePath, JSON.stringify(newContent));
+
+  const choices = {
+    read: readFile,
+    write: writeFile,
+    default: 'Tipo de modificador errado',
+  };
+
+  return choices[fileModifierType](newContent) || choices.default;
+};
 
 const authorizationMiddleware = (req, res, next) => {
   const { authorization } = req.headers;
@@ -76,7 +87,6 @@ module.exports = {
   parseF,
   creatorObject,
   validatorRequestBtc,
-  readFile,
-  writeFile,
+  fileModifier,
   authorizationMiddleware,
 };

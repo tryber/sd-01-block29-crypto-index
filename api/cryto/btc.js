@@ -6,8 +6,7 @@ const {
   parseF,
   creatorObject,
   validatorRequestBtc,
-  readFile,
-  writeFile,
+  fileModifier,
   authorizationMiddleware,
 } = require('../../service/functions');
 
@@ -31,7 +30,7 @@ const bitcoin = {
 
 const callBackrequestGet = async (req, res) => {
   const data = await getSomeData();
-  const read = await readFile();
+  const read = await fileModifier('read');
   const { rate_float: rate } = data.bpi.USD;
   const { BRL: real, CAD: dolCad } = read;
 
@@ -56,15 +55,15 @@ const callBackRequestPost = async (req, res) => {
   const { currency, value } = body;
   const { status, message } = validatorRequestBtc(body);
   if (status === 200) {
-    const read = await readFile();
+    const read = await fileModifier('read');
     read[currency] = value;
-    writeFile(read);
+    fileModifier('write', read);
     return res.status(200).send({ message });
   }
   return res.status(400).send({ message });
 };
 
-router.use(authorizationMiddleware);
+// router.use(authorizationMiddleware);
 
 router.post('/cryto/btc', callBackRequestPost);
 
