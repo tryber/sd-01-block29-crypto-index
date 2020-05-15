@@ -64,6 +64,8 @@ const callBackRequestPost = async (req, res) => {
 };
 
 // router.use(authorizationMiddleware);
+// problema com esse middleware. Não consigo pegar o valor que tá no login
+// e mandar para aqui, pára fazer a validação do que tá no Head.
 
 router.post('/cryto/btc', callBackRequestPost);
 
