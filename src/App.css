@@ -1,4 +1,21 @@
-.bg-red {
-    background-color: purple;
+.container {
+    background: white;
+    height: 1024px;
+    position: relative;
+    width: 1440px;
+    text-align: center;
+};
 
-}
+.login {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+};
+
+.login span {
+    background: whitesmoke;
+    border: 1px solid black;
+    box-sizing: border-box;
+    width: 698px;
+    height: 107px;
+};
