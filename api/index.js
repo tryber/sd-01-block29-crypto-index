@@ -19,4 +19,6 @@ app.use((req, res, next) =>
   })
 );
 
-app.listen(3001, () => console.log('ouvindo porta 3001!'));
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => console.log(`ouvindo na porta http://localhost${PORT}!`));

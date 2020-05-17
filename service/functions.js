@@ -80,5 +80,3 @@ module.exports = {
   fileModifier,
   authorizationMiddleware,
 };
-
-// next.js
