@@ -18,7 +18,7 @@ export default function Price() {
       <span>Valor Atual: R{data.bpi.BRL.symbol}{parseF(BRL, 2)}</span>
       <label htmlFor="">Novo valor</label>
       <input type="number"/>
-      <button className="atualizar">ATUALIZAR</button>
+  <button className="atualizar">ATUALIZAR</button>
     </div>
   );
 }
