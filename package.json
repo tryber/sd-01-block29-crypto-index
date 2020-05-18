@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "ignore-styles": "^5.0.1",
+    "lovelylog": "^1.1.1",
     "nodemon": "^2.0.4",
     "npm-windows-upgrade": "^6.0.1",
     "react": "^16.13.0",

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
-// import { info, debug, error, warn } from '../log'
+import { info, debug, error, warn } from 'lovelylog'
 
 export default function Login() {
+  warn('teste')
   
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
