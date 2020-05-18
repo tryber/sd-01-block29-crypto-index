@@ -6,25 +6,44 @@ const path = require('path');
 
 const fileName = 'currencies.json';
 
-const test = async () => {
+const readLocalCurrencies = async () => {
   try {
     const content = await fs.readFile(path.resolve(__dirname, fileName))
-    return console.log(JSON.parse(content.toString('utf-8')));
+    return JSON.parse(content.toString('utf-8'));
   } catch (err) {
     console.error(`Não foi possível ler o arquivo ${fileName}\nErro: ${err}`);
     process.exit(1);
   }
 }
 
-test();
+const coinsDescription = {
+  BRL: 'Brazilian Real',
+  EUR: 'Euro',
+  CAD: 'Canadian Dollar',
+}
 
-const url = 'https://api.coindesk.com/v1/bpi/currentprice/BTC.json';
-
-router.get('/cryto/btc', (req, res) => {
-  axios.get(url)
-  .then(response => res.json(response.data))
-  .catch(err => console.error(err))
+router.get('/cryto/btc', async (req, res) => {
+  const { data } = await axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json')
+  const readCurrenciasJson = await readLocalCurrencies();
+  const currenciesJson = createObject(readCurrenciasJson, data);
+  const allObject = Object.assign(data, currenciesJson)
+  res.json(allObject);
 });
 
+const createObject = (readLocalCurrencies, data) => {
+  const index = Object.entries(readLocalCurrencies)
+    .map(coin => (
+      {
+        [coin[0]]:
+        {
+          code: coin[0],
+          rate: (data.bpi.USD.rate_float * coin[1]).toLocaleString('pt-BR'),
+          description: coinsDescription[coin[0]],
+          rate_float: (data.bpi.USD.rate_float * coin[1]),
+        },
+      }
+    ))
+    return index;
+};
 
 module.exports = router;
