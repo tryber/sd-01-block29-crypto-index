@@ -1,5 +1,7 @@
 const express = require('express');
 
+const cors = require('cors');
+
 const login = require('./login');
 
 const home = require('./home');
@@ -8,6 +10,7 @@ const btc = require('./cryto/btc');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(home);
 app.use(login);

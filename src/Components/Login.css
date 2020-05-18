@@ -5,27 +5,9 @@
   align-items: center;
 }
 
-.label-email {
-  position: absolute;
-  width: 124px;
-  height: 59px;
-  left: 371px;
-  top: 211px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 50px;
-  line-height: 59px;
-  color: #000000;
-}
 
-.label-senha {
-  position: absolute;
-  width: 139px;
-  height: 59px;
-  left: 371px;
-  top: 423px;
-  font-family: Roboto;
+:placeholder-shown {
+    font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 50px;
@@ -62,4 +44,10 @@
   left: 371px;
   top: 706px;
   background: #5FE122;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 50px;
+  line-height: 59px;
+  color: #000000;
 }

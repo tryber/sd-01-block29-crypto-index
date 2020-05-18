@@ -14,6 +14,7 @@ const callBackRequestLogin = (req, res) => {
   const token = generateToken(16);
 
   const { email, password } = req.body;
+  console.log('password', password);
 
   if (
     validEmailOrPass(email, regexEmail) &&

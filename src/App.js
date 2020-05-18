@@ -1,13 +1,13 @@
 import React from 'react';
-// import Login from './Components/Login';
+import Login from './Components/Login';
 // import Home from './Components/Home';
-import Price from './Components/Price';
+// import Price from './Components/Price';
 
 export default function App() {
   return (
     <div>
-      {/* <Login /> */}
-      <Price />
+      <Login />
+      {/* <Price /> */}
       {/* <Home /> */}
     </div>
   );
