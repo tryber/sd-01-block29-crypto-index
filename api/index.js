@@ -29,12 +29,12 @@ app.post('/login', (req, res) => {
 app.get('/crypto/btc', async (req, res) => {
   const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
   const data = await response.json();
-  const { bpi: { USD: { rate_float } } } = data;
+  const { bpi: { USD: { rate_float: rateFloat } } } = data;
   const currencies = JSON.parse(await fs.readFile(path.resolve(__dirname, 'currencies.json'), 'utf-8'));
-  const currencyDescription = { BRL: 'Brazilian Real', EUR: 'Euro', CAD: 'Canadian Dollar'};
+  const currencyDescription = { BRL: 'Brazilian Real', EUR: 'Euro', CAD: 'Canadian Dollar' };
   const newBPI = Object.entries(currencies).reduce((acc, currency) => {
-    const float = currency[1] * rate_float;
-    return { ...acc, [currency[0]]: { code: currency[0], rate: float.toLocaleString('pt-BR'), description: currencyDescription[currency[0]], rate_float: float } }
+    const float = currency[1] * rateFloat;
+    return { ...acc, [currency[0]]: { code: currency[0], rate: float.toLocaleString('pt-BR'), description: currencyDescription[currency[0]], rate_float: float } };
   }, data.bpi);
 
   data.bpi = newBPI;
@@ -43,17 +43,16 @@ app.get('/crypto/btc', async (req, res) => {
 
 app.post('/crypto/btc', async (req, res) => {
   const { currency, value } = req.body;
-  const currencyValidation = currency === 'BRL' || currency === 'EUR' || currency === 'CAD'
+  const currencyValidation = currency === 'BRL' || currency === 'EUR' || currency === 'CAD';
   const valueValidation = Number.isInteger(value) && value > 0;
   if (!currencyValidation)
-    return res.status(400).json({ message: "Moeda inválida" });  
+    return res.status(400).json({ message: 'Moeda inválida' });
   if (!valueValidation)
-    return res.status(400).json({ message: "Valor inválido" });
+    return res.status(400).json({ message: 'Valor inválido' });
   const currencies = JSON.parse(await fs.readFile(path.resolve(__dirname, 'currencies.json'), 'utf-8'));
   currencies[currency] = `${value}`;
   await fs.writeFile(path.resolve(__dirname, 'currencies.json'), JSON.stringify(currencies, null, 2));
-  return res.json({ "message": "Valor alterado com sucesso!" });
-  
+  return res.json({ message: 'Valor alterado com sucesso!' });
 });
 
 app.listen(port, () => console.log(`ouvindo ${port}`));
