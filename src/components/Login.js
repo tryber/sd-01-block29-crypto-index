@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import '../style/Login.css';
 
-function handleSubmit(event, setRedirect, userEmail) {
+function handleSubmit(event, setRedirect) {
   event.preventDefault();
   setRedirect(true);
 }
@@ -31,12 +31,13 @@ function inputPassword(setUserPassword) {
       placeholder="Digite sua Senha"
       onChange={(e) => {
         setUserPassword(e.target.value);
-      }}    />
+      }}
+    />
   );
 }
 
 function Login() {
-  const [userPassword, setUserPassword] = useState();
+  const [_userPassword, setUserPassword] = useState();
   const [shouldRedirect, setRedirect] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   if (shouldRedirect) return <Redirect to="/receitas" />;
