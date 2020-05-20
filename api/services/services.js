@@ -2,6 +2,8 @@ const fs = require('fs').promises;
 const path = require('path');
 const fileName = 'currencies.json';
 
+const { getToken } = require('../login');
+
 const coinsDescription = {
   BRL: 'Brazilian Real',
   EUR: 'Euro',
@@ -27,7 +29,21 @@ const readLocalCurrencies = async () => {
   }
 }
 
+isTokenValid = (token = '') => {
+  return getToken.find(provisionalToken => provisionalToken === token);
+}
+
+function authorizationMiddleware(req, res, next) {
+  const { authorization } = req.headers;
+
+  if (!authorization || !isTokenValid(authorization))
+  return res.status(401).json({ message: 'Token Inválido' })
+
+  next();
+}
+
 module.exports = {
+  authorizationMiddleware,
   coinsDescription,
   readLocalCurrencies,
   verifyCurrency,
