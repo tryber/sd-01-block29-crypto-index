@@ -22,10 +22,8 @@ router.get('/crypto/btc', async (_req, res) => {
 router.post('/crypto/btc', async (req, res) => {
   const { currency, value } = req.body;
 
-  if (!verifyCurrency(currency)) return res.status(400).json({ message: 'Moeda Inválida!' });
-  if (!verifyValue(value)) return res.status(400).json({ message: 'O número precisa ser inteiro!' })
-  verifyValue(value);
-  console.log(verifyValue(value));
+  if (!verifyCurrency(currency)) return res.status(400).json({ message: 'Moeda Inválida' });
+  if (!verifyValue(value)) return res.status(400).json({ message: 'Valor inválido' });
   const getLocalCurrencies = await readLocalCurrencies();
   const obj = { ...getLocalCurrencies, [currency]: `${value}` }
   try {
