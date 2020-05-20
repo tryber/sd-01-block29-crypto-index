@@ -3,34 +3,41 @@ const router = express.Router();
 const axios = require('axios');
 const fs = require('fs').promises;
 const path = require('path');
-
 const fileName = 'currencies.json';
 
-const readLocalCurrencies = async () => {
-  try {
-    const content = await fs.readFile(path.resolve(__dirname, fileName))
-    return JSON.parse(content.toString('utf-8'));
-  } catch (err) {
-    console.error(`Não foi possível ler o arquivo ${fileName}\nErro: ${err}`);
-    process.exit(1);
-  }
-}
+const {
+  readLocalCurrencies,
+  coinsDescription,
+  verifyCurrency,
+  verifyValue
+} = require('./services/services');
 
-const coinsDescription = {
-  BRL: 'Brazilian Real',
-  EUR: 'Euro',
-  CAD: 'Canadian Dollar',
-}
-
-router.get('/cryto/btc', async (req, res) => {
+router.get('/crypto/btc', async (_req, res) => {
   const { data } = await axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json')
   const readCurrenciasJson = await readLocalCurrencies();
   const currenciesJson = createObject(readCurrenciasJson, data);
-  const allObject = Object.assign(data, currenciesJson)
-  res.json(allObject);
+  res.json(currenciesJson);
+});
+
+router.post('/crypto/btc', async (req, res) => {
+  const { currency, value } = req.body;
+
+  if (!verifyCurrency(currency)) return res.status(400).json({ message: 'Moeda Inválida!' });
+  if (!verifyValue(value)) return res.status(400).json({ message: 'O número precisa ser inteiro!' })
+  verifyValue(value);
+  console.log(verifyValue(value));
+  const getLocalCurrencies = await readLocalCurrencies();
+  const obj = { ...getLocalCurrencies, [currency]: `${value}` }
+  try {
+    await fs.writeFile(path.resolve(__dirname, fileName), JSON.stringify(obj));
+    res.json({ message: 'Valor alterado com sucesso!' });
+  } catch (err) {
+    res.json({ message: 'Algo deu errado!', err });
+  }
 });
 
 const createObject = (readLocalCurrencies, data) => {
+  const { bpi } = data;
   const index = Object.entries(readLocalCurrencies)
     .map(coin => (
       {
@@ -43,7 +50,12 @@ const createObject = (readLocalCurrencies, data) => {
         },
       }
     ))
-    return index;
+    .reduce((acum, coin) => {
+      bpi[Object.keys(coin)[0]] = Object.values(coin)[0];
+      return acum;
+    }, data);
+
+  return index;
 };
 
 module.exports = router;
