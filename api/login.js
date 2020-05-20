@@ -4,7 +4,7 @@ const routerLogin = express.Router();
 
 const {
   generateToken,
-  validLoginMiddleware
+  validLoginMiddleware,
 } = require('./validLogin');
 
 const getToken = [];

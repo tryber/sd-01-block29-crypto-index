@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const axios = require('axios');
 const fs = require('fs').promises;
@@ -9,13 +10,13 @@ const {
   coinsDescription,
   readLocalCurrencies,
   verifyCurrency,
-  verifyValue
+  verifyValue,
 } = require('./services/services');
 
 router.use(authorizationMiddleware);
 
 router.get('/btc', async (_req, res) => {
-  const { data } = await axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json')
+  const { data } = await axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
   const readCurrenciasJson = await readLocalCurrencies();
   const currenciesJson = createObject(readCurrenciasJson, data);
   res.json(currenciesJson);
@@ -27,7 +28,7 @@ router.post('/btc', async (req, res) => {
   if (!verifyCurrency(currency)) return res.status(400).json({ message: 'Moeda Inválida' });
   if (!verifyValue(value)) return res.status(400).json({ message: 'Valor Inválido' });
   const getLocalCurrencies = await readLocalCurrencies();
-  const obj = { ...getLocalCurrencies, [currency]: `${value}` }
+  const obj = { ...getLocalCurrencies, [currency]: `${value}` };
   try {
     await fs.writeFile(path.resolve(__dirname, 'currencies.json'), JSON.stringify(obj));
     res.json({ message: 'Valor alterado com sucesso!' });

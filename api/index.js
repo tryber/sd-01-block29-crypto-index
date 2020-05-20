@@ -11,7 +11,7 @@ app.use('/login', routerLogin);
 app.use('/crypto', crypto);
 
 app.use('*', (_req, res) => {
-  res.status(404).json({ message: "Endpoint não encontrado..." })
+  res.status(404).json({ message: 'Endpoint não encontrado.' });
 });
 
 app.listen(3001, () => console.log('Ouvindo na porta 3001.'));
