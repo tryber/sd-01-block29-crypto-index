@@ -16,7 +16,7 @@ app.use(home);
 app.use(login);
 app.use(btc);
 
-app.use((req, res, next) =>
+app.use((__req, res) =>
   res.status(404).send({
     message: 'Endpoint não encontrado',
   })

@@ -67,7 +67,6 @@ const fileModifier = async (fileModifierType, newContent) => {
 
 const authorizationMiddleware = (req, res, next) => {
   const { authorization } = req.headers;
-
   if (isTokenValid(authorization)) return next();
   return res.status(401).json({ message: 'Token inválido' });
 };

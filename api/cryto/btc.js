@@ -28,7 +28,7 @@ const bitcoin = {
   rate_float: 1,
 };
 
-const callBackrequestGet = async (req, res) => {
+const callBackrequestGet = async (__req, res) => {
   const data = await getSomeData();
   const read = await fileModifier('read');
   const { rate_float: rate } = data.bpi.USD;

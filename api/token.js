@@ -10,6 +10,6 @@ const generateToken = length => {
   return token;
 };
 
-const isTokenValid = Token => arraysToken.includes(Token);
+const isTokenValid = Token =>  arraysToken.includes(Token);
 
 module.exports = { generateToken, isTokenValid };
