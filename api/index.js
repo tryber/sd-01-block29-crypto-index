@@ -26,9 +26,13 @@ app.post('/login', (req, res) => {
   return res.status(400).json({ message: 'Campos inválidos' });
 });
 
+function validateToken(token) {
+  if (!tokens.includes(token)) return true;
+  return false;
+}
+
 app.get('/crypto/btc', async (req, res) => {
-  if (!tokens.includes(req.headers.authorization))
-    return res.status(401).json({ message: "Token inválido" });
+  if (validateToken(req.headers.authorization)) return res.status(401).json({ message: 'Token inválido' });
   const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
   const data = await response.json();
   const { bpi: { USD: { rate_float: rateFloat } } } = data;
@@ -44,8 +48,7 @@ app.get('/crypto/btc', async (req, res) => {
 });
 
 app.post('/crypto/btc', async (req, res) => {
-  if (!tokens.includes(req.headers.authorization))
-    return res.status(401).json({ message: "Token inválido" });
+  if (validateToken(req.headers.authorization)) return res.status(401).json({ message: 'Token inválido' });
   const { currency, value } = req.body;
   const currencyValidation = currency === 'BRL' || currency === 'EUR' || currency === 'CAD';
   const valueValidation = Number.isInteger(value) && value > 0;
@@ -59,8 +62,6 @@ app.post('/crypto/btc', async (req, res) => {
   return res.json({ message: 'Valor alterado com sucesso!' });
 });
 
-app.use((__req, res) => {
-  return res.status(404).json({ message: "Endpoint não encontrado" });
-})
+app.use((__req, res) => res.status(404).json({ message: 'Endpoint não encontrado' }));
 
 app.listen(port, () => console.log(`ouvindo ${port}`));
