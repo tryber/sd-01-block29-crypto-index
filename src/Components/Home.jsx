@@ -1,16 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AwesomeComponent from './AwesomeComponent';
-import './Home';
+import { BTCContext } from '../context/BTCContext';
+import axios from 'axios';
+import './Home.css';
 
 export default function Home() {
-  const [data, setData] = useState(null);
+  
+  const { data, setData } = useContext(BTCContext);
+
+  const fetchData = async () => {
+    const URL = 'http://localhost:3001/cryto/btc';
+    const tokens = localStorage.getItem('token');
+    const configurations = {
+      headers: { authorization: tokens, 'Content-Type': 'application/json' },
+    };
+    return axios
+      .get(URL, configurations)
+      .then(({ data }) => setData(data.data))
+      .catch(error => setData(error));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (!data) return <AwesomeComponent />;
 
   const currents = ({ bpi }) => {
     const newObject = Object.entries(bpi);
     const arrayOfObject = [];
     newObject.map(list => {
       const valueInsideOne = list[1];
-      arrayOfObject.push(valueInsideOne);
+      return arrayOfObject.push(valueInsideOne);
     });
     return arrayOfObject.map(({ code, rate }) => (
       <div>
@@ -20,29 +41,13 @@ export default function Home() {
     ));
   };
 
-  const fetchData = async () => {
-    const URL = 'http://localhost:3001/cryto/btc';
-    const tokens = localStorage.getItem('token');
-    const configurations = {
-      headers: { authorization: tokens, 'Content-Type': 'application/json' },
-    };
-    await fetch(URL, configurations)
-      .then(response => response.json())
-      .then(({ data }) => setData(data));
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  if (data === null) {
-    return <AwesomeComponent />;
-  }
-
   return (
-    <section className="home">
-      <h1>carregou</h1>
-      {currents(data)}
-    </section>
+    <>
+      <button onClick={() => window.location.reload(false)}>
+        {' '}
+        Atualizar valor monetário{' '}
+      </button>
+      <section className="home">{currents(data)}</section>
+    </>
   );
 }
