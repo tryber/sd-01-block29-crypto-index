@@ -1,6 +1,8 @@
 import React, { createContext, useState } from 'react';
 import axios from 'axios';
+
 import PropTypes from 'prop-types';
+
 const BTCContext = createContext();
 const BTCProvider = ({ children }) => {
   const [data, setData] = useState('');

@@ -13,6 +13,21 @@ const seletion = currency => {
   });
 };
 
+const input = (write, setWrite) => (
+  <input
+    type="number"
+    value={write}
+    required
+    onChange={e => setWrite(e.target.value)}
+  />
+);
+
+const btn = (handleSubmit, write) => (
+  <button className="atualizar" onClick={handleSubmit} disabled={!write}>
+    ATUALIZAR
+  </button>
+);
+
 export default function Price() {
   const {
     read,
@@ -23,11 +38,9 @@ export default function Price() {
     handleSubmit,
     fetchDataGet,
   } = useContext(BTCContext);
-
   useEffect(() => {
     fetchDataGet();
   }, []);
-
   if (!read) {
     return <AwesomeComponent />;
   }
@@ -40,15 +53,8 @@ export default function Price() {
       </select>
       <span>Valor Atual: R${read.bpi[currency].rate}</span>
       <label htmlFor="">Novo valor</label>
-      <input
-        type="number"
-        value={write}
-        required
-        onChange={e => setWrite(e.target.value)}
-      />
-      <button className="atualizar" onClick={handleSubmit} disabled={!write}>
-        ATUALIZAR
-      </button>
+      {input(write, setWrite)}
+      {btn(handleSubmit, write)}
     </div>
   );
 }

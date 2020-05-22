@@ -6,13 +6,10 @@ import './Home.css';
 
 export default function Home() {
   const { data, fetchData } = useContext(BTCContext);
-
   useEffect(() => {
     fetchData();
   }, []);
-
   if (!data) return <AwesomeComponent />;
-
   const currents = ({ bpi }) => {
     const newObject = Object.entries(bpi);
     const arrayOfObject = [];
@@ -27,7 +24,6 @@ export default function Home() {
       </div>
     ));
   };
-
   return (
     <span>
       <button onClick={() => window.location.reload(false)}>
