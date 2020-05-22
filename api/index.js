@@ -2,10 +2,12 @@ const express = require('express');
 const fetch = require('node-fetch');
 const fs = require('fs').promises;
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const port = 3001;
 
+app.use(cors());
 app.use(express.json());
 
 const emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -21,7 +23,7 @@ app.post('/login', (req, res) => {
   if (email.match(emailRegex) && password.length === 6) {
     const token = generateToken();
     tokens.push(token);
-    return res.json({ token });
+    return res.status(200).json(token);
   }
   return res.status(400).json({ message: 'Campos inválidos' });
 });
