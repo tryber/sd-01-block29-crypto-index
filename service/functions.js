@@ -26,7 +26,7 @@ const creatorObject = (code, rate, description) => {
 };
 
 const validatorRequestBtc = ({ currency, value }) => {
-  const currencyVerificator = [currency].includes('BRL', 'EUR', 'CAD');
+  const currencyVerificator = ['BRL', 'EUR', 'CAD'].includes(currency);
   const valueVerificator = value >= 0 && Number.isInteger(value);
 
   if (!currencyVerificator)

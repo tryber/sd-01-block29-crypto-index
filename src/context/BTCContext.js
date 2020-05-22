@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 const BTCContext = createContext();
 const BTCProvider = ({ children }) => {
   const [data, setData] = useState('');
-  
-  const context = { data, setData };
+  const [read, setRead] = useState('');
+  const [write, setWrite] = useState();
+  const [currency, setCurrency] = useState('BRL');
+
+  const context = { data, setData, read, setRead, write, setWrite, currency, setCurrency };
   return <BTCContext.Provider value={context}>{children}</BTCContext.Provider>;
 };
 
