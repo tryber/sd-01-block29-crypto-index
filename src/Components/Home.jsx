@@ -1,23 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import AwesomeComponent from './AwesomeComponent';
 import { BTCContext } from '../context/BTCContext';
-import axios from 'axios';
+
 import './Home.css';
 
 export default function Home() {
-  const { data, setData } = useContext(BTCContext);
-
-  const fetchData = async () => {
-    const URL = 'http://localhost:3001/cryto/btc';
-    const tokens = localStorage.getItem('token');
-    const configurations = {
-      headers: { authorization: tokens, 'Content-Type': 'application/json' },
-    };
-    return axios
-      .get(URL, configurations)
-      .then(({ data }) => setData(data.data))
-      .catch(error => setData(error));
-  };
+  const { data, fetchData } = useContext(BTCContext);
 
   useEffect(() => {
     fetchData();
@@ -41,12 +29,12 @@ export default function Home() {
   };
 
   return (
-    <>
+    <span>
       <button onClick={() => window.location.reload(false)}>
         {' '}
         Atualizar valor monetário{' '}
       </button>
       <section className="home">{currents(data)}</section>
-    </>
+    </span>
   );
 }
