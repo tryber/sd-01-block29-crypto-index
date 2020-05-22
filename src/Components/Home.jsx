@@ -5,7 +5,6 @@ import axios from 'axios';
 import './Home.css';
 
 export default function Home() {
-  
   const { data, setData } = useContext(BTCContext);
 
   const fetchData = async () => {

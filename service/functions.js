@@ -71,6 +71,8 @@ const authorizationMiddleware = (req, res, next) => {
   return res.status(401).json({ message: 'Token inválido' });
 };
 
+
+
 module.exports = {
   validEmailOrPass,
   parseF,
