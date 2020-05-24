@@ -11,7 +11,7 @@ const app = express();
 
 const reactApp = ReactDOMServer.renderToString(<App />);
 
-app.use('^/$', (req, res, next) => {
+app.use('^/$', (_req, res) => {
   fs.readFile(
     path.resolve('./build/index.html'), 'utf-8', (err, data) => {
       if (err) {

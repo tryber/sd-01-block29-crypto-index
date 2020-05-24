@@ -1,11 +1,16 @@
 import React from 'react';
 import './App.css'
-import Login from './components/login';
+import { Provider } from './context/CryptoContext';
+// import Login from './components/login';
+import Home from './components/home';
 
 function App() {
   return (
     <div>
-      <Login />
+      <Provider>
+        {/* <Login /> */}
+        <Home />
+      </Provider>
     </div>
   );
 }
