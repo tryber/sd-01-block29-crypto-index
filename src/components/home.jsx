@@ -19,8 +19,9 @@ function ShowValues() {
         />
       </div>
       {coins.map(coin => (
-        <p key={coin[0]}>{`${coin[0]}: ${coin[1].rate_float * updateBitcon}`
-        }</p>
+        <p key={coin[0]}>
+          {`${coin[0]}: ${coin[1].rate_float * updateBitcon}`}
+        </p>
       ))}
     </div>
   );

@@ -10,6 +10,7 @@ const CryptoProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState();
   const [userPassword, setUserPassword] = useState();
   const [updateBitcon, setUpdateBitcoin] = useState(1);
+  const [selectedCoin, setSelectedCoin] = useState();
 
   const getData = async () => {
     return axios.get('http://localhost:3001/crypto/btc',
@@ -20,9 +21,11 @@ const CryptoProvider = ({ children }) => {
 
   const context = {
     data,
+    selectedCoin,
     userEmail,
     userPassword,
     updateBitcon,
+    setSelectedCoin,
     setUserEmail,
     setUserPassword,
     setUpdateBitcoin,
