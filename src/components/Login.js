@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import '../style/Login.css';
 
@@ -36,10 +36,28 @@ function inputPassword(setUserPassword) {
   );
 }
 
+const body = { email: 1, password: 123456 };
+  const fetchPost = async (email, password) => {
+  return fetch('https://httpbin.org/post', {
+        method: 'post',
+        body:    JSON.stringify({ email, password }),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => res.json())
+    .then(json => json.data);
+}
+
+
 function Login() {
   const [_userPassword, setUserPassword] = useState();
   const [shouldRedirect, setRedirect] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+
+  useEffect( async () => {
+    const value = await fetchPost()
+    console.log(value)
+  });
+
   if (shouldRedirect) return <Redirect to="/receitas" />;
   return (
     <div className="login">

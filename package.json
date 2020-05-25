@@ -28,7 +28,8 @@
     "test": "react-scripts test",
     "test:api": "jest ./server/*.test.js",
     "eject": "react-scripts eject",
-    "ssr": "node server/index.js"
+    "ssr": "node server/index.js",
+    "nodemon": "nodemon api"
   },
   "eslintConfig": {
     "extends": "react-app"
