@@ -24,7 +24,7 @@ function FormLogin() {
       <label className="password" htmlFor="password">
         password:
         <input
-          className="input-password"
+        className="input-password"
           type="password"
           name="password"
           value={userPassword}
@@ -37,13 +37,14 @@ function FormLogin() {
   );
 }
 
-// const request = () => {
-//   return {
-//     { headers: { authorization: getLocalStorage(), 'Content-Type': 'application/json' } },
-//     { body: JSON.stringify({ currency, value: parseInt(currencyValue, 10) }) }
-//   );
-// }
-// };
+function SendingRequestAndGettingTokenToUser(userEmail, userPassword) {
+  axios.post('http://localhost:3001/login', {
+    email: userEmail,
+    password: userPassword
+  }).then((response) => {
+    if (response.status = 200) saveLocalStorage(response.data.token);
+  }).catch(err => console.log(err));
+}
 
 export default function Login() {
   const { userEmail, userPassword } = useContext(CryptoContext);

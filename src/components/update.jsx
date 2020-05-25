@@ -1,21 +1,21 @@
 import React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { CryptoContext } from '../context/CryptoContext';
 
 function CurrencyUpdateForm() {
-  const { data, selectedCoin, setSelectedCoin } = useContext(CryptoContext);
-  
+  const { selectedCoin, setSelectedCoin, currentCurrencyValue } = useContext(CryptoContext);
+
   return (
     <div>
       <label>
         Moeda
         <select value={selectedCoin} onChange={(e) => setSelectedCoin(e.target.value)}>
-          <option value="1">BRL</option>
-          <option value="2">EUR</option>
-          <option value="3">CAD</option>
+          <option value='BRL'>BRL</option>
+          <option value='EUR'>EUR</option>
+          <option value='CAD'>CAD</option>
         </select><br />
       </label>
-        <span>Valor Atual: {selectedCoin} </span><br />
+        <span>Valor Atual: {currentCurrencyValue[selectedCoin]} </span><br />
         <label>
           Novo Valor
           <input type="number" />
@@ -25,15 +25,13 @@ function CurrencyUpdateForm() {
   );
 }
 
-function gerCurrency() {
-  axios.post('http://localhost:3001/crypto/btc', {
-      currency: "BRL",
-      value: 10000.0
-  }).then((response) => {
-    if (response.status = 200) saveLocalStorage(response.data.token);
-  }).catch(err => console.log(err));
-
 export default function Update() {
+  const { getCurrency } = useContext(CryptoContext);
+
+  useEffect(() => {
+    getCurrency();
+  }, []);
+
   return (
     <div>
       {CurrencyUpdateForm()}
