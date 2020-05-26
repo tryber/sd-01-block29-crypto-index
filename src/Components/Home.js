@@ -23,7 +23,7 @@ function Home() {
     <div>
       <label htmlFor="btc-value">BTC: </label>
       <input type="number" name="btc-value" onChange={e => setBtcValue(e.target.value)} />
-      {Object.entries(coinTypes).map((type) => type[0])
+      {Object.entries(coinTypes).map(type => type[0])
       .map((coinType => <p>{coinType} - {values[coinType].rate_float * btcValue}</p>))}
     </div>
   );
