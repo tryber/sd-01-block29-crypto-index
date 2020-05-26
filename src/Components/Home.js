@@ -20,7 +20,7 @@ function Home() {
   const { BTC, ...currencyTypes } = currencies;
   if (btcValue < 1) setBtcValue(1);
   return (
-    <div>
+    <div className="content">
       <label htmlFor="btc-value">BTC: </label>
       <input type="number" name="btc-value" onChange={e => setBtcValue(e.target.value)} />
       {Object.entries(currencyTypes).map(type => type[0])

@@ -1,3 +1,48 @@
+.content {
+  margin: 50px;
+}
+
 .bg-red {
-    background-color: purple;
+  background-color: purple;
+}
+
+.login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+  justify-content: center;
+  width: 100%;
+}
+
+.login .login-form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.login .form-input {
+  border: 1px solid black;
+  font-size: 17px;
+  height: 30px;
+  margin: 10px;
+  padding: 3px;
+  text-align: center;
+  width: 80%;
+}
+
+.login .form-submit {
+  background-color: lightgreen;
+  border: 1px solid black;
+  font-size: 20px;
+  height: 70px;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.login .invalid-feedback {
+  color: red;
+  font-size: 13px;
+  text-align: center;
 }

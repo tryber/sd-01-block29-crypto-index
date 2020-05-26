@@ -32,7 +32,7 @@ function UpdateCurrency() {
   }, [update]);
 
   return (
-    <div>
+    <div className="content">
       <label htmlFor="currency">Moeda:</label>
       <select name="currency" onChange={e => setCurrency(e.target.value)}>
         <option value="BRL">BRL</option>

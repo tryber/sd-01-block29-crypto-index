@@ -29,11 +29,11 @@ function Login() {
       <form className="login-form" onSubmit={e => handleSubmit(e, setErrorMessage)}>
         <input
           required type="email" name="email" placeholder="Digite seu Email"
-          onChange={e => setUserEmail(e.target.value)}
+          className="form-input" onChange={e => setUserEmail(e.target.value)}
         />
         <input
           required type="password" minLength="6" maxLength="6"
-          name="password" placeholder="Digite sua Senha"
+          name="password" placeholder="Digite sua Senha" className="form-input"
           onChange={e => setUserPassword(Number(e.target.value))}
         />
         {errorMessage && <p id="error-msg">{errorMessage}</p>}
