@@ -19,29 +19,34 @@ function changeCurrencyValue(selectedCoin, changeValueCurrency) {
       if (data.message === 'Valor alterado com sucesso!')
         console.log(data.message);
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
+}
+
+function ViewCurrencyValue() {
+  const { selectedCoin, setSelectedCoin } = useContext(CryptoContext);
+  return (
+    <label>
+      Moeda
+      <select value={selectedCoin} onChange={(e) => setSelectedCoin(e.target.value)}>
+        <option value='BRL'>BRL</option>
+        <option value='EUR'>EUR</option>
+        <option value='CAD'>CAD</option>
+      </select><br />
+    </label>
+  );
 }
 
 function CurrencyUpdateForm() {
   const {
     changeValueCurrency,
     selectedCoin,
-    setSelectedCoin,
     currentCurrencyValue,
     setChangeValueCurrency
   } = useContext(CryptoContext);
 
   return (
     <div>
-      <label>
-        Moeda
-        <select value={selectedCoin} onChange={(e) => setSelectedCoin(e.target.value)}>
-          <option value='BRL'>BRL</option>
-          <option value='EUR'>EUR</option>
-          <option value='CAD'>CAD</option>
-        </select><br />
-      </label>
-      <span>Valor Atual: {`${currentCurrencyValue[selectedCoin]}`} </span><br />
+      <span>Valor Atual: {`${currentCurrencyValue[selectedCoin]}`}</span><br />
       <label>
         Novo Valor
           <input type="number" onChange={(event) => setChangeValueCurrency(event.target.value)} />
@@ -59,6 +64,7 @@ function CurrencyUpdateForm() {
 export default function Update() {
   return (
     <div>
+      {ViewCurrencyValue()}
       {CurrencyUpdateForm()}
     </div>
   );

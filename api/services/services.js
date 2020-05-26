@@ -1,5 +1,7 @@
 const fs = require('fs').promises;
+
 const path = require('path');
+
 const fileName = 'currencies.json';
 
 const { getToken } = require('../login');
