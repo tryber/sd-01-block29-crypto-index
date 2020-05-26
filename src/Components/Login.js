@@ -10,9 +10,9 @@ async function handleSubmit(event) {
   const email = event.target.email.value;
   const password = event.target.password.value;
   const body = { email, password };
-  const res = await fetch("http://localhost:3001/login", { method: 'post', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' } });
+  const res = await fetch('http://localhost:3001/login', { method: 'post', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' } });
   if (res.status !== 200) {
-    const errorMessage = document.querySelector('#error-msg');
+    const errorMessage = Document.querySelector('#error-msg');
     const data = await res.json();
     errorMessage.textContent = `${errorMessage.textContent} ${data.message}`;
     errorMessage.hidden = false;
@@ -28,12 +28,12 @@ function Login() {
   return (
     <div className="login">
       <h1>Login</h1>
-      <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
+      <form className="login-form" onSubmit={e => handleSubmit(e)}>
         <input
           required type="email"
           name="email"
           placeholder="Digite seu Email"
-          onChange={(e) => setUserEmail(e.target.value)}
+          onChange={e => setUserEmail(e.target.value)}
         />
         <input
           required type="password"
@@ -43,7 +43,11 @@ function Login() {
           onChange={(e) => setUserPassword(Number(e.target.value))}
         />
         <p id="error-msg" hidden>Erro: </p>
-        <input className="form-submit" type="submit" value="Entrar" disabled={!validateFields(userEmail, userPassword)} />
+        <input
+          className="form-submit"
+          type="submit" value="Entrar"
+          disabled={!validateFields(userEmail, userPassword)}
+        />
       </form>
     </div>
   );
