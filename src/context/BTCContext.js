@@ -49,17 +49,13 @@ const BTCProvider = ({ children }) => {
     return axios
       .post(URL, body, configurations)
       .then(({ data }) => console.log('data', data))
-      .catch(err => console.log(err.response.data.message));
+      .catch(err => console.error(err.response.data.message));
   };
 
   const context = {
-    data,
     setData,
-    read,
     setRead,
-    write,
     setWrite,
-    currency,
     setCurrency,
     fetchData,
     fetchDataGet,
