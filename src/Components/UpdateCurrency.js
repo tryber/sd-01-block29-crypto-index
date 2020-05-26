@@ -9,7 +9,7 @@ async function getDolarPrices(setDolarPrices) {
   setDolarPrices(currencies);
 }
 
-async function updateCurrencyValue(currencyValue, selectedCurrency, setUpdate) {
+async function updateData(currencyValue, selectedCurrency, setUpdate) {
   const updatedCurrency = { currency: selectedCurrency, value: Number(currencyValue) };
   const response = await fetch('http://localhost:3001/crypto/btc', {
     method: 'post',
@@ -42,7 +42,7 @@ function UpdateCurrency() {
       <p><strong>Valor atual:</strong> {dolarPrices[selectedCurrency]}</p>
       <label htmlFor="btc-value">Novo valor: </label>
       <input type="number" name="btc-value" onChange={e => setCurrencyValue(e.target.value)} />
-      <button type="button" onClick={() => updateCurrencyValue(currencyValue, selectedCurrency, setUpdate)}>
+      <button type="button" onClick={() => updateData(currencyValue, selectedCurrency, setUpdate)}>
         ATUALIZAR
       </button>
     </div>
