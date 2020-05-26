@@ -44,7 +44,7 @@ function CurrencyUpdateForm() {
       <span>Valor Atual: {`${currentCurrencyValue[selectedCoin]}`} </span><br />
       <label>
         Novo Valor
-          <input type="number" onChange={(event) => setChangeValueCurrency(parseInt(event.target.value))} />
+          <input type="number" onChange={(event) => setChangeValueCurrency(event.target.value)} />
         <button
           type="button"
           onClick={() => changeCurrencyValue(selectedCoin, changeValueCurrency)}

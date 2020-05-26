@@ -4,10 +4,10 @@ import axios from 'axios';
 import { saveLocalStorage } from '../services/services';
 import './login.css';
 
-function FormLogin() {
-  const { userEmail, userPassword, setUserEmail, setUserPassword } = useContext(CryptoContext);
+function FormLoginUser() {
+  const { userEmail, setUserEmail } = useContext(CryptoContext);
   return (
-    <form>
+    <section>
       <label className="email" htmlFor="email">
         email:
         <input
@@ -20,11 +20,18 @@ function FormLogin() {
           required
         />
       </label>
+    </section>
+  );
+}
 
+function FormLoginPassword() {
+  const { userPassword, setUserPassword } = useContext(CryptoContext);
+  return (
+    <section>
       <label className="password" htmlFor="password">
         password:
         <input
-        className="input-password"
+          className="input-password"
           type="password"
           name="password"
           value={userPassword}
@@ -33,7 +40,7 @@ function FormLogin() {
           required
         />
       </label>
-    </form>
+    </section>
   );
 }
 
@@ -51,7 +58,8 @@ export default function Login() {
 
   return (
     <div>
-      {FormLogin()}
+      {FormLoginUser()}
+      {FormLoginPassword()}
       <button
         className="form-submit"
         type="submit"
