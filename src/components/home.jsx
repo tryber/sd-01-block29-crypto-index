@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { CryptoContext } from '../context/CryptoContext';
 
 function ShowValues() {
@@ -28,12 +28,6 @@ function ShowValues() {
 };
 
 function Home() {
-  const { getData } = useContext(CryptoContext);
-
-  useEffect(() => {
-    getData();
-  }, []);
-
   return (
     <div>
       {ShowValues()}

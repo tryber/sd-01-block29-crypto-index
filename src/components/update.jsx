@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import axios from 'axios';
 import { CryptoContext } from '../context/CryptoContext';
 import { getLocalStorage } from '../services/services';
@@ -57,12 +57,6 @@ function CurrencyUpdateForm() {
 }
 
 export default function Update() {
-  const { getCurrency } = useContext(CryptoContext);
-
-  useEffect(() => {
-    getCurrency();
-  }, []);
-
   return (
     <div>
       {CurrencyUpdateForm()}

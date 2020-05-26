@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { getLocalStorage } from '../services/services';
@@ -28,12 +28,16 @@ const CryptoProvider = ({ children }) => {
       .catch(error => setCurrenctCurrencyValue(error));
   };
 
+  useEffect(() => {
+    getCurrency();
+    getData();
+  }, []);
+
   const context = {
     changeValueCurrency,
     currentCurrencyValue,
     data,
     selectedCoin,
-    getCurrency,
     userEmail,
     userPassword,
     updateBitcon,
@@ -42,7 +46,6 @@ const CryptoProvider = ({ children }) => {
     setUserEmail,
     setUserPassword,
     setUpdateBitcoin,
-    getData
   };
 
   return (

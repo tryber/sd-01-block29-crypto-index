@@ -2,16 +2,14 @@ import React, { useContext } from 'react';
 import { CryptoContext } from '../context/CryptoContext';
 import axios from 'axios';
 import { saveLocalStorage } from '../services/services';
-import './login.css';
 
 function FormLoginUser() {
   const { userEmail, setUserEmail } = useContext(CryptoContext);
   return (
     <section>
-      <label className="email" htmlFor="email">
+      <label htmlFor="email">
         email:
         <input
-          className="input-email"
           type="email"
           name="email"
           value={userEmail}
@@ -28,10 +26,9 @@ function FormLoginPassword() {
   const { userPassword, setUserPassword } = useContext(CryptoContext);
   return (
     <section>
-      <label className="password" htmlFor="password">
+      <label htmlFor="password">
         password:
         <input
-          className="input-password"
           type="password"
           name="password"
           value={userPassword}
@@ -61,7 +58,6 @@ export default function Login() {
       {FormLoginUser()}
       {FormLoginPassword()}
       <button
-        className="form-submit"
         type="submit"
         onClick={() => SendingRequestAndGettingTokenToUser(userEmail, userPassword)}
       >
