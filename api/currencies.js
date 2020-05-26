@@ -1,5 +1,7 @@
 const express = require('express');
+
 const fs = require('fs').promises;
+
 const path = require('path');
 
 const currencyLogin = express.Router();
@@ -10,7 +12,7 @@ currencyLogin.get('/', async (_req, res) => {
     res.type('application/json').send(content);
   } catch (err) {
     console.error(`Não foi possível ler o arquivo ${'currencies.json'}\nErro: ${err}`);
-    return res.json({ message: "Erro ao ler o arquivo" });
+    return res.json({ message: 'Erro ao ler o arquivo' });
   }
 });
 

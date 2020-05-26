@@ -13,30 +13,6 @@ const {
   verifyValue,
 } = require('./services/services');
 
-router.use(authorizationMiddleware);
-
-router.get('/btc', async (_req, res) => {
-  const { data } = await axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
-  const readCurrenciasJson = await readLocalCurrencies();
-  const currenciesJson = createObject(readCurrenciasJson, data);
-  res.json(currenciesJson);
-});
-
-router.post('/btc', async (req, res) => {
-  const { currency, value } = req.body;
-
-  if (!verifyCurrency(currency)) return res.status(400).json({ message: 'Moeda Inválida' });
-  if (!verifyValue(value)) return res.status(400).json({ message: 'Valor Inválido' });
-  const getLocalCurrencies = await readLocalCurrencies();
-  const obj = { ...getLocalCurrencies, [currency]: `${value}` };
-  try {
-    await fs.writeFile(path.resolve(__dirname, 'currencies.json'), JSON.stringify(obj));
-    res.json({ message: 'Valor alterado com sucesso!' });
-  } catch (err) {
-    res.json({ message: 'Algo deu errado!', err });
-  }
-});
-
 const createObject = (readLocalCurrencies, data) => {
   const { bpi } = data;
   const index = Object.entries(readLocalCurrencies)
@@ -58,5 +34,29 @@ const createObject = (readLocalCurrencies, data) => {
 
   return index;
 };
+
+router.get('/btc', async (_req, res) => {
+  const { data } = await axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
+  const readCurrenciasJson = await readLocalCurrencies();
+  const currenciesJson = createObject(readCurrenciasJson, data);
+  res.json(currenciesJson);
+});
+
+router.use(authorizationMiddleware);
+
+router.post('/btc', async (req, res) => {
+  const { currency, value } = req.body;
+
+  if (!verifyCurrency(currency)) return res.status(400).json({ message: 'Moeda Inválida' });
+  if (!verifyValue(value)) return res.status(400).json({ message: 'Valor Inválido' });
+  const getLocalCurrencies = await readLocalCurrencies();
+  const obj = { ...getLocalCurrencies, [currency]: `${value}` };
+  try {
+    await fs.writeFile(path.resolve(__dirname, 'currencies.json'), JSON.stringify(obj));
+    res.json({ message: 'Valor alterado com sucesso!' });
+  } catch (err) {
+    res.json({ message: 'Algo deu errado!', err });
+  }
+});
 
 module.exports = router;
