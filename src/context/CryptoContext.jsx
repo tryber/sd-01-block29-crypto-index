@@ -12,6 +12,7 @@ const CryptoProvider = ({ children }) => {
   const [updateBitcon, setUpdateBitcoin] = useState(1);
   const [selectedCoin, setSelectedCoin] = useState('BRL');
   const [currentCurrencyValue, setCurrenctCurrencyValue] = useState({});
+  const [changeValueCurrency, setChangeValueCurrency] = useState();
 
   const getData = async () => {
     return axios.get('http://localhost:3001/crypto/btc',
@@ -28,6 +29,7 @@ const CryptoProvider = ({ children }) => {
   };
 
   const context = {
+    changeValueCurrency,
     currentCurrencyValue,
     data,
     selectedCoin,
@@ -35,6 +37,7 @@ const CryptoProvider = ({ children }) => {
     userEmail,
     userPassword,
     updateBitcon,
+    setChangeValueCurrency,
     setSelectedCoin,
     setUserEmail,
     setUserPassword,
