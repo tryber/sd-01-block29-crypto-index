@@ -4,27 +4,27 @@ function getAuthenticationToken() {
   return localStorage.getItem('token');
 }
 
-async function getFloatValues(setValues) {
-  const values = await fetch('http://localhost:3001/crypto/btc', { headers: { authorization: getAuthenticationToken() } }).then(res => res.json());
-  setValues(values.bpi);
+async function getCurrencyDetails(setCurrencies) {
+  const currencies = await fetch('http://localhost:3001/crypto/btc', { headers: { authorization: getAuthenticationToken() } }).then(res => res.json());
+  setCurrencies(currencies.data.bpi);
 }
 
 function Home() {
-  const [values, setValues] = useState({});
+  const [currencies, setCurrencies] = useState({});
   const [btcValue, setBtcValue] = useState(1);
 
   useEffect(() => {
-    getFloatValues(setValues);
+    getCurrencyDetails(setCurrencies);
   }, []);
 
-  const { BTC, ...coinTypes } = values;
+  const { BTC, ...currencyTypes } = currencies;
   if (btcValue < 1) setBtcValue(1);
   return (
     <div>
       <label htmlFor="btc-value">BTC: </label>
       <input type="number" name="btc-value" onChange={e => setBtcValue(e.target.value)} />
-      {Object.entries(coinTypes).map(type => type[0])
-      .map((coinType => <p>{coinType} - {values[coinType].rate_float * btcValue}</p>))}
+      {Object.entries(currencyTypes).map(type => type[0])
+      .map((coinType => <p>{coinType} - {currencies[coinType].rate_float * btcValue}</p>))}
     </div>
   );
 }

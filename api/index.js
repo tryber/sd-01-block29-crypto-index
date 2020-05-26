@@ -46,7 +46,7 @@ app.get('/crypto/btc', async (req, res) => {
   }, data.bpi);
 
   data.bpi = newBPI;
-  res.json(data);
+  res.json({ currencies, data });
 });
 
 app.post('/crypto/btc', async (req, res) => {
