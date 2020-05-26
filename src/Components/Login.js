@@ -30,18 +30,15 @@ function Login() {
       <h1>Login</h1>
       <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
         <input
-          required
+          required type="email"
           name="email"
-          type="email"
           placeholder="Digite seu Email"
           onChange={(e) => setUserEmail(e.target.value)}
         />
         <input
-          required
-          minLength="6"
-          maxLength="6"
+          required type="password"
+          minLength="6" maxLength="6"
           name="password"
-          type="password"
           placeholder="Digite sua Senha"
           onChange={(e) => setUserPassword(Number(e.target.value))}
         />
