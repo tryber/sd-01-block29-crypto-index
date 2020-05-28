@@ -1,5 +1,4 @@
 const express = require('express');
-const fetch = require('node-fetch');
 const fs = require('fs').promises;
 const path = require('path');
 const cors = require('cors');
@@ -39,7 +38,7 @@ app.get('/crypto/btc', rescue(async (req, res, next) => {
   if (validateToken(req.headers.authorization)) return res.status(401).json({ message: 'Token inválido' });
 
   const response = await axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json', { timeout: 3000 })
-    .catch((err) => ({ hasError: true, data: err.response }));
+    .catch(err => ({ hasError: true, data: err.response }));
 
   if (response.hasError) return !response.data ? res.status(503).json({ message: 'coinbase service not available' }) : next(response.data);
   const data = await response.data;

@@ -1,4 +1,4 @@
-const rescue = (fn) => async (req, res, next) => {
+const rescue = fn => async (req, res, next) => {
   try {
     await fn(req, res, next);
   } catch (e) {
