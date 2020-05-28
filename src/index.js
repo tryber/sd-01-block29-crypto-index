@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { hydrate } from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 const raiz = document.getElementById('root');
 
 const superFather = (page, toot) => {
-  ReactDOM.hydrate(page, toot);
+  hydrate(page, toot);
   return serviceWorker.unregister();
 };
 

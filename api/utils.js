@@ -2,7 +2,7 @@ const path = require('path');
 
 const fs = require('fs').promises;
 
-const { isTokenValid } = require('../api/token');
+const { isTokenValid } = require('./token');
 
 const validEmailOrPass = (validator, regex) => {
   if (!validator) return false;

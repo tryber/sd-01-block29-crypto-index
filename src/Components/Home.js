@@ -2,8 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import AwesomeComponent from './AwesomeComponent';
 import { BTCContext } from '../context/BTCContext';
 
-import './Home.css';
-
 export default function Home() {
   const { data, fetchData } = useContext(BTCContext);
   useEffect(() => {

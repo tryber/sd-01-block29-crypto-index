@@ -1,6 +1,8 @@
 const express = require('express');
 
-const { validEmailOrPass } = require('../service/functions');
+const rescue = require('./rescue')
+
+const { validEmailOrPass } = require('./utils');
 const { generateToken } = require('./token');
 
 const router = express.Router();
@@ -23,6 +25,6 @@ const callBackRequestLogin = (req, res) => {
   return res.status(400).send({ mensagem: 'Campos inválidos' });
 };
 
-router.post('/login', callBackRequestLogin);
+router.post('/login', rescue(callBackRequestLogin));
 
 module.exports = router;
