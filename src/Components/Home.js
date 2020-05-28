@@ -17,7 +17,7 @@ function Home() {
     getCurrencyDetails(setCurrencies);
   }, []);
 
-  const { BTC, ...currencyTypes } = currencies;
+  const { BTC: _BTC, ...currencyTypes } = currencies;
   if (btcValue < 1) setBtcValue(1);
   return (
     <div className="content">
