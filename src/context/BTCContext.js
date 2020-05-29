@@ -29,8 +29,8 @@ const BTCProvider = ({ children }) => {
   };
 
   const fetchDataGet = async () => {
-    const { data:{ data } } = await axios.get(URL, configurations);
-    return setRead(data);
+    const { data } = await axios.get(URL, configurations);
+    return setRead(data.data);
   };
 
   const handleSubmit = async () => axios.post(URL, body, configurations);
