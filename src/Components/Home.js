@@ -17,13 +17,12 @@ function Home() {
     getCurrencyDetails(setCurrencies);
   }, []);
 
-  const { BTC: _BTC, ...currencyTypes } = currencies;
   if (btcValue < 1) setBtcValue(1);
   return (
     <div className="content">
       <label htmlFor="btc-value">BTC: </label>
       <input type="number" name="btc-value" onChange={e => setBtcValue(e.target.value)} />
-      {Object.entries(currencyTypes).map(type => type[0])
+      {Object.entries(currencies).map(type => type[0])
       .map((coinType => <p>{coinType} - {currencies[coinType].rate_float * btcValue}</p>))}
     </div>
   );
