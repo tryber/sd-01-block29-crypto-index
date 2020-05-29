@@ -19,7 +19,7 @@ const URL = (currency = 'currentprice.json') =>
 
 const getSomeData = () =>
   axios
-    .get(URL(), { timeout: parseInt(process.env.COINBASE_API_TIMEOUT) })
+    .get(URL(), { timeout: parseInt(process.env.COINBASE_API_TIMEOUT, 10) })
     .then(({ data }) => data);
 
 const bitcoin = {
