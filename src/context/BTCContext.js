@@ -18,10 +18,8 @@ const BTCProvider = ({ children }) => {
     const configurations = {
       headers: { authorization: tokens, 'Content-Type': 'application/json' },
     };
-    return axios
-      .get(URL, configurations)
-      .then(({ data }) => setData(data.data))
-      .catch(error => setData(error));
+    const { data } = await axios.get(URL, configurations);
+    return setData(data.data);
   };
 
   const fetchDataGet = async () => {
@@ -30,12 +28,9 @@ const BTCProvider = ({ children }) => {
     const configurations = {
       headers: { authorization: tokens, 'Content-Type': 'application/json' },
     };
-    return axios
-      .get(URL, configurations)
-      .then(({ data }) => {
-        setRead(data.data);
-      })
-      .catch(error => setRead(error));
+
+    const { data } = await axios.get(URL, configurations);
+    return setRead(data.data);
   };
 
   const handleSubmit = async () => {
@@ -48,10 +43,7 @@ const BTCProvider = ({ children }) => {
       currency,
       value: Number(write),
     };
-    return axios
-      .post(URL, body, configurations)
-      .then(({ data }) => console.log('data', data))
-      .catch(err => console.error(err.response.data.message));
+    return await axios.post(URL, body, configurations);
   };
 
   const context = {
