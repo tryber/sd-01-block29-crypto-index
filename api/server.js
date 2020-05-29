@@ -19,6 +19,6 @@ app.use('*', (_req, res) =>
   })
 );
 
-app.use((error, _req, res, _next)=> res.status(500).json(error.message));
+app.use((error, _req, res, _next)=> res.status(500).json({ message: error.message }));
 
 module.exports = app;

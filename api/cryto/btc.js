@@ -17,7 +17,8 @@ const router = express.Router();
 const URL = (currency = 'currentprice.json') =>
   `https://api.coindesk.com/v1/bpi/${currency}`;
 
-const getSomeData = () => axios.get(URL()).then(({ data }) => data);
+const getSomeData = () =>
+  axios.get(URL(), { timeout: parseInt(process.env.COINBASE_API_TIMEOUT) }).then(({ data }) => data);
 
 const bitcoin = {
   code: 'BTC',
@@ -27,18 +28,18 @@ const bitcoin = {
 };
 
 const callBackrequestGet = async (__req, res, next) => {
-  const data = await getSomeData().catch(error => ({
+  const apiData = await getSomeData().catch(error => ({
     hasError: true,
-    data: error.response,
+    response: error.response,
   }));
 
-  if (data.hasError)
-    return !data.data
+  if (apiData.hasError)
+    return !apiData.response
       ? res.status(503).json({ message: 'coinbase service not available' })
-      : next(data.data);
+      : next({ message: apiData.response.data });
 
   const read = await fileModifier('read');
-  const { rate_float: rate } = data.bpi.USD;
+  const { rate_float: rate } = apiData.bpi.USD;
   const { BRL: real, CAD: dolCad } = read;
 
   const BTCReais = rate * parseF(real, 2);
@@ -48,13 +49,11 @@ const callBackrequestGet = async (__req, res, next) => {
   const CAD = { CAD: creatorObject('CAD', BTCDolCad, 'Canadian Dollar') };
   const BTC = { BTC: bitcoin };
 
-  Object.assign(data.bpi, BRL);
-  Object.assign(data.bpi, CAD);
-  Object.assign(data.bpi, BTC);
+  Object.assign(apiData.bpi, BRL);
+  Object.assign(apiData.bpi, CAD);
+  Object.assign(apiData.bpi, BTC);
 
-  if (data) return res.status(200).send({ data });
-
-  return res.status(400).send({ mensagem: 'Campos inválidos' });
+  return res.status(200).send({ data: apiData });
 };
 
 const callBackRequestPost = async (req, res) => {
@@ -72,8 +71,8 @@ const callBackRequestPost = async (req, res) => {
 
 router.use(authorizationMiddleware);
 
-router.post('/cryto/btc', rescue(callBackRequestPost));
+router.post('/crypto/btc', rescue(callBackRequestPost));
 
-router.get('/cryto/btc', rescue(callBackrequestGet));
+router.get('/crypto/btc', rescue(callBackrequestGet));
 
 module.exports = router;

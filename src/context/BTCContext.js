@@ -11,7 +11,7 @@ const BTCProvider = ({ children }) => {
   const [currency, setCurrency] = useState('BRL');
 
   const fetchData = async () => {
-    const URL = 'http://localhost:3001/cryto/btc';
+    const URL = 'http://localhost:3001/crypto/btc';
     const tokens = localStorage.getItem('token');
     const configurations = {
       headers: { authorization: tokens, 'Content-Type': 'application/json' },
@@ -23,7 +23,7 @@ const BTCProvider = ({ children }) => {
   };
 
   const fetchDataGet = async () => {
-    const URL = 'http://localhost:3001/cryto/btc';
+    const URL = 'http://localhost:3001/crypto/btc';
     const tokens = localStorage.getItem('token');
     const configurations = {
       headers: { authorization: tokens, 'Content-Type': 'application/json' },
@@ -37,7 +37,7 @@ const BTCProvider = ({ children }) => {
   };
 
   const handleSubmit = async () => {
-    const URL = 'http://localhost:3001/cryto/btc';
+    const URL = 'http://localhost:3001/crypto/btc';
     const tokens = localStorage.getItem('token');
     const configurations = {
       headers: { authorization: tokens, 'Content-Type': 'application/json' },
