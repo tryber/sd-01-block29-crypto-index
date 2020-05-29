@@ -27,7 +27,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:api": "jest ./server/*.test.js",
+    "test:api": "jest --coverage",
     "eject": "react-scripts eject",
     "ssr": "node server/index.js"
   },
@@ -47,6 +47,9 @@
     ]
   },
   "devDependencies": {
+    "axiosist": "^0.9.0",
+    "jest": "^26.0.1",
+    "nock": "^12.0.3",
     "supertest": "^4.0.2"
   }
 }

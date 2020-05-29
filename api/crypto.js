@@ -13,9 +13,9 @@ const {
   verifyValue,
 } = require('./services/services');
 
-const createObject = (readLocalCurrencies, data) => {
+const createObject = (readCurrenciasJson, data) => {
   const { bpi } = data;
-  const index = Object.entries(readLocalCurrencies)
+  const index = Object.entries(readCurrenciasJson)
     .map(coin => (
       {
         [coin[0]]:
@@ -36,7 +36,12 @@ const createObject = (readLocalCurrencies, data) => {
 };
 
 router.get('/btc', async (_req, res) => {
-  const { data } = await axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json');
+  const timeout = parseInt(process.env.COINBASE_API_TIMEOUT || 3000);
+  const { data, error } = await axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json', { timeout })
+    .catch(err => ({ error: { data: err.response } }));
+  if (error) return !error.data
+    ? res.status(503).json({ message: 'coinbase service not available' })
+    : res.status(500).json(error.data);
   const readCurrenciasJson = await readLocalCurrencies();
   const currenciesJson = createObject(readCurrenciasJson, data);
   res.json(currenciesJson);
