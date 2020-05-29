@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const input = (className, email, onChange, placeholder) => (
@@ -49,7 +49,5 @@ function Login() {
     </section>
   );
 }
-
-
 
 export default Login;

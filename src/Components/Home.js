@@ -2,6 +2,15 @@ import React, { useContext, useEffect } from 'react';
 import AwesomeComponent from './AwesomeComponent';
 import { BTCContext } from '../context/BTCContext';
 
+const btn = (currents, data) => (
+  <span>
+    <button onClick={() => window.location.reload(false)}>
+      Atualizar valor monetário
+    </button>
+    <section className="home">{currents(data)}</section>
+  </span>
+);
+
 export default function Home() {
   const { data, fetchData } = useContext(BTCContext);
   useEffect(() => {
@@ -22,13 +31,5 @@ export default function Home() {
       </div>
     ));
   };
-  return (
-    <span>
-      <button onClick={() => window.location.reload(false)}>
-        {' '}
-        Atualizar valor monetário{' '}
-      </button>
-      <section className="home">{currents(data)}</section>
-    </span>
-  );
+  return <div>{btn(currents, data)}</div>;
 }
