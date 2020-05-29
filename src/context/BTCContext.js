@@ -12,40 +12,29 @@ const BTCProvider = ({ children }) => {
 
   console.log(data, read);
 
+  const URL = 'http://localhost:3001/crypto/btc';
+  const tokens = localStorage.getItem('token');
+  const configurations = {
+    headers: { authorization: tokens, 'Content-Type': 'application/json' },
+  };
+
+  const body = {
+    currency,
+    value: Number(write),
+  };
+
   const fetchData = async () => {
-    const URL = 'http://localhost:3001/crypto/btc';
-    const tokens = localStorage.getItem('token');
-    const configurations = {
-      headers: { authorization: tokens, 'Content-Type': 'application/json' },
-    };
     const { data } = await axios.get(URL, configurations);
     return setData(data.data);
   };
 
   const fetchDataGet = async () => {
-    const URL = 'http://localhost:3001/crypto/btc';
-    const tokens = localStorage.getItem('token');
-    const configurations = {
-      headers: { authorization: tokens, 'Content-Type': 'application/json' },
-    };
-
-    const { data } = await axios.get(URL, configurations);
-    return setRead(data.data);
+    const { data:{ data } } = await axios.get(URL, configurations);
+    return setRead(data);
   };
 
-  const handleSubmit = async () => {
-    const URL = 'http://localhost:3001/crypto/btc';
-    const tokens = localStorage.getItem('token');
-    const configurations = {
-      headers: { authorization: tokens, 'Content-Type': 'application/json' },
-    };
-    const body = {
-      currency,
-      value: Number(write),
-    };
-    return await axios.post(URL, body, configurations);
-  };
-
+  const handleSubmit = async () => axios.post(URL, body, configurations);
+  
   const context = {
     setData,
     setRead,
