@@ -7,7 +7,7 @@ import App from '../src/App.js';
 const app = express();
 const reactApp = renderToString(<App />);
 
-const callBack = (err, data) => {
+const getCallBack = (res) => (err, data) => {
   if (err) {
     console.log(err);
     return res.status(500).send('Algo deu errado :(');
@@ -18,7 +18,7 @@ const callBack = (err, data) => {
 }
 app.use('^/$', (_req, res, _next) => {
   fs.readFile(
-    path.resolve('./build/index.html'), 'utf-8',callBack
+    path.resolve('./build/index.html'), 'utf-8', getCallBack(res)
   );
 });
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
