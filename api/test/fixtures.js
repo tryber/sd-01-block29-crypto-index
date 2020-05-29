@@ -35,19 +35,25 @@ const success = {
 };
 
 const validData = {
-  "currency": "BRL",
-  "value": 10000.0
-}
+  currency: 'BRL',
+  value: 10000.0,
+};
 
 const invalidDataCurrency = {
-  "currency": "BL",
-  "value": 10000.0
-}
+  currency: 'BL',
+  value: 10000.0,
+};
 
 const invalidDataValue = {
-  "currency": "BRL",
-  "value": -10000
-}
+  currency: 'BRL',
+  value: -10000,
+};
 
-
-module.exports = { validEmail, invalidEmail, success, validData, invalidDataCurrency, invalidDataValue };
+module.exports = {
+  validEmail,
+  invalidEmail,
+  success,
+  validData,
+  invalidDataCurrency,
+  invalidDataValue,
+};

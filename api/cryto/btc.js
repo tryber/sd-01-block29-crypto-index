@@ -18,7 +18,9 @@ const URL = (currency = 'currentprice.json') =>
   `https://api.coindesk.com/v1/bpi/${currency}`;
 
 const getSomeData = () =>
-  axios.get(URL(), { timeout: parseInt(process.env.COINBASE_API_TIMEOUT) }).then(({ data }) => data);
+  axios
+    .get(URL(), { timeout: parseInt(process.env.COINBASE_API_TIMEOUT) })
+    .then(({ data }) => data);
 
 const bitcoin = {
   code: 'BTC',

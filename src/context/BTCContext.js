@@ -9,7 +9,7 @@ const BTCProvider = ({ children }) => {
   const [read, setRead] = useState('');
   const [write, setWrite] = useState();
   const [currency, setCurrency] = useState('BRL');
-  
+
   console.log(data, read);
 
   const fetchData = async () => {

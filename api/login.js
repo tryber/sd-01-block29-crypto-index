@@ -1,6 +1,6 @@
 const express = require('express');
 
-const rescue = require('./rescue')
+const rescue = require('./rescue');
 
 const { validEmailOrPass } = require('./utils');
 const { generateToken } = require('./token');
@@ -12,7 +12,6 @@ const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 const regexPassword = /^[0-9]{6}$/;
 
 const callBackRequestLogin = (req, res) => {
-
   const token = generateToken(16);
 
   const { email, password } = req.body;
