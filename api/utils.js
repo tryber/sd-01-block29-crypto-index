@@ -26,7 +26,6 @@ const creatorObject = (code, rate, description) => {
 };
 
 const validatorRequestBtc = ({ currency, value }) => {
-  
   const currencyVerificator = ['BRL', 'EUR', 'CAD'].includes(currency);
   const valueVerificator = value > 0 && Number.isInteger(value);
 
@@ -71,8 +70,6 @@ const authorizationMiddleware = (req, res, next) => {
   if (isTokenValid(authorization)) return next();
   return res.status(401).json({ message: 'Token inválido' });
 };
-
-
 
 module.exports = {
   validEmailOrPass,

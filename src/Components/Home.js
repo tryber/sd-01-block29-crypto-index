@@ -2,14 +2,15 @@ import React, { useContext, useEffect } from 'react';
 import AwesomeComponent from './AwesomeComponent';
 import { BTCContext } from '../context/BTCContext';
 
-const btn = (currents, data) => (
-  <span>
-    <button onClick={() => window.location.reload(false)}>
-      Atualizar valor monetário
-    </button>
-    <section className="home">{currents(data)}</section>
-  </span>
-);
+const btn = (currents, data) => {
+  const { reload } = window.location;
+  return (
+    <span>
+      <button onClick={() => reload(false)}>Atualizar valor monetário</button>
+      <section className="home">{currents(data)}</section>
+    </span>
+  );
+};
 
 export default function Home() {
   const { data, fetchData } = useContext(BTCContext);
@@ -20,7 +21,7 @@ export default function Home() {
   const currents = ({ bpi }) => {
     const newObject = Object.entries(bpi);
     const arrayOfObject = [];
-    newObject.map(list => {
+    newObject.map((list) => {
       const valueInsideOne = list[1];
       return arrayOfObject.push(valueInsideOne);
     });

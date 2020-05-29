@@ -25,7 +25,7 @@ const forms = (handleSubmit, email, senha, setEmail, setSenha) => (
 function Login() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3001/login', {
@@ -36,10 +36,7 @@ function Login() {
       setEmail('');
       setSenha('');
     } catch (error) {
-      if (!error.response) {
-        return console.log('aqui mostra o que deu ruim', error);
-      }
-      console.log('→→', error.response.status, error.response.data);
+      if (!error.response) return console.log('aqui mostra o que deu ruim', error);
     }
   };
 
