@@ -8,11 +8,10 @@ const router = express.Router();
 
 const url = "https://api.coindesk.com/v1/bpi/currentprice/BTC.json";
 
-const axiosFetch = (url) => axios.get(url).then(({ data }) => data ).catch( error => console.error(error));
-
+const axiosFetch = (url) => axios.get(url).then(({ data }) => data );
 
 const fileModifier = async (fileModifierType, newContent) => {
-  const filePath = path.resolve(__dirname, 'currencies.json');
+  const filePath = path.resolve(__dirname, '..', '..', 'currencies.json');
   const readFile = () =>
     fs.readFile(filePath).then(fileContent => JSON.parse(fileContent));
   const writeFile = newContent =>
@@ -28,10 +27,12 @@ const fileModifier = async (fileModifierType, newContent) => {
 const parseF = (value, length) => Number(parseFloat(value).toFixed(length));
 
 const callbackGetBTC = async (req, res) => {
-  const data = await axiosFetch(url);
+  const data = await axiosFetch(url).catch(err => err.response || err);
   const read = await fileModifier("read");
-  console.log("data", data)
-  console.log("read", read)
+  if(!data.bpi) {
+    console.log(data.data || data)
+    return res.status(500).send({ message: "Error no data" });
+  }
   const { rate_float } = data.bpi.USD;
   const { BRL, CAD, EUR } = read;
   const real = parseF(BRL, 2);
