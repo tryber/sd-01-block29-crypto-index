@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
+import axios from 'axios';
 import AwesomeComponent from './AwesomeComponent';
 import { BTCContext } from '../context/BTCContext';
 
-const seletion = (currency) => {
+const seletion = currency => {
   const list = ['BRL', 'EUR', 'CAD'];
   return list.map(options => (
     <option value={options} selected={options === currency}>
@@ -27,12 +28,29 @@ const btn = (handleSubmit, write) => (
 );
 
 export default function Price() {
-  const { read, write, setWrite, currency, setCurrency, handleSubmit, fetchDataGet,
-  } = useContext(BTCContext);
-  useEffect(() => {
-    fetchDataGet();
-  }, []);
-  if (!read) return <AwesomeComponent />;
+  const { data, setUpdate } = useContext(BTCContext);
+  const [currency, setCurrency] = useState('BRL');
+  const [write, setWrite] = useState();
+    
+
+  const body = {
+    currency,
+    value: Number(write),
+  };
+
+  const handleSubmit = async () =>{
+
+    axios.post('http://localhost:3001/crypto/btc', body, {
+      headers: {
+        authorization: localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+    })
+    setUpdate(true)
+  }
+
+  console.log('pimpolho', write);
+  if (!data) return <AwesomeComponent />;
   return (
     <div className="containerPrice">
       <button>voltar</button>
@@ -40,7 +58,7 @@ export default function Price() {
       <select onChange={e => setCurrency(e.target.value)}>
         {seletion(currency)}
       </select>
-      <span>Valor Atual: R${read.bpi[currency].rate}</span>
+      <span>Valor Atual: R${data.bpi[currency].rate}</span>
       <p>Novo valor</p>
       {input(write, setWrite)}
       {btn(handleSubmit, write)}

@@ -1,19 +1,30 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AwesomeComponent from './AwesomeComponent';
 import { BTCContext } from '../context/BTCContext';
 
-const btn = (currents, data) => {
-  const { reload } = window.location;
-  return (
-    <span>
-      <button onClick={() => reload(false)}>Atualizar valor monetário</button>
-      <section className="home">{currents(data)}</section>
-    </span>
-  );
-};
+const valuesIs = (currents, data) => (
+  <span>
+    <section className="home">{currents(data)}</section>
+  </span>
+);
+
+const forms = (newValueBTC, setnewValueBTC) => (
+  <form>
+    <div>
+      <input
+        type="number"
+        onChange={event => setnewValueBTC(event.target.value)}
+        value={newValueBTC}
+      />
+      BTC
+    </div>
+  </form>
+);
 
 export default function Home() {
   const { data, fetchData } = useContext(BTCContext);
+  const [newValueBTC, setnewValueBTC] = useState(1);
+  if (newValueBTC <= 0) setnewValueBTC(1);
   useEffect(() => {
     fetchData();
   }, []);
@@ -21,16 +32,28 @@ export default function Home() {
   const currents = ({ bpi }) => {
     const newObject = Object.entries(bpi);
     const arrayOfObject = [];
-    newObject.map((list) => {
+    newObject.map(list => {
       const valueInsideOne = list[1];
       return arrayOfObject.push(valueInsideOne);
     });
-    return arrayOfObject.map(({ code, rate }) => (
-      <div>
-        <span>{code}</span>
-        <p>{rate}</p>
-      </div>
-    ));
+    arrayOfObject.pop();
+    return arrayOfObject.map(({ code, rate_float }) => {
+      const newValue = rate_float * Number(newValueBTC);
+      const floatRateString = newValue.toLocaleString('en-US', {
+        maximumSignificantDigits: 9,
+      });
+      return (
+        <div>
+          <span>{code}</span>
+          <p>{floatRateString}</p>
+        </div>
+      );
+    });
   };
-  return <div>{btn(currents, data)}</div>;
+  return (
+    <div>
+      {forms(newValueBTC, setnewValueBTC)}
+      {valuesIs(currents, data, setnewValueBTC)}
+    </div>
+  );
 }
