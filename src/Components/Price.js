@@ -27,23 +27,25 @@ const btn = (handleSubmit, write) => (
   </button>
 );
 
+const body = {
+  currency,
+  value: Number(write),
+};
+
+const URL = 'http://localhost:3001/crypto/btc';
+const tokens = localStorage.getItem('token');
+const configurations = {
+  headers: { authorization: tokens, 'Content-Type': 'application/json' },
+};
+
 export default function Price() {
   const { data, setUpdate } = useContext(BTCContext);
   const [currency, setCurrency] = useState('BRL');
   const [write, setWrite] = useState();
-  const body = {
-    currency,
-    value: Number(write),
+  const handleSubmit = async () => {
+    axios.post(URL, body, configurations);
+    setUpdate(true);
   };
-  const handleSubmit = async () =>{
-    axios.post('http://localhost:3001/crypto/btc', body, {
-      headers: {
-        authorization: localStorage.getItem('token'),
-        'Content-Type': 'application/json',
-      },
-    })
-    setUpdate(true)
-  }
   if (!data) return <AwesomeComponent />;
   return (
     <div className="containerPrice">
