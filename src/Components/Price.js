@@ -31,15 +31,11 @@ export default function Price() {
   const { data, setUpdate } = useContext(BTCContext);
   const [currency, setCurrency] = useState('BRL');
   const [write, setWrite] = useState();
-    
-
   const body = {
     currency,
     value: Number(write),
   };
-
   const handleSubmit = async () =>{
-
     axios.post('http://localhost:3001/crypto/btc', body, {
       headers: {
         authorization: localStorage.getItem('token'),
@@ -48,8 +44,6 @@ export default function Price() {
     })
     setUpdate(true)
   }
-
-  console.log('pimpolho', write);
   if (!data) return <AwesomeComponent />;
   return (
     <div className="containerPrice">
