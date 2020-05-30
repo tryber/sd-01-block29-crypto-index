@@ -27,12 +27,7 @@ const btn = (handleSubmit, write) => (
   </button>
 );
 
-const body = (currency, write) => {
-  return {
-    currency,
-    value: Number(write),
-  };
-};
+const body = (currency, write) => ({ currency, value: Number(write) });
 
 const URL = 'http://localhost:3001/crypto/btc';
 const tokens = localStorage.getItem('token');

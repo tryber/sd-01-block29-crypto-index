@@ -18,13 +18,12 @@ const forms = (newValueBTC, setnewValueBTC) => (
 const currents = ({ bpi }, newValueBTC) => {
   const newObject = Object.entries(bpi);
   const arrayOfObject = [];
-  newObject.map((list) => {
+  newObject.map(list => {
     const valueInsideOne = list[1];
     return arrayOfObject.push(valueInsideOne);
   });
   arrayOfObject.pop();
-  return arrayOfObject.map(({ code, rate_float }) => {
-    const rateFloat = rate_float
+  return arrayOfObject.map(({ code, rate_float: rateFloat }) => {
     const newValue = rateFloat * Number(newValueBTC);
     const floatRateString = newValue.toLocaleString('en-US', {
       maximumSignificantDigits: 9,
