@@ -18,7 +18,7 @@ const forms = (newValueBTC, setnewValueBTC) => (
 const currents = ({ bpi }, newValueBTC) => {
   const newObject = Object.entries(bpi);
   const arrayOfObject = [];
-  newObject.map(list => {
+  newObject.map((list) => {
     const valueInsideOne = list[1];
     return arrayOfObject.push(valueInsideOne);
   });
