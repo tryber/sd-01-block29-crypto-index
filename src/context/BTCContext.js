@@ -21,13 +21,14 @@ const BTCProvider = ({ children }) => {
 
   useEffect(() => {
     fetchData();
-    setUpdate(false)
+    setUpdate(false);
   }, [update]);
 
   const context = {
     data,
     setData,
-    update, setUpdate,
+    update,
+    setUpdate,
   };
 
   return <BTCContext.Provider value={context}>{children}</BTCContext.Provider>;

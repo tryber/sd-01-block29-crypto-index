@@ -15,16 +15,17 @@ const forms = (newValueBTC, setnewValueBTC) => (
   </form>
 );
 
-const currents = ({ bpi }) => {
+const currents = ({ bpi }, newValueBTC) => {
   const newObject = Object.entries(bpi);
   const arrayOfObject = [];
-  newObject.map(list => {
+  newObject.map((list) => {
     const valueInsideOne = list[1];
     return arrayOfObject.push(valueInsideOne);
   });
   arrayOfObject.pop();
   return arrayOfObject.map(({ code, rate_float }) => {
-    const newValue = rate_float * Number(newValueBTC);
+    const rateFloat = rate_float
+    const newValue = rateFloat * Number(newValueBTC);
     const floatRateString = newValue.toLocaleString('en-US', {
       maximumSignificantDigits: 9,
     });
@@ -46,7 +47,7 @@ export default function Home() {
     <div>
       {forms(newValueBTC, setnewValueBTC)}
       <span>
-        <section className="home">{currents(data)}</section>
+        <section className="home">{currents(data, newValueBTC)}</section>
       </span>
     </div>
   );

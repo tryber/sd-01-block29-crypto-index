@@ -3,7 +3,7 @@ import axios from 'axios';
 import AwesomeComponent from './AwesomeComponent';
 import { BTCContext } from '../context/BTCContext';
 
-const seletion = currency => {
+const seletion = (currency) => {
   const list = ['BRL', 'EUR', 'CAD'];
   return list.map(options => (
     <option value={options} selected={options === currency}>
@@ -27,9 +27,11 @@ const btn = (handleSubmit, write) => (
   </button>
 );
 
-const body = {
-  currency,
-  value: Number(write),
+const body = (currency, write) => {
+  return {
+    currency,
+    value: Number(write),
+  };
 };
 
 const URL = 'http://localhost:3001/crypto/btc';
@@ -43,7 +45,7 @@ export default function Price() {
   const [currency, setCurrency] = useState('BRL');
   const [write, setWrite] = useState();
   const handleSubmit = async () => {
-    axios.post(URL, body, configurations);
+    axios.post(URL, body(currency, write), configurations);
     setUpdate(true);
   };
   if (!data) return <AwesomeComponent />;
