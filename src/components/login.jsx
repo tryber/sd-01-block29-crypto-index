@@ -37,7 +37,7 @@ export default function Login() {
       <p>Email:</p>
       {FormLogin(setUserEmail, userEmail, 'email')}
       <p>Password:</p>
-      {FormLogin(setUserPassword, setUserPassword, 'password')}
+      {FormLogin(setUserPassword, userPassword, 'password')}
       <button
         type="submit"
         onClick={() => SendingRequestAndGettingTokenToUser(userEmail, userPassword)}
