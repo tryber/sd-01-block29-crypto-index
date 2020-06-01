@@ -42,7 +42,7 @@ const coinObj = (data, coin, description, value) => {
 const callbackGetBTC = async (req, res) => {
   const data = await axiosFetch(url).catch(err => err.response || err);
   const read = await fileModifier('read');
-  if (!data.bpi) {
+  if (!data.bpi){
     return res.status(500).send({ message: 'Error no data' });
   }
   const { BRL, CAD, EUR } = read;
@@ -62,7 +62,7 @@ const callbackPostCoin = async (req, res) => {
     const sucess = { message: 'Valor alterado com sucesso!' };
     const read = await fileModifier('read');
     read[currency] = value;
-    const write = await fileModifier('write', read);
+    // const write = await fileModifier('write', read);
     return res.status(200).json(sucess);
   } catch (error) {
     console.error();

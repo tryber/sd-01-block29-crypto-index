@@ -1,8 +1,8 @@
-const validateValue = value => {
+const validateValue = (value) => {
   return Number.isInteger(value) && value > 0;
 };
 
-const validateCoins = currency => {
+const validateCoins = (currency) => {
   return ['EUR', 'CAD', 'BRL'].includes(currency);
 };
 
