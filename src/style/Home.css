@@ -9,9 +9,9 @@ th {
   padding-right: 38px;
 }
 
-td.value {
+td .value {
   width: 190px;
   height: 30px;
-  background: #c4c4c4;
+  background: rgb(196, 196, 196);
   text-align: center;
 }

@@ -42,9 +42,7 @@ const coinObj = (data, coin, description, value) => {
 const callbackGetBTC = async (req, res) => {
   const data = await axiosFetch(url).catch(err => err.response || err);
   const read = await fileModifier('read');
-  if(!data.bpi) {
-    return res.status(500).send({ message: 'Error no data' });
-  }
+  if (!data.bpi) return res.status(500).send({ message: 'Error no data' });
   const { BRL, CAD, EUR } = read;
   const objReal = coinObj(data.bpi.USD, 'BRL', 'Brazilian Real', BRL);
   const objCad = coinObj(data.bpi.USD, 'CAD', 'Canadian Dollar', CAD);

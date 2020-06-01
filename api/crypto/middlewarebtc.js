@@ -1,10 +1,6 @@
-const validateValue = (value) => {
-  return Number.isInteger(value) && value > 0;
-};
+const validateValue = value => Number.isInteger(value) && value > 0;
 
-const validateCoins = (currency) => {
-  return ['EUR', 'CAD', 'BRL'].includes(currency);
-};
+const validateCoins = currency => ['EUR', 'CAD', 'BRL'].includes(currency);
 
 const validate = (req, res, next) => {
   const { currency, value } = req.body;

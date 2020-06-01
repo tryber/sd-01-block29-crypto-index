@@ -21,9 +21,8 @@ const callbackRequest = (req, res) => {
   const invalid = { message: 'Campos inválidos' };
   const token = generatorToken(16);
   const { email, password } = req.body;
-  if (validate(email, regexEmail) && validate(password, regexPassword)){
+  if (validate(email, regexEmail) && validate(password, regexPassword))
     return res.status(200).send({ token });
-  }
   return res.status(400).send(invalid);
 };
 
