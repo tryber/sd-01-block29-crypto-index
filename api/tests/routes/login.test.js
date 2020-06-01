@@ -23,11 +23,27 @@ describe('POST /login', () => {
     });
   });
 
-  describe('when login is invalid', () => {
+  describe('when email is invalid', () => {
     let response;
 
     beforeAll(async () => {
       response = await axios.post('/login', fixtures.invalidEmail);
+    });
+
+    it('returns 400 a HTTP status code', () => {
+      expect(response.status).toBe(400);
+    });
+
+    it('returns a `Campos inválidos`', () => {
+      expect(response.data.message).toBe('Campos inválidos');
+    });
+  });
+
+  describe('when password is invalid', () => {
+    let response;
+
+    beforeAll(async () => {
+      response = await axios.post('/login', fixtures.invalidPassword);
     });
 
     it('returns 400 a HTTP status code', () => {
