@@ -2,6 +2,8 @@ const axiosist = require('axiosist');
 const app = require('../../server');
 const fs = require('fs').promises;
 
+const localCurrencies = '{"BRL":"5200","EUR":"5","CAD":"1.440"}';
+
 describe('POST /currencies', () => {
   const axios = axiosist(app);
 
@@ -28,12 +30,12 @@ describe('POST /currencies', () => {
     let response;
 
     beforeAll(async () => {
-      readFileSpy.mockResolvedValueOnce('Arquivo lido!');
+      readFileSpy.mockResolvedValueOnce(localCurrencies);
       response = await axios.get('/currencies');
     });
 
     it('returns the object in currencies.json', () => {
-      expect(response.data.message).toBe('Valores acessados com sucesso!');
+      expect(JSON.stringify(response.data)).toBe(localCurrencies);
     });
   });
 });

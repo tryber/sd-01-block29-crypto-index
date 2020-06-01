@@ -1,5 +1,6 @@
 const nock = require('nock');
 const axiosist = require('axiosist');
+const fs = require('fs').promises;
 const app = require('../../server');
 const btcFixtures = require('../fixtures/crypto-btc');
 const loginFixtures = require('../fixtures/login');
@@ -73,6 +74,8 @@ describe('GET /crypto/btc', () => {
 describe('POST /crypto/btc', () => {
   const axios = axiosist(app);
 
+  const readFileSpy = jest.spyOn(fs, 'writeFile');
+
   afterEach(() => {
     nock.cleanAll();
   });
@@ -128,6 +131,23 @@ describe('POST /crypto/btc', () => {
 
     it('return `Valor Inválido` error message', () => {
       expect(response.data.message).toBe('Valor Inválido');
+    });
+  });
+
+  describe('when dont read the file', () => {
+    let response;
+
+    beforeAll(async () => {
+      const token = await axios.post('/login', loginFixtures.validLogin)
+        .then(({ data }) => data.token);
+
+      readFileSpy.mockRejectedValueOnce(new Error('Algo deu errado!'));
+
+      response = await axios.post('/crypto/btc', { currency: 'BRL', value: 1000 }, { headers: { Authorization: token } });
+    });
+
+    it('return `Erro ao ler o arquivo` error message', () => {
+      expect(response.data.message).toBe('Algo deu errado!');
     });
   });
 

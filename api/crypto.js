@@ -60,7 +60,7 @@ router.post('/btc', async (req, res) => {
     await fs.writeFile(path.resolve(__dirname, 'currencies.json'), JSON.stringify(obj));
     res.json({ message: 'Valor alterado com sucesso!' });
   } catch (err) {
-    res.json({ message: 'Algo deu errado!', err });
+    res.json({ message: 'Algo deu errado!' });
   }
 });
 
