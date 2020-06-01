@@ -8,7 +8,7 @@ const router = express.Router();
 
 const url = 'https://api.coindesk.com/v1/bpi/currentprice/BTC.json';
 
-const axiosFetch = (link) => axios.get(link).then( data  => data.data );
+const axiosFetch = link => axios.get(link).then(data  => data.data );
 
 const fileModifier = async (fileModifierType, newContent) => {
   const filePath = path.resolve(__dirname, '..', '..', 'currencies.json');
@@ -26,6 +26,22 @@ const fileModifier = async (fileModifierType, newContent) => {
 
 const parseF = (value, length) => Number(parseFloat(value).toFixed(length));
 
+const coinObj = (data, coin, description, value) => {
+  const { rate_float: rateFloat } = data;
+  console.log("coin", coin)
+  const coins = parseF(value, 2);
+  const btcCoins = rateFloat * coins;
+
+  console.log("coin2", coin)
+  return { [coin]: {
+    code: coin,
+    rate: parseF(btcCoins, 4).toString(),
+    description,
+    rate_float: parseF(btcCoins, 4),
+  }}
+
+}
+
 const callbackGetBTC = async (req, res) => {
   const data = await axiosFetch(url).catch(err => err.response || err);
   const read = await fileModifier('read');
@@ -33,32 +49,10 @@ const callbackGetBTC = async (req, res) => {
     console.log(data.data || data);
     return res.status(500).send({ message: 'Error no data' });
   }
-  const { rate_float: rateFloat } = data.bpi.USD;
   const { BRL, CAD, EUR } = read;
-  const real = parseF(BRL, 2);
-  const dolCad = parseF(CAD, 2);
-  const euro = parseF(EUR, 2);
-  const btcReais = rateFloat * real;
-  const btcDolCad = rateFloat * dolCad;
-  const btcEuro = rateFloat * euro;
-  const objReal = { BRL: {
-    code: 'BRL',
-    rate: parseF(btcReais, 4).toString(),
-    description: 'Brazilian Real',
-    rate_float: parseF(btcReais, 4),
-  }}
-  const objCad = { CAD: {
-    code: 'CAD',
-    rate: parseF(btcDolCad, 4).toString(),
-    description: 'Canadian Dollar',
-    rate_float: parseF(btcDolCad, 4),
-  }}
-  const objEur = { EUR: {
-    code: 'EUR',
-    rate: parseF(btcEuro, 4).toString(),
-    description: 'Euro',
-    rate_float: parseF(btcEuro, 4),
-  }}
+  const objReal = coinObj(data.bpi.USD, 'BRL', 'Brazilian Real', BRL);
+  const objCad = coinObj(data.bpi.USD, 'CAD', 'Canadian Dollar', CAD);
+  const objEur = coinObj(data.bpi.USD, 'EUR', 'Euro', EUR);
   Object.assign( data.bpi, objReal);
   Object.assign( data.bpi, objEur);
   Object.assign( data.bpi, objCad);
