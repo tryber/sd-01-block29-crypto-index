@@ -12,7 +12,7 @@ const coinsDescription = {
   CAD: 'Canadian Dollar',
 };
 
-const verifyCurrency = (currency) => {
+const verifyCurrency = currency => {
   return Object.keys(coinsDescription).find(element => element === currency);
 };
 
