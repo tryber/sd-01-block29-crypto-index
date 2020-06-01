@@ -9,4 +9,4 @@ const validLogin = { email: 'teste@test.com', ...basePassword };
 module.exports = {
   invalidEmail,
   validLogin,
-}
+};

@@ -12,9 +12,7 @@ const coinsDescription = {
   CAD: 'Canadian Dollar',
 };
 
-const verifyCurrency = currency => {
-  return Object.keys(coinsDescription).find(element => element === currency);
-};
+const verifyCurrency = (currency) => Object.keys(coinsDescription).find(element => element === currency);
 
 const verifyValue = (value) => {
   if (value > 0 && value % 1 === 0)
@@ -30,9 +28,7 @@ const readLocalCurrencies = async () => {
   }
 };
 
-const isTokenValid = (token = '') => {
-  return getToken.find(provisionalToken => provisionalToken === token);
-};
+const isTokenValid = (token = '') => getToken.find(provisionalToken => provisionalToken === token);
 
 function authorizationMiddleware(req, res, next) {
   const { authorization } = req.headers;

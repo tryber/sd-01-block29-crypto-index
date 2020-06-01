@@ -36,7 +36,7 @@ const createObject = (readCurrenciasJson, data) => {
 };
 
 router.get('/btc', async (_req, res) => {
-  const timeout = parseInt(process.env.COINBASE_API_TIMEOUT || 3000);
+  const timeout = parseInt(process.env.COINBASE_API_TIMEOUT || 3000, 10);
   const { data, error } = await axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json', { timeout })
     .catch(err => ({ error: { data: err.response } }));
   if (error) return !error.data
