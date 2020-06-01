@@ -17,6 +17,35 @@ describe('GET /crypto/btc', () => {
     nock.cleanAll();
   });
 
+  describe('when coinbase API returns an error', () => {
+    let response;
+
+    beforeAll(async () => {
+      const token = await axios
+        .post('/login', loginFixtures.validLogin)
+        .then(({ data }) => data.token);
+
+
+      nock('https://api.coindesk.com')
+        .defaultReplyHeaders({ 'access-control-allow-origin': '*' })
+        .get('/v1/bpi/currentprice/BTC.json')
+        .once()
+        .reply(500, 'error 500');
+
+      response = await axios.get('/crypto/btc', { headers: { Authorization: token },
+      });
+    });
+
+    afterEach(() => {
+      nock.cleanAll();
+    });
+
+    it('returns a 500 HTTP status code', () => {
+      expect(response.status).toBe(500);
+    });
+
+  });
+
   describe('when coinbase is offline', () => {
     let response;
 
