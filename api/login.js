@@ -23,9 +23,9 @@ const callbackRequest = (req, res) => {
   const { email, password } = req.body
   if(validate(email, regexEmail) && validate(password, regexPassword) ) {
     return res.status(200).send( { token } );
-  } 
+  }
   return res.status(400).send( invalid );
-} 
+}
 
 router.post('/login', callbackRequest );
 

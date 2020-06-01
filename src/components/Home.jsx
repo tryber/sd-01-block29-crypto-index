@@ -7,7 +7,7 @@ const fetchHome = () => {
     .then( response => response.data.bpi)
 }
 
-const coin = (data, numberText) => { 
+const coin = (data, numberText) => {
   return data.map((tag, index) => {
     if(index !== 1)
     return (
@@ -26,7 +26,7 @@ const coin = (data, numberText) => {
 const Home = () => {
   const [userCoins, setUserCoins] = useState([]);
   const [numberText, setNumberText] = useState(1);
-  
+
   useEffect(() => {
     fetchHome().then(setUserCoins);
   }, [numberText]);
@@ -40,7 +40,7 @@ const Home = () => {
       <input
         min={1}
         className="input-number"
-        type="Number" 
+        type="Number"
         value={numberText}
         onChange={(e) => e.target.value > 0 ? setNumberText(e.target.value) : setNumberText(numberText)}
         placeholder="Digite o bitcoin"

@@ -40,36 +40,47 @@ const generateSelect = (
   </div>
 );
 
-const Coins = () => {
-const [select, setSelect] = useState('BRL');
-const [numberText, setNumberText] = useState('');
-const [data, setData] = useState();
-const [btn, setBtn] = useState();
+const generateBtn = (select, numberText, setBtn) => {
+  return (
+    <input
+      className="form-submit"
+      type="submit"
+      value="Atualizar"
+      onClick={() => validateValue(select, Number(numberText), setBtn)}
+    />
+  )
+}
 
-
-useEffect(() => {
-  setData(generateSelect(setSelect, select))
-}, [btn]);
-
-return (
-  <div>
-    <h2>MOEDA</h2>
-    {data}
-    <h2>NOVO VALOR</h2>
+const generateInput = (numberText, setNumberText) => {
+  return (
     <input
       className="input-number"
-      type="Number" 
+      type="Number"
       value={numberText}
       onChange={(e) => setNumberText(e.target.value)}
       placeholder="Digite o bitcoin"
     />
-    <input 
-      className="form-submit" 
-      type="submit" 
-      value="Atualizar" 
-      onClick={() => validateValue(select, Number(numberText), setBtn)}
-    />
-  </div>
+  )
+}
+
+const Coins = () => {
+  const [select, setSelect] = useState('BRL');
+  const [numberText, setNumberText] = useState('');
+  const [data, setData] = useState();
+  const [btn, setBtn] = useState();
+
+  useEffect(() => {
+    setData(generateSelect(setSelect, select))
+  }, [btn]);
+
+  return (
+    <div>
+      <h2>MOEDA</h2>
+      {data}
+      <h2>NOVO VALOR</h2>
+      {generateInput(numberText, setNumberText)}
+      {generateBtn(select, numberText, setBtn)}
+    </div>
   );
 }
 
