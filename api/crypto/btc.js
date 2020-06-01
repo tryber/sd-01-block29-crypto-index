@@ -8,14 +8,14 @@ const router = express.Router();
 
 const url = 'https://api.coindesk.com/v1/bpi/currentprice/BTC.json';
 
-const axiosFetch = link => axios.get(link).then(data  => data.data );
+const axiosFetch = link => axios.get(link).then(data => data.data );
 
 const fileModifier = async (fileModifierType, newContent) => {
   const filePath = path.resolve(__dirname, '..', '..', 'currencies.json');
   const readFile = () =>
     fs.readFile(filePath).then(fileContent => JSON.parse(fileContent));
-  const writeFile = newContent =>
-    fs.writeFile(filePath, JSON.stringify(newContent));
+  const writeFile = content =>
+    fs.writeFile(filePath, JSON.stringify(content));
   const choices = {
     read: readFile,
     write: writeFile,
@@ -28,54 +28,48 @@ const parseF = (value, length) => Number(parseFloat(value).toFixed(length));
 
 const coinObj = (data, coin, description, value) => {
   const { rate_float: rateFloat } = data;
-  console.log("coin", coin)
   const coins = parseF(value, 2);
   const btcCoins = rateFloat * coins;
 
-  console.log("coin2", coin)
   return { [coin]: {
     code: coin,
     rate: parseF(btcCoins, 4).toString(),
     description,
     rate_float: parseF(btcCoins, 4),
-  }}
-
-}
+  } };
+};
 
 const callbackGetBTC = async (req, res) => {
   const data = await axiosFetch(url).catch(err => err.response || err);
   const read = await fileModifier('read');
   if (!data.bpi) {
-    console.log(data.data || data);
     return res.status(500).send({ message: 'Error no data' });
   }
   const { BRL, CAD, EUR } = read;
   const objReal = coinObj(data.bpi.USD, 'BRL', 'Brazilian Real', BRL);
   const objCad = coinObj(data.bpi.USD, 'CAD', 'Canadian Dollar', CAD);
   const objEur = coinObj(data.bpi.USD, 'EUR', 'Euro', EUR);
-  Object.assign( data.bpi, objReal);
-  Object.assign( data.bpi, objEur);
-  Object.assign( data.bpi, objCad);
-  if(data) return res.status(200).send( { data } );
+  Object.assign(data.bpi, objReal);
+  Object.assign(data.bpi, objEur);
+  Object.assign(data.bpi, objCad);
+  if (data) return res.status(200).send({ data });
   return res.status(400).send({ message: 'Campos inválidos' });
-}
+};
 
 const callbackPostCoin = async (req, res) => {
   const { currency, value } = req.body;
-  try{
-    const sucess = {  message: 'Valor alterado com sucesso!' };
+  try {
+    const sucess = { message: 'Valor alterado com sucesso!' };
     const read = await fileModifier('read');
-    read[currency] = value
+    read[currency] = value;
     const write = await fileModifier('write', read);
-    console.log('read', read)
-    console.log('write', write)
     return res.status(200).json(sucess);
-  } catch(error){
-    console.error()
+  } catch (error) {
+    console.error();
   }
-}
+};
 
-router.post('/crypto/btc', validate, callbackPostCoin );
-router.get('/crypto/btc', callbackGetBTC );
+router.post('/crypto/btc', validate, callbackPostCoin);
+router.get('/crypto/btc', callbackGetBTC);
 
 module.exports = router;
