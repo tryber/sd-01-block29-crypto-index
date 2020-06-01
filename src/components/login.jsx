@@ -3,41 +3,15 @@ import { CryptoContext } from '../context/CryptoContext';
 import axios from 'axios';
 import { saveLocalStorage } from '../services/services';
 
-function FormLoginUser() {
-  const { userEmail, setUserEmail } = useContext(CryptoContext);
+function FormLogin(setInfo, value, name) {
   return (
-    <section>
-      <label htmlFor="email">
-        email:
-        <input
-          type="email"
-          name="email"
-          value={userEmail}
-          onChange={(event) => setUserEmail(event.target.value)}
-          placeholder="exemplo@exemplo.com"
-          required
-        />
-      </label>
-    </section>
-  );
-}
-
-function FormLoginPassword() {
-  const { userPassword, setUserPassword } = useContext(CryptoContext);
-  return (
-    <section>
-      <label htmlFor="password">
-        password:
-        <input
-          type="password"
-          name="password"
-          value={userPassword}
-          onChange={(event) => setUserPassword(event.target.value)}
-          placeholder="Digite sua senha"
-          required
-        />
-      </label>
-    </section>
+    <input
+      type={name}
+      name={name}
+      value={value}
+      onChange={(event) => setInfo(event.target.value)}
+      required
+    />
   );
 }
 
@@ -51,18 +25,25 @@ function SendingRequestAndGettingTokenToUser(userEmail, userPassword) {
 }
 
 export default function Login() {
-  const { userEmail, userPassword } = useContext(CryptoContext);
+  const {
+    userEmail,
+    userPassword,
+    setUserEmail,
+    setUserPassword,
+  } = useContext(CryptoContext);
 
   return (
-    <div>
-      {FormLoginUser()}
-      {FormLoginPassword()}
+    <section>
+      <p>Email:</p>
+      {FormLogin(setUserEmail, userEmail, 'email')}
+      <p>Password:</p>
+      {FormLogin(setUserPassword, setUserPassword, 'password')}
       <button
         type="submit"
         onClick={() => SendingRequestAndGettingTokenToUser(userEmail, userPassword)}
       >
         Entrar
       </button>
-    </div>
+    </section>
   );
 }
