@@ -1,5 +1,5 @@
-const express = require("express");
-const rescue = require("./rescue");
+const express = require('express');
+const rescue = require('./rescue');
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ const generatorToken = () =>
 const tokens = [];
 
 const callbackRequest = (req, res) => {
-  const invalid = { message: "Campos inválidos" };
+  const invalid = { message: 'Campos inválidos' };
   const token = generatorToken();
   tokens.push(token);
   const { email, password } = req.body;
@@ -28,6 +28,6 @@ const callbackRequest = (req, res) => {
   return res.status(400).json(invalid);
 };
 
-router.post("/login", rescue(callbackRequest));
+router.post('/login', rescue(callbackRequest));
 
 module.exports = { router, tokens };

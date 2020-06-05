@@ -12,8 +12,8 @@ const url = "https://api.coindesk.com/v1/bpi/currentprice/BTC.json";
 const fileModifier = async (fileModifierType, newContent) => {
   const filePath = path.resolve(__dirname, "..", "..", "currencies.json");
   const readFile = () =>
-    fs.readFile(filePath).then((fileContent) => JSON.parse(fileContent));
-  const writeFile = (content) =>
+    fs.readFile(filePath).then(fileContent => JSON.parse(fileContent));
+  const writeFile = content =>
     fs.writeFile(filePath, JSON.stringify(content));
   const choices = {
     read: readFile,
