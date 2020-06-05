@@ -6,26 +6,43 @@
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
     "@babel/register": "^7.8.6",
-    "@testing-library/jest-dom": "^4.2.4",
+    "@expresso/validator": "^1.1.5",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "axios-hooks": "^1.9.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "coverage": "^0.4.1",
     "express": "^4.17.1",
     "ignore-styles": "^5.0.1",
+    "jest": "^26.0.1",
+    "nock": "^12.0.3",
+    "node-fetch": "^2.6.0",
+    "npm-watch": "^0.6.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js, jsx"
+    }
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:api": "jest ./server/*.test.js",
+    "test": "jest --collect-coverage",
+    "test:api": "jest ./tests/",
+    "test-coverage": "jest --collect-coverage",
     "eject": "react-scripts eject",
-    "ssr": "node server/index.js"
+    "ssr": "node server/index.js",
+    "watch": "npm-watch",
+    "nodemon": "nodemon api"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "axiosist": "^0.9.0",
     "supertest": "^4.0.2"
   }
 }
