@@ -26,7 +26,13 @@
             }
         ],
         "no-alert": "off",
-        "no-confusing-arrow": "off"
+        "no-confusing-arrow": "off",
+        "no-unused-vars": [
+            1,
+            {
+                "argsIgnorePattern": "^_"
+            }
+        ]
     },
     "globals": {
         "localStorage": false,
