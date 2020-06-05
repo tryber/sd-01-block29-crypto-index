@@ -1,4 +1,5 @@
-const express = require('express');
+const express = require("express");
+const rescue = require("./rescue");
 
 const router = express.Router();
 
@@ -10,22 +11,23 @@ const validate = (params1, regex) => {
   return regex.test(params1);
 };
 
-const generatorToken = length =>
-  `${Math.random()
+const generatorToken = () =>
+  `${Math.random().toString(36).slice(-10)}${Math.random()
     .toString(36)
-    .slice((length / 2) * -1)}${Math.random()
-    .toString(36)
-    .slice((length / 2) * -1)}`;
+    .slice(-6)}`;
+
+const tokens = [];
 
 const callbackRequest = (req, res) => {
-  const invalid = { message: 'Campos inválidos' };
-  const token = generatorToken(16);
+  const invalid = { message: "Campos inválidos" };
+  const token = generatorToken();
+  tokens.push(token);
   const { email, password } = req.body;
   if (validate(email, regexEmail) && validate(password, regexPassword))
-    return res.status(200).send({ token });
-  return res.status(400).send(invalid);
+    return res.status(200).json({ token });
+  return res.status(400).json(invalid);
 };
 
-router.post('/login', callbackRequest);
+router.post("/login", rescue(callbackRequest));
 
-module.exports = router;
+module.exports = { router, tokens };
