@@ -1,28 +1,25 @@
-import express from 'express';
-import fs from 'fs';
-import path from 'path';
-
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import Login from '../src/Login.js';
 
-import App from '../src/App.js';
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 
-const reactApp = ReactDOMServer.renderToString(<App />);
+const reactApp = ReactDOMServer.renderToString(<Login />);
 
-app.use('^/$', (req, res, next) => {
-  fs.readFile(
-    path.resolve('./build/index.html'), 'utf-8', (err, data) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send('Algo deu errado :(');
-      }
-      return res.send(
-        data.replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
-      );
+app.use('^/login$', (req, res, next) => {
+  fs.readFile(path.resolve('./build/index.html'), 'utf-8', (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send('Algo deu errado :(');
     }
-  );
+    return res.send(
+      data.replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
+    );
+  });
 });
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
